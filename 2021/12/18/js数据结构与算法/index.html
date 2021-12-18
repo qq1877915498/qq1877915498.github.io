@@ -6,7 +6,7 @@
     <meta name="referrer" content="origin">
     <meta http-equiv="Cache-Control" content="no-transform">
     <meta http-equiv="Cache-Control" content="no-siteapp">
-    <title></title>
+    <title>js数据结构与算法</title>
     <link rel="shortcut icon" href="#"/>
 
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/LongCang.css">
@@ -32,14 +32,14 @@
     <div class="header">
         <div class="vertical">
             <div class="inner">
-                <h1 class="header-subtitle"></h1>
+                <h1 class="header-subtitle">js数据结构与算法</h1>
                 <div class="header-subinfo">
                     <p class="article-info-text">
                         <span>
                             <i class="iconfont icon-time"></i> 发表时间：2021-12-18
                         </span>
                         
-                            <span id="/2021/12/18/js数据结构与算法/" class="leancloud_visitors" data-flag-title="">
+                            <span id="/2021/12/18/js数据结构与算法/" class="leancloud_visitors" data-flag-title="js数据结构与算法">
                                 <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
                             </span>
                         
@@ -58,7 +58,7 @@
         <div id="article">
     <div class="toc"></div>
     <div class="article-body">
-        <h1 id="title-js数据结构与算法"><a href="#title-js数据结构与算法" class="headerlink" title="title:js数据结构与算法"></a>title:js数据结构与算法</h1><p>[toc]</p>
+        <h1 id="js数据结构与算法"><a href="#js数据结构与算法" class="headerlink" title="js数据结构与算法"></a>js数据结构与算法</h1><p>[toc]</p>
 <h2 id="1-栈"><a href="#1-栈" class="headerlink" title="1.栈"></a>1.栈</h2><p> 栈是一种遵从后进先出（LIFO）原则的有序集合。新添加的或待删除的元素都保存在栈的 同一端，称作栈顶，另一端就叫栈底。在栈里，新元素都靠近栈顶，旧元素都接近栈底。 </p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//栈</span></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">Stack</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="comment">//各种属性和方法的声明</span></span><br><span class="line">            <span class="keyword">let</span> items = [];</span><br><span class="line">            <span class="comment">//添加元素</span></span><br><span class="line">            <span class="built_in">this</span>.push = <span class="function"><span class="keyword">function</span>(<span class="params">element</span>)</span>&#123;</span><br><span class="line">                items.push(element);</span><br><span class="line">            &#125;;</span><br><span class="line">            <span class="comment">//移除元素</span></span><br><span class="line">            <span class="built_in">this</span>.pop = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">                <span class="keyword">return</span> items.pop();</span><br><span class="line">            &#125;;</span><br><span class="line">            <span class="comment">//查看栈顶</span></span><br><span class="line">            <span class="built_in">this</span>.peek = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">                <span class="keyword">return</span> items[items.length-<span class="number">1</span>];</span><br><span class="line">            &#125;; </span><br><span class="line">            <span class="comment">//查看栈是不是为空</span></span><br><span class="line">            <span class="built_in">this</span>.isEmpty = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">                <span class="keyword">return</span> items.length == <span class="number">0</span>;</span><br><span class="line">            &#125;; </span><br><span class="line">            <span class="comment">//清空栈元素</span></span><br><span class="line">            <span class="built_in">this</span>.clear = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">                items = [];</span><br><span class="line">            &#125;;</span><br><span class="line">            <span class="comment">//打印栈元素</span></span><br><span class="line">            <span class="built_in">this</span>.print = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">                <span class="built_in">console</span>.log(items.toString());</span><br><span class="line">            &#125;; </span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
 
@@ -142,7 +142,7 @@
             <div class="suffix-box-right">
                 <span class="suffix-box-title">文章作者</span>：Live For Code
                 <br>
-                <span class="suffix-box-title">文章出处</span>：<a href="/2021/12/18/js%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" target="_blank"></a>
+                <span class="suffix-box-title">文章出处</span>：<a href="/2021/12/18/js%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" target="_blank">js数据结构与算法</a>
                 <br>
                 <span class="suffix-box-title">作者签名</span>：简单地活着, 肆意又精彩.
                 <br>
@@ -159,7 +159,7 @@
         
         <div class="article-prev-next">
             
-                <a href="/2021/12/18/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="prev-prefix">« </a> 上一篇：    <a href="/2021/12/18/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="发布于 2021-12-18 03:27"></a>
+                <a href="/2021/12/18/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="prev-prefix">« </a> 上一篇：    <a href="/2021/12/18/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="发布于 2021-12-18 03:27">Java学习笔记</a>
                 <br>
             
             
