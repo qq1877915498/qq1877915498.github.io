@@ -6,7 +6,7 @@
     <meta name="referrer" content="origin">
     <meta http-equiv="Cache-Control" content="no-transform">
     <meta http-equiv="Cache-Control" content="no-siteapp">
-    <title>前端菜鸟的bug日记</title>
+    <title>归档</title>
     <link rel="shortcut icon" href="#"/>
 
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/LongCang.css">
@@ -18,121 +18,69 @@
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Rosario.css">
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/UbuntuMono.css">
 
-    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/post.css">
-    
-        <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/normal.css">
-    
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/archive.css">
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/jquery-3.4.1.min.js"></script>
-
 <meta name="generator" content="Hexo 5.4.0"></head>
 <body>
     <a id="cover"></a>
     <div id="header">
-    <div class="header">
+    <div class="header" >
         <div class="vertical">
             <div class="inner">
-                <h1 class="header-subtitle">前端菜鸟的bug日记</h1>
-                <div class="header-subinfo">
-                    <p class="article-info-text">
-                        <span>
-                            <i class="iconfont icon-time"></i> 发表时间：2021-12-18
-                        </span>
-                        
-                            <span id="/2021/12/18/前端菜鸟的bug日记/" class="leancloud_visitors" data-flag-title="前端菜鸟的bug日记">
-                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                            </span>
-                        
-                        <span>
-                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2021/12/18/前端菜鸟的bug日记/"></span>
-                        </span>  
-                    </p>                 
-                </div>
+                <h1 class="header-title"></h1>
+                <h2 class="header-description" id="hitokoto"></h2>
+                <h3 class="header-info" id="hitokotoAuthor"></h3>
+                <!--
+                <h1 class="header-subtitle"></h1>
+                <p class="header-subinfo"></p>
+                -->
             </div>
         </div>
-        <canvas id="articleHeaderCanvas"></canvas>
+        <a class="scroll-down" href="javascript:;" target="_self" data-offset="-45">
+            <span class="hidden">Scroll Down</span>
+            <i class="scroll-down-icon iconfont icon-return"></i>
+        </a>
     </div>
 </div>
     <div id="container">
     <div id="content">
-        <div id="article">
-    <div class="toc"></div>
-    <div class="article-body">
-        <p>[TOC]</p>
-<h1 id="前端菜鸟的bug日记"><a href="#前端菜鸟的bug日记" class="headerlink" title="前端菜鸟的bug日记"></a>前端菜鸟的bug日记</h1><h2 id="问题1：苹果手机退回上一页面不刷新，安卓显示正常"><a href="#问题1：苹果手机退回上一页面不刷新，安卓显示正常" class="headerlink" title="问题1：苹果手机退回上一页面不刷新，安卓显示正常"></a>问题1：苹果手机退回上一页面不刷新，安卓显示正常</h2><p>解决：返回上一目录改用 window.location.href = document.referrer; </p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// window.history.go(-1)</span></span><br><span class="line"><span class="comment">// window.history.back()</span></span><br><span class="line"><span class="built_in">window</span>.location.href = <span class="built_in">document</span>.referrer; </span><br></pre></td></tr></table></figure>
-
-<h2 id="问题2：使用transform中scale缩放元素还占据位置"><a href="#问题2：使用transform中scale缩放元素还占据位置" class="headerlink" title="问题2：使用transform中scale缩放元素还占据位置"></a>问题2：使用transform中scale缩放元素还占据位置</h2><p>解决：使用zoom来缩放元素（有兼容）</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.demo</span>&#123; </span><br><span class="line">    // <span class="attribute">transform</span>: <span class="built_in">scale</span>(<span class="number">0.5</span>);</span><br><span class="line">    zoom: <span class="number">0.5</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="问题3：uniapp兼容h5和小程序使用vant组件"><a href="#问题3：uniapp兼容h5和小程序使用vant组件" class="headerlink" title="问题3：uniapp兼容h5和小程序使用vant组件"></a>问题3：uniapp兼容h5和小程序使用vant组件</h2><p>解决：推荐博客<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_42257240/article/details/113074415">https://blog.csdn.net/weixin_42257240/article/details/113074415</a> 参考uniapp自定义组件</p>
-<h2 id="问题4：移动端出现谷歌调试"><a href="#问题4：移动端出现谷歌调试" class="headerlink" title="问题4：移动端出现谷歌调试"></a>问题4：移动端出现谷歌调试</h2><p>解决：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=<span class="string">&quot;https://cdn.bootcss.com/vConsole/3.3.4/vconsole.min.js&quot;</span> /&gt;</span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><span class="javascript"></span></span></span><br><span class="line"><span class="javascript"><span class="xml">    <span class="keyword">var</span> vConsole = <span class="keyword">new</span> VConsole();</span></span></span><br><span class="line"><span class="javascript"><span class="xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="问题5：导入导出excel"><a href="#问题5：导入导出excel" class="headerlink" title="问题5：导入导出excel"></a>问题5：导入导出excel</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// exportRate是封装的axios请求</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">exportRate</span>(<span class="params">params</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> request(&#123;</span><br><span class="line">    <span class="attr">url</span>: <span class="string">`/test/<span class="subst">$&#123;params&#125;</span>`</span>,</span><br><span class="line">    <span class="attr">method</span>: <span class="string">&#x27;get&#x27;</span>,</span><br><span class="line">    <span class="attr">responseType</span>: <span class="string">&#x27;blob&#x27;</span> <span class="comment">// 设置响应类型为blob 这样得到的是一个Blob对象</span></span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 导出</span></span><br><span class="line">exportRate(item.protocolNo).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(res)</span><br><span class="line">    <span class="keyword">const</span> Blob = res</span><br><span class="line">    <span class="keyword">const</span> a = <span class="built_in">document</span>.createElement(<span class="string">&#x27;a&#x27;</span>)</span><br><span class="line">    a.download = <span class="string">`<span class="subst">$&#123;item.protocolNo&#125;</span>.xlsx`</span></span><br><span class="line">    a.href = URL.createObjectURL(Blob)</span><br><span class="line">    <span class="built_in">document</span>.body.appendChild(a)</span><br><span class="line">    a.click()</span><br><span class="line">    a.remove()</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 导入</span></span><br><span class="line"><span class="function"><span class="title">uploadFile</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">this</span>.fileList.length === <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="built_in">this</span>.$message.warning(<span class="string">&#x27;请上传文件&#x27;</span>)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> form = <span class="keyword">new</span> FormData()</span><br><span class="line">        form.append(<span class="string">&#x27;uploadFile&#x27;</span>, <span class="built_in">this</span>.fileList[<span class="number">0</span>])</span><br><span class="line">        <span class="built_in">this</span>.insertUploadExcel(form)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;,</span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="title">insertUploadExcel</span>(<span class="params">params</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> _this = <span class="built_in">this</span></span><br><span class="line">        <span class="keyword">await</span> importRate(params, <span class="built_in">this</span>.protocolNo).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(res)</span><br><span class="line">            <span class="keyword">if</span> (res.code === <span class="string">&#x27;20000&#x27;</span>) &#123;</span><br><span class="line">                <span class="built_in">this</span>.$message.success(<span class="string">&#x27;上传成功&#x27;</span>)</span><br><span class="line">                _this.uploadErrorFlg = <span class="literal">false</span></span><br><span class="line">                _this.upLoadFlg = <span class="literal">false</span></span><br><span class="line">                _this.fileList = []</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                _this.uploadErrorFlg = <span class="literal">true</span></span><br><span class="line">                _this.uploadHtml = res.msg</span><br><span class="line">                _this.fileList = []</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(error)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="问题6：uniapp去掉顶部返回按钮"><a href="#问题6：uniapp去掉顶部返回按钮" class="headerlink" title="问题6：uniapp去掉顶部返回按钮"></a>问题6：uniapp去掉顶部返回按钮</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a =  <span class="built_in">document</span>.getElementsByClassName(<span class="string">&#x27;uni-page-head-hd&#x27;</span>)[<span class="number">0</span>]</span><br><span class="line">	a.style.display = <span class="string">&#x27;none&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="问题7：微信网页关闭"><a href="#问题7：微信网页关闭" class="headerlink" title="问题7：微信网页关闭"></a>问题7：微信网页关闭</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//这个可以关闭安卓系统的手机</span></span><br><span class="line"><span class="built_in">document</span>.addEventListener(<span class="string">&quot;WeixinJSBridgeReady&quot;</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	WeixinJSBridge.call(<span class="string">&quot;closeWindow&quot;</span>);</span><br><span class="line">&#125;,<span class="literal">false</span>);</span><br><span class="line"><span class="comment">//这个可以关闭ios系统的手机</span></span><br><span class="line">WeixinJSBridge.call(<span class="string">&quot;closeWindow&quot;</span>);</span><br></pre></td></tr></table></figure>
-
-<h2 id="问题8：echart在微信中使用"><a href="#问题8：echart在微信中使用" class="headerlink" title="问题8：echart在微信中使用"></a>问题8：echart在微信中使用</h2><p>微信小程序中使用echarts</p>
-<p><a target="_blank" rel="noopener" href="https://github.com/ecomfe/echarts-for-weixin">echarts-for-weixin</a> 项目提供了一个小程序组件，用这种方式可以方便地使用 ECharts。</p>
-<p>使用方式</p>
-<ol>
-<li>下载该项目</li>
-<li>如有必要，将 <code>ec-canvas</code> 目录下的 <code>echarts.js</code> 替换为最新版的 ECharts。如果希望减小包体积大小，可以使用<a target="_blank" rel="noopener" href="https://echarts.apache.org//build.html">自定义构建</a>生成并替换 <code>echarts.js</code></li>
-<li><code>pages</code> 目录下是使用的示例文件，可以作为参考，或者删除不需要的页面。</li>
-</ol>
-<p>更详细的说明请参见 <a target="_blank" rel="noopener" href="https://github.com/ecomfe/echarts-for-weixin">echarts-for-weixin</a> 项目。</p>
-<p><img src="C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\image-20211225144727707.png" alt="image-20211225144727707"></p>
-<h2 id="问题9：去除select滚动条"><a href="#问题9：去除select滚动条" class="headerlink" title="问题9：去除select滚动条"></a>问题9：去除select滚动条</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.time-cycle</span> <span class="selector-class">.table-item</span> select::-webkit-scrollbar &#123; width: <span class="number">0</span> <span class="meta">!important</span> &#125;</span><br><span class="line"><span class="selector-class">.time-cycle</span> <span class="selector-class">.table-item</span> select &#123; -ms-<span class="attribute">overflow</span>-style: none; &#125;</span><br><span class="line"><span class="selector-class">.time-cycle</span> <span class="selector-class">.table-item</span> select &#123; <span class="attribute">overflow</span>: -moz-scrollbars-none; &#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="问题10：table文字溢出显示省略号"><a href="#问题10：table文字溢出显示省略号" class="headerlink" title="问题10：table文字溢出显示省略号"></a>问题10：table文字溢出显示省略号</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">table</span> &#123;  <span class="attribute">width</span>: <span class="number">100%</span>;  <span class="attribute">table-layout</span>:fixed;&#125;</span><br><span class="line"><span class="selector-tag">td</span> &#123;  <span class="attribute">width</span>: <span class="number">20%</span>;  <span class="attribute">overflow</span>: hidden;  <span class="attribute">white-space</span>: nowrap;  <span class="attribute">text-overflow</span>: ellipsis;&#125;</span><br></pre></td></tr></table></figure>
-
-
-        <p class="suffix-end">__END__</p>
-        <div class="suffix-box">
-            <div class="suffix-box-left">
-                <img src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/sidebar/avatar.jpg" alt="Live For Code">
-            </div>
-            <div class="suffix-box-right">
-                <span class="suffix-box-title">文章作者</span>：Live For Code
-                <br>
-                <span class="suffix-box-title">文章出处</span>：<a href="/2021/12/18/%E5%89%8D%E7%AB%AF%E8%8F%9C%E9%B8%9F%E7%9A%84bug%E6%97%A5%E8%AE%B0/" target="_blank">前端菜鸟的bug日记</a>
-                <br>
-                <span class="suffix-box-title">作者签名</span>：简单地活着, 肆意又精彩.
-                <br>
-                <span class="suffix-box-title">关于主题</span>：<a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
-                <br>
-                <span class="suffix-box-title">版权声明</span>：文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
-                <br>
-            </div>
-            <div style="clear: both;"></div>
-        </div>
-    </div>
-    <div class="article-footer">
-        
-        
-        <div class="article-prev-next">
+          
+    <div class="articles-year">
+        <h2>2021</h2>
+        <ul class="list">
             
-                <a href="/2022/02/24/jQuery%E5%B0%81%E8%A3%85%E6%97%A5%E6%9C%9F%E7%BB%84%E4%BB%B6/" class="prev-prefix">« </a> 上一篇：    <a href="/2022/02/24/jQuery%E5%B0%81%E8%A3%85%E6%97%A5%E6%9C%9F%E7%BB%84%E4%BB%B6/" title="发布于 2022-02-24 10:40">jQuery封装日期组件</a>
-                <br>
+                <li>
+                    <span class="date">2021/12/18</span>
+                    <a href="/2021/12/18/%E5%89%8D%E7%AB%AF%E8%8F%9C%E9%B8%9F%E7%9A%84bug%E6%97%A5%E8%AE%B0/" title="前端菜鸟的bug日记">    
+                        <span>前端菜鸟的bug日记</span>
+                    </a>
+                </li>
             
+                <li>
+                    <span class="date">2021/12/18</span>
+                    <a href="/2021/12/18/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="Java学习笔记">    
+                        <span>Java学习笔记</span>
+                    </a>
+                </li>
             
-                <a href="/2021/12/18/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="next-prefix">» </a> 下一篇：    <a href="/2021/12/18/Java%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="发布于 2021-12-18 03:27">Java学习笔记</a>
+                <li>
+                    <span class="date">2021/12/18</span>
+                    <a href="/2021/12/18/js%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" title="js数据结构与算法">    
+                        <span>js数据结构与算法</span>
+                    </a>
+                </li>
             
-        </div>
-    </div>
-    
-    <div class="article-comments">
-        <div class="comments-title">
-            评论列表
-        </div>
-        <div class="comments-content">
-        </div>
+                <li>
+                    <span class="date">2021/12/18</span>
+                    <a href="/2021/12/18/vue-router%E6%8F%92%E4%BB%B6%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/" title="vue-router插件的实现原理">    
+                        <span>vue-router插件的实现原理</span>
+                    </a>
+                </li>
+            
+        </ul>
     </div>
 
-</div>
 
     </div>
 </div>
