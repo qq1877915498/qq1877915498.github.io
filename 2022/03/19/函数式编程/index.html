@@ -127,7 +127,7 @@
 <h2 id="纯函数"><a href="#纯函数" class="headerlink" title="纯函数"></a>纯函数</h2><p>纯函数概念</p>
 <ul>
 <li>纯函数：相同的输入永远会得到相同的输出，而且没有任何课观察的副作用<ul>
-<li>纯函数就雷士数学中的函数（用来描述输入和输出之间的关系），y=f(x)</li>
+<li>纯函数就类似数学中的函数（用来描述输入和输出之间的关系），y=f(x)</li>
 </ul>
 </li>
 <li>lodash是一个纯函数的功能库，提供了对数组，数字，对象，字符串，函数等操作的一些方法</li>
@@ -149,7 +149,7 @@
 </ul>
 </li>
 </ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 记忆函数</span></span><br><span class="line"><span class="keyword">const</span> _ = <span class="built_in">require</span>(<span class="string">&#x27;lodash&#x27;</span>)</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getArea</span>(<span class="params">r</span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(r)</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">Math</span>.PI*r*r</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> getAreaWithMemory = _.memoize(getArea)</span><br><span class="line"></span><br><span class="line"><span class="comment">//模拟memoize方法的实现</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">memoize</span>(<span class="params">f</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">let</span> cache = &#123;&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="keyword">let</span> keyy = <span class="built_in">JSON</span>.stringify(<span class="built_in">arguments</span>)</span><br><span class="line">        cache[key] = cache[key] || f.apply(f,<span class="built_in">arguments</span>)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 记忆函数</span></span><br><span class="line"><span class="keyword">const</span> _ = <span class="built_in">require</span>(<span class="string">&#x27;lodash&#x27;</span>)</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getArea</span>(<span class="params">r</span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(r)</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">Math</span>.PI*r*r</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> getAreaWithMemory = _.memoize(getArea)</span><br><span class="line"></span><br><span class="line"><span class="comment">//模拟memoize方法的实现</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">memoize</span>(<span class="params">f</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">let</span> cache = &#123;&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="keyword">let</span> key = <span class="built_in">JSON</span>.stringify(<span class="built_in">arguments</span>)</span><br><span class="line">        cache[key] = cache[key] || f.apply(f,<span class="built_in">arguments</span>)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>可测试<ul>
@@ -363,6 +363,9 @@
         
         
         <div class="article-prev-next">
+            
+                <a href="/2022/03/22/%E6%89%8B%E5%86%99Promise/" class="prev-prefix">« </a> 上一篇：    <a href="/2022/03/22/%E6%89%8B%E5%86%99Promise/" title="发布于 2022-03-22 09:21">手写Promise</a>
+                <br>
             
             
                 <a href="/2022/03/02/%E6%89%8B%E5%86%99Vue%E6%BA%90%E7%A0%81/" class="next-prefix">» </a> 下一篇：    <a href="/2022/03/02/%E6%89%8B%E5%86%99Vue%E6%BA%90%E7%A0%81/" title="发布于 2022-03-02 04:40">手写Vue源码</a>
