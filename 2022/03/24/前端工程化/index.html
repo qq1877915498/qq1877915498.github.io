@@ -6,7 +6,7 @@
     <meta name="referrer" content="origin">
     <meta http-equiv="Cache-Control" content="no-transform">
     <meta http-equiv="Cache-Control" content="no-siteapp">
-    <title>归档</title>
+    <title>前端工程化</title>
     <link rel="shortcut icon" href="#"/>
 
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/LongCang.css">
@@ -18,104 +18,160 @@
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Rosario.css">
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/UbuntuMono.css">
 
-    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/archive.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/post.css">
+    
+        <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/normal.css">
+    
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/jquery-3.4.1.min.js"></script>
+
 <meta name="generator" content="Hexo 5.4.0"></head>
 <body>
     <a id="cover"></a>
     <div id="header">
-    <div class="header" >
+    <div class="header">
         <div class="vertical">
             <div class="inner">
-                <h1 class="header-title"></h1>
-                <h2 class="header-description" id="hitokoto"></h2>
-                <h3 class="header-info" id="hitokotoAuthor"></h3>
-                <!--
-                <h1 class="header-subtitle"></h1>
-                <p class="header-subinfo"></p>
-                -->
+                <h1 class="header-subtitle">前端工程化</h1>
+                <div class="header-subinfo">
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2022-03-24
+                        </span>
+                        
+                            <span id="/2022/03/24/前端工程化/" class="leancloud_visitors" data-flag-title="前端工程化">
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
+                        
+                        <span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2022/03/24/前端工程化/"></span>
+                        </span>  
+                    </p>                 
+                </div>
             </div>
         </div>
-        <a class="scroll-down" href="javascript:;" target="_self" data-offset="-45">
-            <span class="hidden">Scroll Down</span>
-            <i class="scroll-down-icon iconfont icon-return"></i>
-        </a>
+        <canvas id="articleHeaderCanvas"></canvas>
     </div>
 </div>
     <div id="container">
     <div id="content">
-          
-    <div class="articles-year">
-        <h2>2022</h2>
-        <ul class="list">
+        <div id="article">
+    <div class="toc"></div>
+    <div class="article-body">
+        <p>[TOC]</p>
+<h1 id="前端工程化"><a href="#前端工程化" class="headerlink" title="前端工程化"></a>前端工程化</h1><h2 id="工程化概述"><a href="#工程化概述" class="headerlink" title="工程化概述"></a>工程化概述</h2><h3 id="工程化表现"><a href="#工程化表现" class="headerlink" title="工程化表现"></a>工程化表现</h3><p>一切以提高效率、降低成本、质量保证为目的的手段都属于工程化</p>
+<p>一切重复的工作都应被自动化</p>
+<ol>
+<li>创建项目<ul>
+<li>创建项目结构</li>
+<li>创建特定类型文件</li>
+</ul>
+</li>
+<li>编码<ul>
+<li>格式化代码</li>
+<li>检验代码风格</li>
+<li>编译/构建/打包</li>
+</ul>
+</li>
+<li>预览/测试<ul>
+<li>Web Server / Mock</li>
+<li>Live Reloading / HMR</li>
+<li>Source Map</li>
+</ul>
+</li>
+<li>提交<ul>
+<li>Git Hooks</li>
+<li>Lint-Staged</li>
+<li>持续集成</li>
+</ul>
+</li>
+<li>部署<ul>
+<li>CI/CD</li>
+<li>自动发布</li>
+</ul>
+</li>
+</ol>
+<h3 id="工程化不等于工具"><a href="#工程化不等于工具" class="headerlink" title="工程化不等于工具"></a>工程化不等于工具</h3><h3 id="工程化与Node-js"><a href="#工程化与Node-js" class="headerlink" title="工程化与Node.js"></a>工程化与Node.js</h3><h2 id="脚手架工具概要"><a href="#脚手架工具概要" class="headerlink" title="脚手架工具概要"></a>脚手架工具概要</h2><p>前端工程化发起者</p>
+<p><strong>脚手架的本质作用</strong></p>
+<p>创建项目基础结构、提供项目规范和约定</p>
+<p>解决这类问题</p>
+<ul>
+<li>相同的组织结构</li>
+<li>相同的开发范式</li>
+<li>相同的模块依赖</li>
+<li>相同的工具配置</li>
+<li>相同的基础代码</li>
+</ul>
+<p><strong>举个例子</strong></p>
+<p>IDE创建项目的过程就是一个脚手架的工作流程</p>
+<p><strong>前端脚手架</strong></p>
+<h3 id="常用的脚手架工具"><a href="#常用的脚手架工具" class="headerlink" title="常用的脚手架工具"></a>常用的脚手架工具</h3><ul>
+<li><p>React项目 -&gt; create-react-app</p>
+</li>
+<li><p>Vue -&gt; vue cli</p>
+</li>
+<li><p>Angular项目 -&gt; angular cli </p>
+</li>
+</ul>
+<p>根据信息创建对应的项目基础结构</p>
+<ul>
+<li><p>Yeoman</p>
+</li>
+<li><p>Plop</p>
+</li>
+</ul>
+<h3 id="Yeoman基础使用"><a href="#Yeoman基础使用" class="headerlink" title="Yeoman基础使用"></a>Yeoman基础使用</h3><p>基本使用</p>
+<p> 全局安装</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn global add yo</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn global add generator-node</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">you node </span><br></pre></td></tr></table></figure>
+
+
+        <p class="suffix-end">__END__</p>
+        <div class="suffix-box">
+            <div class="suffix-box-left">
+                <img src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/sidebar/avatar.jpg" alt="Live For Code">
+            </div>
+            <div class="suffix-box-right">
+                <span class="suffix-box-title">文章作者</span>：Live For Code
+                <br>
+                <span class="suffix-box-title">文章出处</span>：<a href="/2022/03/24/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/" target="_blank">前端工程化</a>
+                <br>
+                <span class="suffix-box-title">作者签名</span>：简单地活着, 肆意又精彩.
+                <br>
+                <span class="suffix-box-title">关于主题</span>：<a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+                <br>
+                <span class="suffix-box-title">版权声明</span>：文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+                <br>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+    </div>
+    <div class="article-footer">
+        
+        
+        <div class="article-prev-next">
             
-                <li>
-                    <span class="date">2022/03/25</span>
-                    <a href="/2022/03/25/Vue3%E4%B8%AD%E5%AE%9E%E7%8E%B0echarts%E5%9B%BE%E8%A1%A8%E6%94%BE%E5%A4%A7%E9%A2%84%E8%A7%88/" title="Vue3中实现echarts图表放大预览">    
-                        <span>Vue3中实现echarts图表放大预览</span>
-                    </a>
-                </li>
+                <a href="/2022/03/25/Vue3%E4%B8%AD%E5%AE%9E%E7%8E%B0echarts%E5%9B%BE%E8%A1%A8%E6%94%BE%E5%A4%A7%E9%A2%84%E8%A7%88/" class="prev-prefix">« </a> 上一篇：    <a href="/2022/03/25/Vue3%E4%B8%AD%E5%AE%9E%E7%8E%B0echarts%E5%9B%BE%E8%A1%A8%E6%94%BE%E5%A4%A7%E9%A2%84%E8%A7%88/" title="发布于 2022-03-25 05:12">Vue3中实现echarts图表放大预览</a>
+                <br>
             
-                <li>
-                    <span class="date">2022/03/24</span>
-                    <a href="/2022/03/24/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/" title="前端工程化">    
-                        <span>前端工程化</span>
-                    </a>
-                </li>
             
-                <li>
-                    <span class="date">2022/03/24</span>
-                    <a href="/2022/03/24/JavaScript%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" title="JavaScript性能优化">    
-                        <span>JavaScript性能优化</span>
-                    </a>
-                </li>
+                <a href="/2022/03/24/JavaScript%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" class="next-prefix">» </a> 下一篇：    <a href="/2022/03/24/JavaScript%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" title="发布于 2022-03-24 09:52">JavaScript性能优化</a>
             
-                <li>
-                    <span class="date">2022/03/24</span>
-                    <a href="/2022/03/24/TypeScirpt/" title="TypeScript学习">    
-                        <span>TypeScript学习</span>
-                    </a>
-                </li>
-            
-                <li>
-                    <span class="date">2022/03/23</span>
-                    <a href="/2022/03/23/TypeScript/" title="TypeScript学习">    
-                        <span>TypeScript学习</span>
-                    </a>
-                </li>
-            
-                <li>
-                    <span class="date">2022/03/22</span>
-                    <a href="/2022/03/22/ECMAScript/" title="ECMAScript新特性">    
-                        <span>ECMAScript新特性</span>
-                    </a>
-                </li>
-            
-                <li>
-                    <span class="date">2022/03/22</span>
-                    <a href="/2022/03/22/%E5%AE%9E%E7%8E%B0Promise/" title="实现Promise">    
-                        <span>实现Promise</span>
-                    </a>
-                </li>
-            
-                <li>
-                    <span class="date">2022/03/19</span>
-                    <a href="/2022/03/19/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" title="函数式编程">    
-                        <span>函数式编程</span>
-                    </a>
-                </li>
-            
-                <li>
-                    <span class="date">2022/03/02</span>
-                    <a href="/2022/03/02/%E5%AE%9E%E7%8E%B0Vue%E5%8F%8C%E5%90%91%E7%BB%91%E5%AE%9A/" title="实现Vue双向绑定">    
-                        <span>实现Vue双向绑定</span>
-                    </a>
-                </li>
-            
-        </ul>
+        </div>
+    </div>
+    
+    <div class="article-comments">
+        <div class="comments-title">
+            评论列表
+        </div>
+        <div class="comments-content">
+        </div>
     </div>
 
+</div>
 
     </div>
 </div>

@@ -6,7 +6,7 @@
     <meta name="referrer" content="origin">
     <meta http-equiv="Cache-Control" content="no-transform">
     <meta http-equiv="Cache-Control" content="no-siteapp">
-    <title>归档</title>
+    <title>Vue3中实现echarts图表放大预览</title>
     <link rel="shortcut icon" href="#"/>
 
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/LongCang.css">
@@ -18,104 +18,107 @@
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Rosario.css">
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/UbuntuMono.css">
 
-    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/archive.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/post.css">
+    
+        <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/normal.css">
+    
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/jquery-3.4.1.min.js"></script>
+
 <meta name="generator" content="Hexo 5.4.0"></head>
 <body>
     <a id="cover"></a>
     <div id="header">
-    <div class="header" >
+    <div class="header">
         <div class="vertical">
             <div class="inner">
-                <h1 class="header-title"></h1>
-                <h2 class="header-description" id="hitokoto"></h2>
-                <h3 class="header-info" id="hitokotoAuthor"></h3>
-                <!--
-                <h1 class="header-subtitle"></h1>
-                <p class="header-subinfo"></p>
-                -->
+                <h1 class="header-subtitle">Vue3中实现echarts图表放大预览</h1>
+                <div class="header-subinfo">
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2022-03-25
+                        </span>
+                        
+                            <span id="/2022/03/25/Vue3中实现echarts图表放大预览/" class="leancloud_visitors" data-flag-title="Vue3中实现echarts图表放大预览">
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
+                        
+                        <span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2022/03/25/Vue3中实现echarts图表放大预览/"></span>
+                        </span>  
+                    </p>                 
+                </div>
             </div>
         </div>
-        <a class="scroll-down" href="javascript:;" target="_self" data-offset="-45">
-            <span class="hidden">Scroll Down</span>
-            <i class="scroll-down-icon iconfont icon-return"></i>
-        </a>
+        <canvas id="articleHeaderCanvas"></canvas>
     </div>
 </div>
     <div id="container">
     <div id="content">
-          
-    <div class="articles-year">
-        <h2>2022</h2>
-        <ul class="list">
+        <div id="article">
+    <div class="toc"></div>
+    <div class="article-body">
+        <h1 id="Vue3中实现echarts图表放大预览"><a href="#Vue3中实现echarts图表放大预览" class="headerlink" title="Vue3中实现echarts图表放大预览"></a>Vue3中实现echarts图表放大预览</h1><p><strong>效果：</strong></p>
+<p><img src="/image/image-20220325171003414.png" alt="image-20220325171003414"></p>
+<p><strong>实现思路：</strong></p>
+<p>两个图标的echarts的配置option相同，点击子组件的时候，通过emit把子组件的option配置项传递给父类，通过echarts.resize()方法重新绘制改变图表的大小，从而达到图表的放大预览</p>
+<p>目录结构</p>
+<p>components/ echarts.vue  图表组件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div class=&quot;echarts&quot; ref=&quot;echart&quot; @click=&quot;handlerClick&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">      import &#123; reactive, ref &#125; from &quot;@vue/reactivity&quot;;</span><br><span class="line">      import &#123; inject, onMounted, watch &#125; from &quot;@vue/runtime-core&quot;;</span><br><span class="line">      import * as echarts from &quot;echarts&quot;;</span><br><span class="line">      export default&#123;</span><br><span class="line">		 props: &#123;</span><br><span class="line">            onClick: Function</span><br><span class="line">         &#125;,</span><br><span class="line">         setup(props,context) &#123;</span><br><span class="line">             const echart = ref(null);</span><br><span class="line">             let option = reactive(&#123;&#125;)</span><br><span class="line">             onMounted(()=&gt;&#123;</span><br><span class="line">                 var myChart = echarts.init(echarts.value);</span><br><span class="line">                 option = &#123;...&#125;  // 配置省略</span><br><span class="line">                 myChart.setOption(option);</span><br><span class="line">                 window.addEventListener(&quot;resize&quot;, function () &#123;</span><br><span class="line">                     myChart.resize();</span><br><span class="line">                 &#125;);</span><br><span class="line">             &#125;)</span><br><span class="line">             const handlerClick = ()=&gt;&#123;</span><br><span class="line">                 context.emit(&#x27;open&#x27;,option)  </span><br><span class="line">             &#125;</span><br><span class="line">             return&#123;</span><br><span class="line">                 option,</span><br><span class="line">                 echart,</span><br><span class="line">                 handlerClick</span><br><span class="line">             &#125;</span><br><span class="line">         &#125;</span><br><span class="line">	&#125;</span><br><span class="line">      </span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>views/Home.vue 首页</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">	&lt;Echarts @open=&quot;handerClick&quot; class=&quot;echartsContainer&quot; &gt;&lt;/Echarts&gt;</span><br><span class="line">	&lt;el-dialog</span><br><span class="line">        v-model=&quot;centerDialogVisible&quot;</span><br><span class="line">        title=&quot;Notice&quot;</span><br><span class="line">        width=&quot;60%&quot;</span><br><span class="line">        destroy-on-close</span><br><span class="line">        center</span><br><span class="line">        custom-class=&quot;mydialog&quot;</span><br><span class="line">      &gt;</span><br><span class="line">    &lt;div style=&quot;width:100%;height:8rem;&quot; ref=&quot;dialogEcharts&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;template #footer&gt;</span><br><span class="line">      &lt;span class=&quot;dialog-footer&quot;&gt;</span><br><span class="line">        &lt;el-button @click=&quot;centerDialogVisible = false&quot;&gt;取消&lt;/el-button&gt;</span><br><span class="line">        &lt;el-button type=&quot;primary&quot; @click=&quot;centerDialogVisible = false&quot;</span><br><span class="line">          &gt;确认&lt;/el-button</span><br><span class="line">        &gt;</span><br><span class="line">      &lt;/span&gt;</span><br><span class="line">    &lt;/template&gt;</span><br><span class="line">  &lt;/el-dialog&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">      import &#123; reactive, ref &#125; from &quot;@vue/reactivity&quot;;</span><br><span class="line">      import &#123; inject, onMounted, watch &#125; from &quot;@vue/runtime-core&quot;;</span><br><span class="line">      import * as echarts from &quot;echarts&quot;;</span><br><span class="line">      export default&#123;</span><br><span class="line">		 props: &#123;</span><br><span class="line">            onClick: Function</span><br><span class="line">         &#125;,</span><br><span class="line">         setup(props,context) &#123;</span><br><span class="line">             const dialogEcharts = ref(null);</span><br><span class="line">             const centerDialogVisible = ref(false);</span><br><span class="line">             onMounted(()=&gt;&#123;</span><br><span class="line">                 var myChart = echarts.init(echarts.value);</span><br><span class="line">                 option = &#123;...&#125;  // 配置省略</span><br><span class="line">                 myChart.setOption(option);</span><br><span class="line">                 window.addEventListener(&quot;resize&quot;, function () &#123;</span><br><span class="line">                     myChart.resize();</span><br><span class="line">                 &#125;);</span><br><span class="line">             &#125;)</span><br><span class="line">            const handerClick = (option)=&gt;&#123;</span><br><span class="line">                centerDialogVisible.value = true</span><br><span class="line">                setTimeout(() =&gt; &#123; // 使用延时器是为了避免获取不到DOM</span><br><span class="line">                  	console.log(dialogEcharts.value)</span><br><span class="line">                    var myChart = echarts.init(dialogEcharts.value);</span><br><span class="line">                    myChart.setOption(option);</span><br><span class="line">                    window.addEventListener(&quot;resize&quot;, function () &#123;</span><br><span class="line">                      myChart.resize();</span><br><span class="line">                    &#125;);</span><br><span class="line">                &#125;, 100);</span><br><span class="line">            &#125;</span><br><span class="line">             return&#123;</span><br><span class="line">                 dialogEcharts,</span><br><span class="line">                 centerDialogVisible,</span><br><span class="line">                 handerClick</span><br><span class="line">             &#125;</span><br><span class="line">         &#125;</span><br><span class="line">	&#125;</span><br><span class="line">      </span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+
+        <p class="suffix-end">__END__</p>
+        <div class="suffix-box">
+            <div class="suffix-box-left">
+                <img src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/sidebar/avatar.jpg" alt="Live For Code">
+            </div>
+            <div class="suffix-box-right">
+                <span class="suffix-box-title">文章作者</span>：Live For Code
+                <br>
+                <span class="suffix-box-title">文章出处</span>：<a href="/2022/03/25/Vue3%E4%B8%AD%E5%AE%9E%E7%8E%B0echarts%E5%9B%BE%E8%A1%A8%E6%94%BE%E5%A4%A7%E9%A2%84%E8%A7%88/" target="_blank">Vue3中实现echarts图表放大预览</a>
+                <br>
+                <span class="suffix-box-title">作者签名</span>：简单地活着, 肆意又精彩.
+                <br>
+                <span class="suffix-box-title">关于主题</span>：<a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+                <br>
+                <span class="suffix-box-title">版权声明</span>：文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+                <br>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+    </div>
+    <div class="article-footer">
+        
+        
+            <div class="tag">
+                标签：
+                
+                    <a href="/tags/Vue3/">Vue3</a>
+                
+                    <a href="/tags/Echarts/">Echarts</a>
+                
+            </div>
+        
+        <div class="article-prev-next">
             
-                <li>
-                    <span class="date">2022/03/25</span>
-                    <a href="/2022/03/25/Vue3%E4%B8%AD%E5%AE%9E%E7%8E%B0echarts%E5%9B%BE%E8%A1%A8%E6%94%BE%E5%A4%A7%E9%A2%84%E8%A7%88/" title="Vue3中实现echarts图表放大预览">    
-                        <span>Vue3中实现echarts图表放大预览</span>
-                    </a>
-                </li>
             
-                <li>
-                    <span class="date">2022/03/24</span>
-                    <a href="/2022/03/24/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/" title="前端工程化">    
-                        <span>前端工程化</span>
-                    </a>
-                </li>
+                <a href="/2022/03/24/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/" class="next-prefix">» </a> 下一篇：    <a href="/2022/03/24/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/" title="发布于 2022-03-24 03:30">前端工程化</a>
             
-                <li>
-                    <span class="date">2022/03/24</span>
-                    <a href="/2022/03/24/JavaScript%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" title="JavaScript性能优化">    
-                        <span>JavaScript性能优化</span>
-                    </a>
-                </li>
-            
-                <li>
-                    <span class="date">2022/03/24</span>
-                    <a href="/2022/03/24/TypeScirpt/" title="TypeScript学习">    
-                        <span>TypeScript学习</span>
-                    </a>
-                </li>
-            
-                <li>
-                    <span class="date">2022/03/23</span>
-                    <a href="/2022/03/23/TypeScript/" title="TypeScript学习">    
-                        <span>TypeScript学习</span>
-                    </a>
-                </li>
-            
-                <li>
-                    <span class="date">2022/03/22</span>
-                    <a href="/2022/03/22/ECMAScript/" title="ECMAScript新特性">    
-                        <span>ECMAScript新特性</span>
-                    </a>
-                </li>
-            
-                <li>
-                    <span class="date">2022/03/22</span>
-                    <a href="/2022/03/22/%E5%AE%9E%E7%8E%B0Promise/" title="实现Promise">    
-                        <span>实现Promise</span>
-                    </a>
-                </li>
-            
-                <li>
-                    <span class="date">2022/03/19</span>
-                    <a href="/2022/03/19/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" title="函数式编程">    
-                        <span>函数式编程</span>
-                    </a>
-                </li>
-            
-                <li>
-                    <span class="date">2022/03/02</span>
-                    <a href="/2022/03/02/%E5%AE%9E%E7%8E%B0Vue%E5%8F%8C%E5%90%91%E7%BB%91%E5%AE%9A/" title="实现Vue双向绑定">    
-                        <span>实现Vue双向绑定</span>
-                    </a>
-                </li>
-            
-        </ul>
+        </div>
+    </div>
+    
+    <div class="article-comments">
+        <div class="comments-title">
+            评论列表
+        </div>
+        <div class="comments-content">
+        </div>
     </div>
 
+</div>
 
     </div>
 </div>

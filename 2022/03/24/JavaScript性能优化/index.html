@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, shrink-to-fit=no">
+    <meta name="referrer" content="origin">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <title>JavaScript性能优化</title>
+    <link rel="shortcut icon" href="#"/>
+
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/LongCang.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Monda.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/NotoSansSC.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Playball.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/PTMono.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/RobotoSlab.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Rosario.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/UbuntuMono.css">
+
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/post.css">
+    
+        <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/normal.css">
+    
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/jquery-3.4.1.min.js"></script>
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    <a id="cover"></a>
+    <div id="header">
+    <div class="header">
+        <div class="vertical">
+            <div class="inner">
+                <h1 class="header-subtitle">JavaScript性能优化</h1>
+                <div class="header-subinfo">
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2022-03-24
+                        </span>
+                        
+                            <span id="/2022/03/24/JavaScript性能优化/" class="leancloud_visitors" data-flag-title="JavaScript性能优化">
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
+                        
+                        <span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2022/03/24/JavaScript性能优化/"></span>
+                        </span>  
+                    </p>                 
+                </div>
+            </div>
+        </div>
+        <canvas id="articleHeaderCanvas"></canvas>
+    </div>
+</div>
+    <div id="container">
+    <div id="content">
+        <div id="article">
+    <div class="toc"></div>
+    <div class="article-body">
+        <p>[TOC]</p>
+<h1 id="性能优化介绍"><a href="#性能优化介绍" class="headerlink" title="性能优化介绍"></a>性能优化介绍</h1><ul>
+<li>性能优化是不可避免的</li>
+<li>那些内容可以看做是性能优化</li>
+<li>无处不在的前端性能优化</li>
+<li>本笔记讲解JavaScript语言的优化</li>
+</ul>
+<p><strong>内存概要</strong></p>
+<ul>
+<li>内存管理</li>
+<li>垃圾回收与常见GC算法</li>
+<li>V8引擎的垃圾回收</li>
+<li>Performance工具</li>
+<li>代码优化实例</li>
+</ul>
+<h2 id="Javascript内存管理"><a href="#Javascript内存管理" class="headerlink" title="Javascript内存管理"></a>Javascript内存管理</h2><p><strong>内存为什么需要管理</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	arrList = []</span><br><span class="line">	arrList[<span class="number">10000</span>] = <span class="string">&#x27;lg is a coder&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line">fn() <span class="comment">// 内存泄漏</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>内存管理介绍</strong></p>
+<ul>
+<li>内存：由可读写单元组成，表示一片可操作空间</li>
+<li>管理：认为的去操作一片空间的申请、使用和释放</li>
+<li>内存管理：开发者主动申请空间、使用空间、释放空间</li>
+<li>管理流程：申请-使用-释放</li>
+</ul>
+<p><strong>JavaScript中的内存管理</strong></p>
+<ul>
+<li>申请内存空间</li>
+<li>使用内存空间</li>
+<li>释放内存空间 </li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 申请</span></span><br><span class="line"><span class="keyword">let</span> obj = &#123;&#125;</span><br><span class="line"><span class="comment">// 使用</span></span><br><span class="line">obj.name = <span class="string">&#x27;zxq&#x27;</span></span><br><span class="line"><span class="comment">// 释放</span></span><br><span class="line">obj = <span class="literal">null</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="JavaScript中的垃圾回收"><a href="#JavaScript中的垃圾回收" class="headerlink" title="JavaScript中的垃圾回收"></a>JavaScript中的垃圾回收</h2><p><strong>JavaScript中的垃圾</strong></p>
+<ul>
+<li>JavaScript中内存管理是自动的</li>
+<li>对象不在被引用时是垃圾</li>
+<li>对象不能从根上访问到时是垃圾</li>
+</ul>
+<p><strong>JavaScript中的可达对象</strong></p>
+<ul>
+<li>可以访问到的对象就是可达对象（引用、作用域链）</li>
+<li>可达的标准就是从根出发是否可能被找到</li>
+<li>JavaScript中的根就可以理解为是全局变量对象</li>
+</ul>
+<p><strong>JavaScript的引用与可达</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// reference</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> obj = &#123; <span class="attr">name</span>: <span class="string">&#x27;zxq&#x27;</span>&#125; <span class="comment">//引用</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> ali = obj <span class="comment">// 创建了两个引用 ali还存在 依然可以访问</span></span><br><span class="line"></span><br><span class="line">obj = <span class="literal">null</span> </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">objGroup</span>(<span class="params">obj1,obj2</span>)</span>&#123;</span><br><span class="line">    obj1.text = obj2</span><br><span class="line">    obj2,prev = obj1</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="attr">o1</span>: obj1,</span><br><span class="line">        <span class="attr">o2</span>: obj2	</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> obj = objGroup(&#123;<span class="attr">name</span>: <span class="string">&#x27;obj1&#x27;</span>&#125;,&#123;<span class="attr">name</span>: <span class="string">&#x27;obj2&#x27;</span>&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(obj)</span><br></pre></td></tr></table></figure>
+
+<h2 id="GC算法介绍"><a href="#GC算法介绍" class="headerlink" title="GC算法介绍"></a>GC算法介绍</h2><p><strong>GC定义与作用</strong></p>
+<ul>
+<li>GC就是垃圾回收机制的简写</li>
+<li>GC可以找到内存中的垃圾、并释放和回收空间</li>
+</ul>
+<p>GC里的垃圾是什么</p>
+<ul>
+<li>程序中不再需要使用的对象</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">func</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    name = <span class="string">&#x27;lg&#x27;</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">`<span class="subst">$&#123;name&#125;</span> is a coder`</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>程序中不能再访问到的对象</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">func</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> name = <span class="string">&#x27;lg&#x27;</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">`<span class="subst">$&#123;name&#125;</span> is a coder`</span></span><br><span class="line">&#125;</span><br><span class="line">func()</span><br></pre></td></tr></table></figure>
+
+<p><strong>GC算法是什么</strong></p>
+<ul>
+<li>GC是一种机制，垃圾回收器完成具体的工作</li>
+<li>工作的内容就是查找垃圾释放空间、回收空间</li>
+<li>算法就是工作时查找和回收所遵循的规则</li>
+</ul>
+<p><strong>常见的GC算法</strong></p>
+<ul>
+<li>引用计数</li>
+<li>标记清除</li>
+<li>标记整理</li>
+<li>分代回收</li>
+</ul>
+<h3 id="引用技术算法实现原理"><a href="#引用技术算法实现原理" class="headerlink" title="引用技术算法实现原理"></a>引用技术算法实现原理</h3><p><strong>引用技术算法</strong></p>
+<ul>
+<li>核心思想：设置引用数，判断当前引用数是否为0</li>
+<li>引用计数器</li>
+<li>引用关系改变时修改引用数字</li>
+<li>引用数字为0时立即回收</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> user1 = &#123;<span class="attr">age</span>: <span class="number">11</span>&#125;</span><br><span class="line"><span class="keyword">const</span> user2 = &#123;<span class="attr">age</span>: <span class="number">22</span>&#125;</span><br><span class="line"><span class="keyword">const</span> user3 = &#123;<span class="attr">age</span>: <span class="number">33</span>&#125;</span><br><span class="line"><span class="keyword">const</span> nameList = [user1.age,user2.age,user3.age]</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    num1 = <span class="number">1</span> <span class="comment">// 没有引用会被释放</span></span><br><span class="line">    num2 = <span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line">fn()</span><br></pre></td></tr></table></figure>
+
+<h3 id="引用技术算法优缺点"><a href="#引用技术算法优缺点" class="headerlink" title="引用技术算法优缺点"></a><strong>引用技术算法优缺点</strong></h3><p><strong>引用计数算法优点</strong></p>
+<ul>
+<li>发现垃圾时立即回收</li>
+<li>最大限度减少程序暂停</li>
+</ul>
+<p><strong>引用计数算法缺点</strong></p>
+<ul>
+<li>无法回收循环引用的对象</li>
+<li>时间开销大 （资源消耗大）</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> obj1 = &#123;&#125;</span><br><span class="line">    <span class="keyword">const</span> obj2 = &#123;&#125;</span><br><span class="line">    <span class="comment">// 这种情况没法回收</span></span><br><span class="line">    obj1.name = obj2</span><br><span class="line">    obj2.name = obj1</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;lg is a coder&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="标记清除算法实现原理"><a href="#标记清除算法实现原理" class="headerlink" title="标记清除算法实现原理"></a>标记清除算法实现原理</h3><p><strong>引用计数算法优点</strong></p>
+<ul>
+<li>核心思想：分标记和清楚两个阶段完成</li>
+<li>遍历所有对象找标记活动对象</li>
+<li>遍历所有对象清楚没有标记对象</li>
+<li>回收响应的空间</li>
+</ul>
+<h3 id="标记清除算法优缺点"><a href="#标记清除算法优缺点" class="headerlink" title="标记清除算法优缺点"></a>标记清除算法优缺点</h3><p><strong>标记清除算法优点</strong></p>
+<ul>
+<li>可以回收循环引用的对象</li>
+</ul>
+<p><strong>标记清除算法缺点</strong></p>
+<ul>
+<li>容易产生碎片化空间，浪费空间</li>
+<li>不会立即回收垃圾对象</li>
+</ul>
+<h3 id="标记整理算法实现原理"><a href="#标记整理算法实现原理" class="headerlink" title="标记整理算法实现原理"></a>标记整理算法实现原理</h3><ul>
+<li>标记整理可以看作是标记清楚的增强</li>
+<li>标记阶段的操作和标记清除一致</li>
+<li>清除阶段会先执行整理，移动对象位置</li>
+</ul>
+<p><strong>标记整理算法优点</strong></p>
+<ul>
+<li>减少碎片化空间</li>
+</ul>
+<p><strong>标记整理算法缺点</strong></p>
+<ul>
+<li>不会立即回收垃圾对象</li>
+</ul>
+<h2 id="认识V8"><a href="#认识V8" class="headerlink" title="认识V8"></a>认识V8</h2><ul>
+<li>V8是一款主流的JavaScript执行引擎</li>
+<li>V8采用即使编译</li>
+<li>V8内存设限</li>
+</ul>
+<h3 id="V8垃圾回收策略"><a href="#V8垃圾回收策略" class="headerlink" title="V8垃圾回收策略"></a>V8垃圾回收策略</h3><ul>
+<li>采用分代回收的思想</li>
+<li>内存分为新生代、老生代</li>
+<li>针对不同对象采用不同算法</li>
+</ul>
+<h3 id="V8中常用的GC算法"><a href="#V8中常用的GC算法" class="headerlink" title="V8中常用的GC算法"></a>V8中常用的GC算法</h3><ul>
+<li>分代回收</li>
+<li>空间复制</li>
+<li>标记清除</li>
+<li>标记整理</li>
+<li>标记增量</li>
+</ul>
+<h3 id="V8如何回收新生代对象"><a href="#V8如何回收新生代对象" class="headerlink" title="V8如何回收新生代对象"></a>V8如何回收新生代对象</h3><p><strong>V8内存分配</strong></p>
+<ul>
+<li>V8内存空间一份为二</li>
+<li>小空间用于存储新生代对象（32m|16m)</li>
+<li>新生代指的是存活时间较短的对象</li>
+</ul>
+<p>新生代对象回收实现</p>
+<ul>
+<li>回收过程采用复制算法+标记整理</li>
+<li>新生代内存区分为二哥等大小空间</li>
+<li>使用空间为From，空闲空间为To</li>
+<li>活动对象存储于From空间</li>
+<li>标记整理后将活动对象拷贝至To</li>
+<li>From与To交换空间完成释放</li>
+</ul>
+<p><strong>回收细节说明</strong></p>
+<ul>
+<li>拷贝过程中可能出现晋升</li>
+<li>晋升就是将新生代对象移动至老生代</li>
+<li>一轮GC还存货的新生代需要晋升</li>
+<li>To空间的使用率超过了25%</li>
+</ul>
+<h3 id="V8如何回收老生代对象"><a href="#V8如何回收老生代对象" class="headerlink" title="V8如何回收老生代对象"></a>V8如何回收老生代对象</h3><p><strong>老生代对象说明</strong></p>
+<ul>
+<li>老生代对象存放在右侧老生代区域</li>
+<li>64位操作系统1.4g，32操作系统700M</li>
+<li>老年代对象就是指存活时间较长的对象（全局存放的对象，或者闭包）</li>
+</ul>
+<p><strong>老年代对象回收实现</strong></p>
+<ul>
+<li>主要采用标记清除、标记整理、增量标记算法</li>
+<li>首先使用标记清除完成垃圾空间的回收</li>
+<li>采用标记整理进行空间优化</li>
+<li>采用增量标记进行效率优化</li>
+</ul>
+<p><strong>细节对比</strong></p>
+<ul>
+<li>新生代区域垃圾回收使用空间换时间</li>
+<li>老年代区域垃圾回收不适合复制算法</li>
+</ul>
+<h3 id="V8垃圾回收总结"><a href="#V8垃圾回收总结" class="headerlink" title="V8垃圾回收总结"></a>V8垃圾回收总结</h3><p><strong>V8总结</strong></p>
+<ul>
+<li>V8是一款主流的JavaScript执行引擎</li>
+<li>V8内存设置上限</li>
+<li>V8采用基于分代回收思想实现垃圾回收</li>
+<li>V8内存分为新生代和老生代</li>
+<li>V8垃圾回收常见的GC算法</li>
+</ul>
+<h2 id="Performance工具介绍"><a href="#Performance工具介绍" class="headerlink" title="Performance工具介绍"></a>Performance工具介绍</h2><p><strong>为什么使用Performance</strong></p>
+<ul>
+<li>GC的目的是为了实现内存空间的良性循环</li>
+<li>良性循环的基石是合理使用</li>
+<li>时刻关注才能确定是否合理</li>
+<li>Performance提供多种监控方式</li>
+</ul>
+<p>通过Performance时刻监控内存</p>
+<p><strong>Performance使用步骤</strong></p>
+<ul>
+<li>打开浏览器输入目标地址</li>
+<li>进入开发人员工作面板，选择性能</li>
+<li>开启录制功能，访问具体界面</li>
+<li>执行用户行为，一段时间后停止录制</li>
+<li>分析界面中记录的内存信息</li>
+</ul>
+<h3 id="内存问题的体现"><a href="#内存问题的体现" class="headerlink" title="内存问题的体现"></a>内存问题的体现</h3><p><strong>内存问题的外在表现</strong></p>
+<ul>
+<li>页面出现延迟加载或经常性暂停</li>
+<li>页面持续性出现糟糕的性能（内存膨胀）</li>
+<li>页面的性能随时间延长越来越差  （内存泄漏）</li>
+</ul>
+<h3 id="监控内存的几种方式"><a href="#监控内存的几种方式" class="headerlink" title="监控内存的几种方式"></a>监控内存的几种方式</h3><p><strong>界定内存问题的标准</strong></p>
+<ul>
+<li>内存泄漏：内存使用持续升高</li>
+<li>内存膨胀：在多数设备上都存在性能问题</li>
+<li>频繁垃圾回收：通过内存变化图进行分析</li>
+</ul>
+<p><strong>监控内存的几种方式</strong></p>
+<ul>
+<li>浏览器任务管理器</li>
+<li>Timeline时序图记录</li>
+<li>推快照查找分离DOM</li>
+<li>判断是否存在频繁的垃圾回收</li>
+</ul>
+<h4 id="任务管理器监控内存"><a href="#任务管理器监控内存" class="headerlink" title="任务管理器监控内存"></a>任务管理器监控内存</h4><p>通过shift+Esc在浏览器打开任务管理器</p>
+<h4 id="Timeline记录内存"><a href="#Timeline记录内存" class="headerlink" title="Timeline记录内存"></a>Timeline记录内存</h4><h4 id="推快照查找分离DOM"><a href="#推快照查找分离DOM" class="headerlink" title="推快照查找分离DOM"></a>推快照查找分离DOM</h4><p><strong>什么是分离DOM</strong></p>
+<ul>
+<li>界面元素存活在DOM树上</li>
+<li>垃圾对象时的DOM节点</li>
+<li>分离状态的DOM节点</li>
+</ul>
+<h4 id="判断是否存在频繁GC"><a href="#判断是否存在频繁GC" class="headerlink" title="判断是否存在频繁GC"></a>判断是否存在频繁GC</h4><p><strong>为什么确定频繁垃圾回收</strong></p>
+<ul>
+<li>GC巩固走时应用程序是停止的</li>
+<li>频繁且过长的GC会导致应用假死</li>
+<li>用户使用中感知应用卡顿</li>
+</ul>
+<p><strong>确定频繁垃的垃圾回收</strong></p>
+<ul>
+<li>Timeline中的频繁的上升下降</li>
+<li>任务管理器中数据频繁的增加减少</li>
+</ul>
+<h3 id="Performance总结"><a href="#Performance总结" class="headerlink" title="Performance总结"></a>Performance总结</h3><ul>
+<li>Performance使用流程</li>
+<li>内存问题的相关分析</li>
+<li>Performance时序图监控内存变化</li>
+<li>任务管理器监控内存变化</li>
+</ul>
+<h2 id="V8引擎执行流程"><a href="#V8引擎执行流程" class="headerlink" title="V8引擎执行流程"></a>V8引擎执行流程</h2><p>Scanner是一个扫描器</p>
+<p>Parser是一个解析器</p>
+<p><strong>预解析优点</strong></p>
+<ul>
+<li>跳过未被使用的代码</li>
+<li>不生产AST，创建无变量引用和声明的scopes</li>
+<li>依据规范抛出特定的错误</li>
+<li>解析速度更快</li>
+</ul>
+<p><strong>全量解析</strong></p>
+<ul>
+<li>解析被使用的代码</li>
+<li>生成AST</li>
+<li>构建具体scopes信息，变量引用、声明等</li>
+<li>抛出所有语法错误</li>
+</ul>
+<p>lgnition是V8提供的一个解释器</p>
+<p>TurboFan是V8提供的编译器模块</p>
+<h2 id="堆栈处理"><a href="#堆栈处理" class="headerlink" title="堆栈处理"></a>堆栈处理</h2><p>堆栈准备</p>
+<ul>
+<li>js执行环境</li>
+<li>执行环境栈（ECStack,execution context stack）</li>
+<li>执行上下文</li>
+<li>VO（G），全局变量对象</li>
+</ul>
+<h2 id="引用类型堆栈处理"><a href="#引用类型堆栈处理" class="headerlink" title="引用类型堆栈处理"></a>引用类型堆栈处理</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj1 = &#123;<span class="attr">x</span>:<span class="number">100</span>&#125;</span><br><span class="line"><span class="keyword">var</span> obj2 = obj1</span><br><span class="line">obj2[<span class="string">&#x27;x&#x27;</span>] = <span class="number">200</span></span><br><span class="line"><span class="built_in">console</span>.log(obj1.x)</span><br></pre></td></tr></table></figure>
+
+<h2 id="函数堆栈处理"><a href="#函数堆栈处理" class="headerlink" title="函数堆栈处理"></a>函数堆栈处理</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="string">&#x27;zxe&#x27;</span>,<span class="string">&#x27;jssdf&#x27;</span>]</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">ojb</span>)&#125;</span></span><br><span class="line"><span class="function">	</span></span><br></pre></td></tr></table></figure>
+
+
+        <p class="suffix-end">__END__</p>
+        <div class="suffix-box">
+            <div class="suffix-box-left">
+                <img src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/sidebar/avatar.jpg" alt="Live For Code">
+            </div>
+            <div class="suffix-box-right">
+                <span class="suffix-box-title">文章作者</span>：Live For Code
+                <br>
+                <span class="suffix-box-title">文章出处</span>：<a href="/2022/03/24/JavaScript%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" target="_blank">JavaScript性能优化</a>
+                <br>
+                <span class="suffix-box-title">作者签名</span>：简单地活着, 肆意又精彩.
+                <br>
+                <span class="suffix-box-title">关于主题</span>：<a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+                <br>
+                <span class="suffix-box-title">版权声明</span>：文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+                <br>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+    </div>
+    <div class="article-footer">
+        
+        
+        <div class="article-prev-next">
+            
+                <a href="/2022/03/24/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/" class="prev-prefix">« </a> 上一篇：    <a href="/2022/03/24/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/" title="发布于 2022-03-24 03:30">前端工程化</a>
+                <br>
+            
+            
+                <a href="/2022/03/24/TypeScirpt/" class="next-prefix">» </a> 下一篇：    <a href="/2022/03/24/TypeScirpt/" title="发布于 2022-03-24 09:23">TypeScript学习</a>
+            
+        </div>
+    </div>
+    
+    <div class="article-comments">
+        <div class="comments-title">
+            评论列表
+        </div>
+        <div class="comments-content">
+        </div>
+    </div>
+
+</div>
+
+    </div>
+</div>
+    <div id="footer"></div>
+    <div id="sidebar">
+    <div class="menu-wrap" style="display:none;">
+        <nav class="menu">
+            <div class="menu-introduce"> 
+                <div class="introduce-avatar"></div> 
+                <div class="introduce-info"> 
+                    <div class="introduce-user"><span></span></div>        
+                </div> 
+            </div> 
+            <div class="menu-list">
+                <ul></ul> 
+            </div> 
+            <div class="menu-link"></div> 
+        </nav>
+        <button class="menu-button-close"></button>
+        <div class="morph-shape" id="morph-shape" data-morph-open="M-7.312,0H15c0,0,66,113.339,66,399.5C81,664.006,15,800,15,800H-7.312V0z;M-7.312,0H100c0,0,0,113.839,0,400c0,264.506,0,400,0,400H-7.312V0z">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 100 800" preserveAspectRatio="none">
+                <path d="M-7.312,0H0c0,0,0,113.839,0,400c0,264.506,0,400,0,400h-7.312V0z"/>
+            </svg>
+        </div>
+    </div>
+    <button class="menu-button-open">MENU</button>
+    <div class="menu-cover"></div>
+</div>
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/search.css">
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/iscroll.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/instantsearch.min.js"></script>
+<div class="search-window">
+    <div class="search-content">
+        <div class="search-content-icon">
+            <i class="iconfont icon-search"></i>
+        </div>
+        <div id="search-input" class="search-input"></div>
+    </div>
+
+    <div class="search-scroll">
+        <div class="search-result">
+            <div id="search-stats" class="search-stats"></div>
+            <div id="search-hits"></div>
+            <div id="search-pagination" class="search-pagination"></div>
+        </div>
+    </div>
+
+    <span class="search-close-icon">
+        <i class="iconfont icon-close"></i>
+    </span>
+</div>
+    <div id="tools">
+    <div class="progressbar-top"></div>
+
+    
+        <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/APlayer.css">
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/APlayer.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/Meting.min.js"></script>
+        <meting-js id="3778678" lrcshow="false" server="netease" type="playlist" fixed="true" autoplay="false" loop="all" order="random" preload="auto" volume="0.67" mutex="true"></meting-js>
+    
+    
+    <div class="wrap-right"></div>
+    <div class="loading"></div>
+</div>
+    <script>
+    window.config = {
+        GitHubUserName     : 'first19326',
+        GitHubRepositories : 'Hexo-LiveForCode',
+
+        BlogUser      : 'Live For Code',
+        BlogAvatar    : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/sidebar/avatar.jpg',
+        BlogStartDate : '2020-01-01',
+
+        WebsiteTitleBlur         : '(◍´꒳`◍) Hi, Live For Code',
+        WebsiteTitleBlurTimeOut  : 500,
+        WebsiteTitleFocus        : '(*´∇｀*) 欢迎回来!',
+        WebsiteTitleFocusTimeOut : 1000,
+        WebsiteFavicon           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/website/logo.png',
+
+        ProgressBar: {
+            id       : 'topProgressBar',
+            color    : '#77B6FF',
+            height   : '2px',
+            duration : 0.2
+        },
+
+        Loading: {
+            rebound: {
+                tension  : 16,
+                friction : 5
+            },
+            spinner: {
+                id     : 'spinner',
+                radius : 90,
+                sides  : 3,
+                depth  : 4,
+                colors : {
+                    background : '#F0F0F0',
+                    stroke     : '#272633',
+                    base       : '',
+                    child      : '#272633'
+                },
+                alwaysForward : true,
+                restAt        : 0.5,
+                renderBase    : false
+            }
+        },
+
+        HomeHeaderAnimationRendered : true,
+        HomeHeaderAnimation         : {
+            radius      : 15,
+            density     : 0.2,
+            color       : 'rgba(255, 255, 255, .2)',
+            clearOffset : 0.3
+        },
+
+        ArticleHeaderAnimationRendered : false,
+        ArticleHeaderAnimation         : {
+            triW                  : 14,
+            triH                  : 20,
+            neighbours            : [
+                
+                    'side',
+                
+                    'top',
+                
+                    'bottom',
+                
+            ],
+            speedTrailAppear      : 0.1,
+            speedTrailDisappear   : 0.1,
+            speedTriOpen          : 1,
+            trailMaxLength        : 30,
+            trailIntervalCreation : 100,
+            delayBeforeDisappear  : 2,
+            colors                : [
+                
+                    '#96EDA6',
+                
+                    '#5BC6A9',
+                
+                    '#38668C',
+                
+                    '#374D84',
+                
+                    '#BED5CB',
+                
+                    '#62ADC6',
+                
+                    '#8EE5DE',
+                
+                    '#304E7B',
+                
+            ]
+        },
+
+        BackAnimationRendered          : true,
+        IEBrowserBackAnimationRendered : false,
+        BackAnimation                  : {
+            colorSaturation  : '60%',
+            colorBrightness  : '50%',
+            colorAlpha       : 0.5,
+            colorCycleSpeed  : 5,
+            verticalPosition : 'random',
+            horizontalSpeed  : 200,
+            ribbonCount      : 3,
+            strokeSize       : 0,
+            parallaxAmount   : -0.2,
+            animateSections  : true
+        },
+
+        HomeHeaderImage : [
+            
+                'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/header/home.jpg',
+            
+                'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/header/home.jpeg',
+            
+        ],
+        HomeBannerText  : '',
+
+        ArticleHeaderImage : [
+            
+                'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/header/article.jpg',
+            
+        ],
+
+        OtherBannerText : '',
+
+        MenuList : [
+            
+                {
+                    name   : '首页',
+                    href   : '/',    
+                    target : '',
+                    class  : ''
+                },
+            
+                {
+                    name   : '标签',
+                    href   : '/tag',    
+                    target : '',
+                    class  : ''
+                },
+            
+                {
+                    name   : '分类',
+                    href   : '/category',    
+                    target : '',
+                    class  : ''
+                },
+            
+                {
+                    name   : '归档',
+                    href   : '/archive',    
+                    target : '',
+                    class  : ''
+                },
+            
+                {
+                    name   : '赞赏',
+                    href   : '/donate',    
+                    target : '',
+                    class  : ''
+                },
+            
+                {
+                    name   : '关于',
+                    href   : '/about',    
+                    target : '',
+                    class  : ''
+                },
+            
+                {
+                    name   : '订阅',
+                    href   : '/atom.xml',    
+                    target : '_blank',
+                    class  : ''
+                },
+            
+                {
+                    name   : '搜索',
+                    href   : '',    
+                    target : '',
+                    class  : 'search'
+                },
+            
+                {
+                    name   : '留言板',
+                    href   : '/comment',    
+                    target : '',
+                    class  : ''
+                },
+            
+                {
+                    name   : '友情链接',
+                    href   : '/friend',    
+                    target : '',
+                    class  : ''
+                },
+            
+        ],
+        MenuLink : [
+            
+                
+                    {
+                        icon : 'icon-weibo', 
+                        url  : ''
+                    },
+                
+                    {
+                        icon : 'icon-wechat', 
+                        url  : ''
+                    },
+                
+                    {
+                        icon : 'icon-qq', 
+                        url  : ''
+                    },
+                
+                    {
+                        icon : 'icon-github', 
+                        url  : 'https://github.com/first19326'
+                    },
+                
+            
+        ],
+
+        FooterStyle : 2,
+        BottomText  : {
+            icon    : 'like-fill',
+            left    : '人生若只如初见',
+            right   : '何事秋风悲画扇'
+        },
+        ThemeInfo   : true,
+
+        ConsoleList : [
+            
+                
+                    [
+                        
+                            
+                                'Based on cnblogs theme SimpleMemory.',
+                            
+                                '',
+                            
+                        
+                    ],
+                
+                    [
+                        
+                            
+                                'SimpleMemory Author:',
+                            
+                                'BNDong',
+                            
+                        
+                    ],
+                
+                    [
+                        
+                            
+                                'Theme:',
+                            
+                                'LiveForCode',
+                            
+                        
+                    ],
+                
+            
+        ],
+
+        FontIconExtend : '',
+
+        Donate : {
+            paypal  : '',
+            bitcoin : '',
+            alipay  : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/donate/alipay.png',
+            wechat  : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/donate/wechat.png'
+        },
+
+        Code : {
+            style : 'normal'
+        },  
+
+        Search : {
+            applicationID : '010C3EANT8',
+            apiKey        : 'c7abab9f11b79102b9aff7fe6d41447d',
+            indexName     : 'Notes',
+            hits          : {
+                page : 10
+            },
+            labels        : {
+                placeholder : '搜索',
+                empty       : '未发现与 「${query}」 相关的内容',
+                stats       : '${hits} 条相关条目，使用了 ${time} 毫秒',
+            }
+        }, 
+
+        Valine : {
+            switch         : true,
+            el             : '.comments-content',
+            appId          : 'srhKtvWPQTWYKh3qX8G8M7v0-gzGzoHsz',
+            appKey         : '8uVSP1q6UlALVC5igYfIfv2h',
+            placeholder    : '你是我一生只会遇见一次的惊喜...',
+            avatar         : 'mm',
+            meta           : 'nick,mail,link',
+            requiredFields : 'nick,mail',
+            pageSize       : 5,
+            lang           : 'zh-cn',
+            visitor        : true,
+            enableQQ       : true
+        },
+
+        Tocbot : {
+            switch                : true,
+            tocSelector           : '.toc',
+            contentSelector       : '.article-body',
+            headingSelector       : 'h1, h2, h3, h4, h5',
+            headingsOffset        : 0,
+            scrollSmooth          : true,
+            scrollSmoothOffset    : -5,
+            positionFixedSelector : '.toc',
+            positionFixedClass    : 'toc-fixed',
+            fixedSidebarOffset    : '',
+        },
+
+        Require : {
+            baseUrl     : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/',
+            waitSeconds : 100
+        },
+
+        Music : {
+            type : 'Meting'
+        },
+        APlayer : {
+            container : '.aplayer',
+            fixed     : true,
+            autoplay  : false,
+            loop      : 'all',
+            order     : 'random',
+            preload   : 'auto',
+            volume    : 0.67,
+            mutex     : true,
+            lrcType   : 3,
+            audio     : [
+                
+                    {
+                        name   : 'aLIEz',
+                        artist : 'mizuki（瑞葵）',
+                        cover  : '/music/cover/aLIEz.jpg',
+                        url    : '/music/song/aLIEz.mp3',
+                        lrc    : '/music/lrc/aLIEz.lrc'
+                    },
+                
+                    {
+                        name   : 'Endless Tears',
+                        artist : 'CLIFF EDGE',
+                        cover  : '/music/cover/Endless Tears.jpg',
+                        url    : '/music/song/Endless Tears.mp3',
+                        lrc    : '/music/lrc/Endless Tears.lrc'
+                    },
+                
+                    {
+                        name   : 'Miracle',
+                        artist : 'Cascada',
+                        cover  : '/music/cover/Miracle.jpg',
+                        url    : '/music/song/Miracle.mp3',
+                        lrc    : '/music/lrc/Miracle.lrc'
+                    },
+                
+                    {
+                        name   : 'Roll The Dice',
+                        artist : '高珊',
+                        cover  : '/music/cover/Roll The Dice.jpg',
+                        url    : '/music/song/Roll The Dice.mp3',
+                        lrc    : '/music/lrc/Roll The Dice.lrc'
+                    },
+                
+                    {
+                        name   : 'See You Again',
+                        artist : 'Charlie Puth, Wiz Khalifa',
+                        cover  : '/music/cover/See You Again.jpg',
+                        url    : '/music/song/See You Again.mp3',
+                        lrc    : '/music/lrc/See You Again.lrc'
+                    },
+                
+                    {
+                        name   : 'Traveling Light',
+                        artist : 'Joel Hanson, Sara Groves',
+                        cover  : '/music/cover/Traveling Light.jpg',
+                        url    : '/music/song/Traveling Light.mp3',
+                        lrc    : '/music/lrc/Traveling Light.lrc'
+                    },
+                
+                    {
+                        name   : '痴心绝对',
+                        artist : '李圣杰',
+                        cover  : '/music/cover/痴心绝对.jpg',
+                        url    : '/music/song/痴心绝对.mp3',
+                        lrc    : '/music/lrc/痴心绝对.lrc'
+                    },
+                
+                    {
+                        name   : '好想大声说爱你',
+                        artist : 'BAAD（バード）',
+                        cover  : '/music/cover/好想大声说爱你.jpg',
+                        url    : '/music/song/好想大声说爱你.mp3',
+                        lrc    : '/music/lrc/好想大声说爱你.lrc'
+                    },
+                
+            ]
+        },
+        Meting : {
+            id       : '3778678', 
+            lrcshow  : false, 
+            server   : 'netease', 
+            type     : 'playlist', 
+            fixed    : true, 
+            autoplay : false, 
+            loop     : 'all', 
+            order    : 'random', 
+            preload  : 'auto', 
+            volume   : 0.67, 
+            mutex    : true
+        },
+
+        Mouse : {
+            enable  : true,
+            options : {
+                size  : 6,
+                sizeF : 24
+            }
+        },
+
+        LazyLoad : {
+            default : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/website/lazyload.svg'
+        },
+  
+        Style : {
+            aplayer          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/APlayer.css',
+            archive          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/archive.css',
+            donate           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/donate.css',
+            fancybox         : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/jquery.fancybox.css',
+            footer           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/footer.css',
+            iconfont         : 'https://at.alicdn.com/t/font_1546312_l3yohatebw.css',
+            index            : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/index.css',
+            menuBubble       : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/menu-bubble.css',
+            page             : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/page.css',
+            post             : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/post.css',
+            search           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/search.css',
+            tocbot           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/tocbot.css',
+            normal           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/normal.css',
+            night            : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/night.css',
+            clipboard        : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/clipboard.css'
+        },
+
+        Script: {
+            aplayer          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/APlayer.min.js',
+            config           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/require.config.js',
+            index            : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/index.js',
+            instantSearch    : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/instantsearch.min.js',
+            jQuery           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/jquery-3.4.1.min.js',
+            loading          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/loading.js',
+            meting           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/Meting.min.js',
+            iscroll          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/iscroll.js',
+            require          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/require.min.js'
+        },
+
+        Font: {
+            LongCang   : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/LongCang.css',
+            Monda      : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Monda.css',
+            NotoSansSC : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/NotoSansSC.css',
+            Playball   : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Playball.css',
+            PTMono     : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/PTMono.css',
+            RobotoSlab : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/RobotoSlab.css',
+            Rosario    : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Rosario.css',
+            UbuntuMono : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/UbuntuMono.css'
+        },
+
+        Suffix : {
+            about : '简单地活着, 肆意又精彩.'
+        },
+            
+        Theme : {
+            url  : 'https://github.com/first19326/Hexo-LiveForCode',
+            name : 'Hexo - Live For Code'
+        }  
+    };
+</script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/index.js"></script>
+</body>
+</html>
