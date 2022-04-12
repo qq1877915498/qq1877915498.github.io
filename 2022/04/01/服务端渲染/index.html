@@ -6,7 +6,7 @@
     <meta name="referrer" content="origin">
     <meta http-equiv="Cache-Control" content="no-transform">
     <meta http-equiv="Cache-Control" content="no-siteapp">
-    <title>Vue3中实现echarts图表放大预览</title>
+    <title>服务端渲染</title>
     <link rel="shortcut icon" href="#"/>
 
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/LongCang.css">
@@ -32,19 +32,19 @@
     <div class="header">
         <div class="vertical">
             <div class="inner">
-                <h1 class="header-subtitle">Vue3中实现echarts图表放大预览</h1>
+                <h1 class="header-subtitle">服务端渲染</h1>
                 <div class="header-subinfo">
                     <p class="article-info-text">
                         <span>
-                            <i class="iconfont icon-time"></i> 发表时间：2022-03-25
+                            <i class="iconfont icon-time"></i> 发表时间：2022-04-01
                         </span>
                         
-                            <span id="/2022/03/25/Vue3中实现echarts图表放大预览/" class="leancloud_visitors" data-flag-title="Vue3中实现echarts图表放大预览">
+                            <span id="/2022/04/01/服务端渲染/" class="leancloud_visitors" data-flag-title="服务端渲染">
                                 <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
                             </span>
                         
                         <span>
-                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2022/03/25/Vue3中实现echarts图表放大预览/"></span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2022/04/01/服务端渲染/"></span>
                         </span>  
                     </p>                 
                 </div>
@@ -58,17 +58,202 @@
         <div id="article">
     <div class="toc"></div>
     <div class="article-body">
-        <h1 id="Vue3中实现echarts图表放大预览"><a href="#Vue3中实现echarts图表放大预览" class="headerlink" title="Vue3中实现echarts图表放大预览"></a>Vue3中实现echarts图表放大预览</h1><p><strong>效果：</strong></p>
-<p><img src="/image/image-20220325171003414.png" alt="image-20220325171003414"></p>
-<p><strong>实现思路：</strong></p>
-<p>两个图标的echarts的配置option相同，点击子组件的时候，通过emit把子组件的option配置项传递给父类，通过echarts.resize()方法重新绘制改变图表的大小，从而达到图表的放大预览</p>
-<p>目录结构</p>
-<p>components/ echarts.vue  图表组件</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div class=&quot;echarts&quot; ref=&quot;echart&quot; @click=&quot;handlerClick&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">      import &#123; reactive, ref &#125; from &quot;@vue/reactivity&quot;;</span><br><span class="line">      import &#123; inject, onMounted, watch &#125; from &quot;@vue/runtime-core&quot;;</span><br><span class="line">      import * as echarts from &quot;echarts&quot;;</span><br><span class="line">      export default&#123;</span><br><span class="line">		 props: &#123;</span><br><span class="line">            onClick: Function</span><br><span class="line">         &#125;,</span><br><span class="line">         setup(props,context) &#123;</span><br><span class="line">             const echart = ref(null);</span><br><span class="line">             let option = reactive(&#123;&#125;)</span><br><span class="line">             onMounted(()=&gt;&#123;</span><br><span class="line">                 var myChart = echarts.init(echarts.value);</span><br><span class="line">                 option = &#123;...&#125;  // 配置省略</span><br><span class="line">                 myChart.setOption(option);</span><br><span class="line">                 window.addEventListener(&quot;resize&quot;, function () &#123;</span><br><span class="line">                     myChart.resize();</span><br><span class="line">                 &#125;);</span><br><span class="line">             &#125;)</span><br><span class="line">             const handlerClick = ()=&gt;&#123;</span><br><span class="line">                 context.emit(&#x27;open&#x27;,option)  </span><br><span class="line">             &#125;</span><br><span class="line">             return&#123;</span><br><span class="line">                 option,</span><br><span class="line">                 echart,</span><br><span class="line">                 handlerClick</span><br><span class="line">             &#125;</span><br><span class="line">         &#125;</span><br><span class="line">	&#125;</span><br><span class="line">      </span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+        <p>[TOC]</p>
+<h1 id="服务端渲染基础"><a href="#服务端渲染基础" class="headerlink" title="服务端渲染基础"></a>服务端渲染基础</h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a><strong>概述</strong></h2><h3 id="SPA单页面应用"><a href="#SPA单页面应用" class="headerlink" title="SPA单页面应用"></a><strong>SPA单页面应用</strong></h3><ul>
+<li>优点<ul>
+<li>用户体验好</li>
+<li>开发效率高</li>
+<li>渲染性能好</li>
+<li>可维护性好</li>
+<li>…</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>首屏渲染时间长</li>
+<li>不利于SEO</li>
+</ul>
+</li>
+</ul>
+<h3 id="同构应用"><a href="#同构应用" class="headerlink" title="同构应用"></a>同构应用</h3><ul>
+<li>通过服务端渲染首屏直出，解决SPA应用首屏渲染慢以及不利于SEO问题</li>
+<li>通过客户端渲染接管页面内容交互得到更好的用户体验</li>
+<li>这种方式通常称之为现代化的服务端渲染，也叫同构渲染</li>
+<li>这个方式构建的应用称之为服务端渲染应用或者同构应用</li>
+</ul>
+<h3 id="相关概念"><a href="#相关概念" class="headerlink" title="相关概念"></a>相关概念</h3><ul>
+<li>什么是渲染</li>
+<li>传统的服务端渲染</li>
+<li>客户端渲染</li>
+<li>现代化的服务端渲染（同构渲染）</li>
+</ul>
+<h4 id="什么是渲染"><a href="#什么是渲染" class="headerlink" title="什么是渲染"></a>什么是渲染</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="string">&quot;message&quot;</span>:<span class="string">&quot;你好，世界&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>views/Home.vue 首页</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">	&lt;Echarts @open=&quot;handerClick&quot; class=&quot;echartsContainer&quot; &gt;&lt;/Echarts&gt;</span><br><span class="line">	&lt;el-dialog</span><br><span class="line">        v-model=&quot;centerDialogVisible&quot;</span><br><span class="line">        title=&quot;Notice&quot;</span><br><span class="line">        width=&quot;60%&quot;</span><br><span class="line">        destroy-on-close</span><br><span class="line">        center</span><br><span class="line">        custom-class=&quot;mydialog&quot;</span><br><span class="line">      &gt;</span><br><span class="line">    &lt;div style=&quot;width:100%;height:8rem;&quot; ref=&quot;dialogEcharts&quot;&gt;&lt;/div&gt;</span><br><span class="line">    &lt;template #footer&gt;</span><br><span class="line">      &lt;span class=&quot;dialog-footer&quot;&gt;</span><br><span class="line">        &lt;el-button @click=&quot;centerDialogVisible = false&quot;&gt;取消&lt;/el-button&gt;</span><br><span class="line">        &lt;el-button type=&quot;primary&quot; @click=&quot;centerDialogVisible = false&quot;</span><br><span class="line">          &gt;确认&lt;/el-button</span><br><span class="line">        &gt;</span><br><span class="line">      &lt;/span&gt;</span><br><span class="line">    &lt;/template&gt;</span><br><span class="line">  &lt;/el-dialog&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">      import &#123; reactive, ref &#125; from &quot;@vue/reactivity&quot;;</span><br><span class="line">      import &#123; inject, onMounted, watch &#125; from &quot;@vue/runtime-core&quot;;</span><br><span class="line">      import * as echarts from &quot;echarts&quot;;</span><br><span class="line">      export default&#123;</span><br><span class="line">		 props: &#123;</span><br><span class="line">            onClick: Function</span><br><span class="line">         &#125;,</span><br><span class="line">         setup(props,context) &#123;</span><br><span class="line">             const dialogEcharts = ref(null);</span><br><span class="line">             const centerDialogVisible = ref(false);</span><br><span class="line">             onMounted(()=&gt;&#123;</span><br><span class="line">                 var myChart = echarts.init(echarts.value);</span><br><span class="line">                 option = &#123;...&#125;  // 配置省略</span><br><span class="line">                 myChart.setOption(option);</span><br><span class="line">                 window.addEventListener(&quot;resize&quot;, function () &#123;</span><br><span class="line">                     myChart.resize();</span><br><span class="line">                 &#125;);</span><br><span class="line">             &#125;)</span><br><span class="line">            const handerClick = (option)=&gt;&#123;</span><br><span class="line">                centerDialogVisible.value = true</span><br><span class="line">                setTimeout(() =&gt; &#123; // 使用延时器是为了避免获取不到DOM</span><br><span class="line">                  	console.log(dialogEcharts.value)</span><br><span class="line">                    var myChart = echarts.init(dialogEcharts.value);</span><br><span class="line">                    myChart.setOption(option);</span><br><span class="line">                    window.addEventListener(&quot;resize&quot;, function () &#123;</span><br><span class="line">                      myChart.resize();</span><br><span class="line">                    &#125;);</span><br><span class="line">                &#125;, 100);</span><br><span class="line">            &#125;</span><br><span class="line">             return&#123;</span><br><span class="line">                 dialogEcharts,</span><br><span class="line">                 centerDialogVisible,</span><br><span class="line">                 handerClick</span><br><span class="line">             &#125;</span><br><span class="line">         &#125;</span><br><span class="line">	&#125;</span><br><span class="line">      </span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>&#123;&#123;message&#125;&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;h1&gt;你好，世界&lt;/h1&gt;</span><br></pre></td></tr></table></figure>
+
+<p>渲染：把数据+模板拼接到一起</p>
+<h4 id="传统的服务端渲染"><a href="#传统的服务端渲染" class="headerlink" title="传统的服务端渲染"></a>传统的服务端渲染</h4><p>早起的web页面渲染都是在服务端进行的</p>
+<p>网页越来越复杂的情况下，存在很多不足</p>
+<ul>
+<li>前后端代码完全耦合在一起，不利于开发和维护</li>
+<li>前端没有足够发挥空间</li>
+<li>服务端压力大</li>
+<li>用户体验一般</li>
+</ul>
+<h4 id="客户端渲染"><a href="#客户端渲染" class="headerlink" title="客户端渲染"></a>客户端渲染</h4><ul>
+<li>首屏渲染慢</li>
+<li>不利于SEO</li>
+</ul>
+<p>随着客户端Ajax技术的普及，Ajax使得客户端动态获取数据成为可能</p>
+<p>服务端渲染工作，放到客户端处理</p>
+<p><strong>为什么客户端渲染首屏渲染慢</strong></p>
+<p>客户端会发送好几个请求</p>
+<p><strong>为什么客户端渲染不利于SEO</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// 搜索引擎是怎么获取网页内容的</span><br><span class="line">const http = require(&#x27;http&#x27;)</span><br><span class="line">http.get(&#x27;http://localhost:3000&#x27;,res =&gt; &#123;</span><br><span class="line">	let data = &#x27;&#x27;</span><br><span class="line">	res.on(&#x27;data&#x27;, chunk =&gt;&#123;</span><br><span class="line">		data+=chunk</span><br><span class="line">	&#125;)</span><br><span class="line">	res.end(&#x27;data&#x27;, chunk =&gt;&#123;</span><br><span class="line">		console.log(data)</span><br><span class="line">	&#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>客户端没有body内容</p>
+</li>
+<li><p>服务端会爬取到body内容</p>
+</li>
+</ul>
+<h4 id="现代化的服务端渲染"><a href="#现代化的服务端渲染" class="headerlink" title="现代化的服务端渲染"></a>现代化的服务端渲染</h4><p>同构渲染 = 后端渲染 + 前端渲染</p>
+<ul>
+<li>基于React、Vue等框架，客户端渲染和服务端渲染的结合<ul>
+<li>在服务器端执行一次，用于实现服务端渲染（首屏直出）</li>
+<li>在客户端再执行一次，用于接管页面交互</li>
+</ul>
+</li>
+<li>核心解决SEO和首屏渲染慢的问题</li>
+<li>拥有传统服务端渲染的优点，也有客户端渲染的优点</li>
+</ul>
+<h4 id="如何实现同构渲染？"><a href="#如何实现同构渲染？" class="headerlink" title="如何实现同构渲染？"></a>如何实现同构渲染？</h4><ul>
+<li>使用Vue、React等框架的官方解决方案<ul>
+<li>优点：有助于理解原理</li>
+<li>缺点：需要搭建环境，比较麻烦</li>
+</ul>
+</li>
+<li>使用第三方解决方案<ul>
+<li>React生态的Next.js</li>
+<li>Vue生态的Nuxt.js</li>
+<li>…</li>
+</ul>
+</li>
+</ul>
+<p>以Vue生态的Nuxt.js为例演示同构渲染应用</p>
+<h3 id="同构渲染应用的问题"><a href="#同构渲染应用的问题" class="headerlink" title="同构渲染应用的问题"></a>同构渲染应用的问题</h3><ul>
+<li>开发条件所限<ul>
+<li>浏览器特定的代码只能在某些生命周期钩子函数中使用</li>
+<li>一些外部扩展库可能需要特殊处理才能在服务端渲染应用中运行</li>
+<li>不能再服务端渲染期间操作DOM</li>
+<li>某些代码操作需要区分运行环境</li>
+</ul>
+</li>
+<li>涉及构建设置和部署的更多要求</li>
+<li>更多的服务端负载</li>
+</ul>
+<p>涉及构建和部署的要求更多</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th>客服端渲染</th>
+<th align="center">同构渲染</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">构建</td>
+<td>仅构建客户端应用即可</td>
+<td align="center">需要构建两个端</td>
+</tr>
+<tr>
+<td align="center">部署</td>
+<td>可以部署在任意web服务器中</td>
+<td align="center">只能部署在node.js server</td>
+</tr>
+</tbody></table>
+<h4 id="更多的服务器负载"><a href="#更多的服务器负载" class="headerlink" title="更多的服务器负载"></a>更多的服务器负载</h4><ul>
+<li>在Node中渲染完成的应用程序，相比仅仅提供静态文件的服务器需要大量占用CPU资源</li>
+<li>如果应用在高流量环境下使用，需要准备相应的服务器负载</li>
+<li>需要更多的服务端渲染优化工作处理</li>
+</ul>
+<h4 id="服务端渲染使用建议"><a href="#服务端渲染使用建议" class="headerlink" title="服务端渲染使用建议"></a>服务端渲染使用建议</h4><ul>
+<li>首屏渲染速度是否真的重要？</li>
+<li>是否真的需求SEO？</li>
+</ul>
+<h1 id="NustJS介绍"><a href="#NustJS介绍" class="headerlink" title="NustJS介绍"></a>NustJS介绍</h1><h2 id="Nuxt-js是什么"><a href="#Nuxt-js是什么" class="headerlink" title="Nuxt.js是什么"></a>Nuxt.js是什么</h2><ul>
+<li>一个基于Vue.js生态的第三方开源服务端渲染应用框架</li>
+<li>它可以帮我们轻松的使用Vue.js技术栈构建同构应用</li>
+<li>官方：<a target="_blank" rel="noopener" href="https://zh.nuxtjs.org/">https://zh.nuxtjs.org/</a></li>
+<li>GitHub仓库：<a target="_blank" rel="noopener" href="https://github.com/nuxt/nuxt.js">https://github.com/nuxt/nuxt.js</a></li>
+</ul>
+<h2 id="Nuxt-js的使用方式"><a href="#Nuxt-js的使用方式" class="headerlink" title="Nuxt.js的使用方式"></a>Nuxt.js的使用方式</h2><ul>
+<li><p>初始项目</p>
+</li>
+<li><p>已有的Node.js服务端项目</p>
+<ul>
+<li>直接把Nuxt当作一个中间件集成到Node Web Server中</li>
+</ul>
+</li>
+<li><p>现有的Vue.js项目</p>
+<ul>
+<li>非常熟悉Nuxt.js</li>
+<li>至少百分之10的代码改动</li>
+</ul>
+</li>
+<li><p>官方文档：<a target="_blank" rel="noopener" href="https://zh.nuxtjs.org/guide/installation">https://zh.nuxtjs.org/guide/installation</a></p>
+<ul>
+<li>方式一：使用create-nuxt-app</li>
+<li>方式二：手动创建</li>
+</ul>
+</li>
+</ul>
+<h2 id="Nuxt-js路由-基础路由"><a href="#Nuxt-js路由-基础路由" class="headerlink" title="Nuxt.js路由-基础路由"></a>Nuxt.js路由-基础路由</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">nuxt-link</span> <span class="attr">to</span>=<span class="string">&quot;/&quot;</span>&gt;</span>首页<span class="tag">&lt;/<span class="name">nuxt-link</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Nuxt-js路由-路由导航"><a href="#Nuxt-js路由-路由导航" class="headerlink" title="Nuxt.js路由-路由导航"></a>Nuxt.js路由-路由导航</h2><ul>
+<li>a标签<ul>
+<li>它会刷新整个页面，不要使用</li>
+</ul>
+</li>
+<li>nuxt-link组件</li>
+<li>编程式导航</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">      &lt;h1&gt;About page&lt;/h1&gt;</span><br><span class="line">      &lt;!-- a链接 刷新导航，走服务端渲染 --&gt;</span><br><span class="line">      &lt;h2&gt;a 链接&lt;/h2&gt;</span><br><span class="line">      &lt;a href=&quot;/&quot;&gt;首页&lt;/a&gt;</span><br><span class="line">      &lt;h2&gt;router-link&lt;/h2&gt;</span><br><span class="line">      &lt;router-link to=&quot;/&quot;&gt;首页&lt;/router-link&gt;</span><br><span class="line">      &lt;h2&gt;编程式导航&lt;/h2&gt;</span><br><span class="line">      &lt;button @click=&quot;onClick&quot;&gt;首页&lt;/button&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line">    methods: &#123;</span><br><span class="line">        onClick()&#123;</span><br><span class="line">            this.$router.push(&#x27;/&#x27;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style&gt;</span><br><span class="line"></span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Nuxt-js路由-动态路由"><a href="#Nuxt-js路由-动态路由" class="headerlink" title="Nuxt.js路由-动态路由"></a>Nuxt.js路由-动态路由</h2><p>假设文件结构如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">pages/</span><br><span class="line">--| users/</span><br><span class="line">-----| _id.vue</span><br><span class="line">-----| index.vue</span><br><span class="line">--| users.vue</span><br></pre></td></tr></table></figure>
+
+<p>Nuxt.js 自动生成的路由配置如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">router: &#123;</span><br><span class="line">  routes: [</span><br><span class="line">    &#123;</span><br><span class="line">      path: &#x27;/users&#x27;,</span><br><span class="line">      component: &#x27;pages/users.vue&#x27;,</span><br><span class="line">      children: [</span><br><span class="line">        &#123;</span><br><span class="line">          path: &#x27;&#x27;,</span><br><span class="line">          component: &#x27;pages/users/index.vue&#x27;,</span><br><span class="line">          name: &#x27;users&#x27;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          path: &#x27;:id&#x27;,</span><br><span class="line">          component: &#x27;pages/users/_id.vue&#x27;,</span><br><span class="line">          name: &#x27;users-id&#x27;</span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">      &lt;h1&gt;user&lt;/h1&gt;</span><br><span class="line">      &lt;div&gt;&#123;&#123;$route.params.id&#125;&#125;&lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style&gt;</span><br><span class="line"></span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Nuxt-js路由-嵌套路由"><a href="#Nuxt-js路由-嵌套路由" class="headerlink" title="Nuxt.js路由-嵌套路由"></a>Nuxt.js路由-嵌套路由</h2><p>这个应用场景比较少见，但是 Nuxt.js 仍然支持：在动态路由下配置动态子路由。</p>
+<p>假设文件结构如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">pages/</span><br><span class="line">--| _category/</span><br><span class="line">-----| _subCategory/</span><br><span class="line">--------| _id.vue</span><br><span class="line">--------| index.vue</span><br><span class="line">-----| _subCategory.vue</span><br><span class="line">-----| index.vue</span><br><span class="line">--| _category.vue</span><br><span class="line">--| index.vue</span><br></pre></td></tr></table></figure>
+
+<p>Nuxt.js 自动生成的路由配置如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">router: &#123;</span><br><span class="line">  routes: [</span><br><span class="line">    &#123;</span><br><span class="line">      path: &#x27;/&#x27;,</span><br><span class="line">      component: &#x27;pages/index.vue&#x27;,</span><br><span class="line">      name: &#x27;index&#x27;</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      path: &#x27;/:category&#x27;,</span><br><span class="line">      component: &#x27;pages/_category.vue&#x27;,</span><br><span class="line">      children: [</span><br><span class="line">        &#123;</span><br><span class="line">          path: &#x27;&#x27;,</span><br><span class="line">          component: &#x27;pages/_category/index.vue&#x27;,</span><br><span class="line">          name: &#x27;category&#x27;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          path: &#x27;:subCategory&#x27;,</span><br><span class="line">          component: &#x27;pages/_category/_subCategory.vue&#x27;,</span><br><span class="line">          children: [</span><br><span class="line">            &#123;</span><br><span class="line">              path: &#x27;&#x27;,</span><br><span class="line">              component: &#x27;pages/_category/_subCategory/index.vue&#x27;,</span><br><span class="line">              name: &#x27;category-subCategory&#x27;</span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">              path: &#x27;:id&#x27;,</span><br><span class="line">              component: &#x27;pages/_category/_subCategory/_id.vue&#x27;,</span><br><span class="line">              name: &#x27;category-subCategory-id&#x27;</span><br><span class="line">            &#125;</span><br><span class="line">          ]</span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Nuxt.js视图-模板</p>
+<p>Nuxt.js视图-结构</p>
+<h2 id="Nuxt-js异步数据-asyncData"><a href="#Nuxt-js异步数据-asyncData" class="headerlink" title="Nuxt.js异步数据-asyncData"></a>Nuxt.js异步数据-asyncData</h2><ul>
+<li><p>基本用法</p>
+<ul>
+<li>它会将asyncData返回的数据融合组件data方法返回数据一并给组件</li>
+<li>调用时机：服务端渲染期间和客户路由更新之前</li>
+</ul>
+</li>
+<li><p>注意事项</p>
+<ul>
+<li>只能在页面组件中使用</li>
+<li>没有this,因为它是在组件初始化之前被</li>
+</ul>
+</li>
+</ul>
 
         <p class="suffix-end">__END__</p>
         <div class="suffix-box">
@@ -78,7 +263,7 @@
             <div class="suffix-box-right">
                 <span class="suffix-box-title">文章作者</span>：Live For Code
                 <br>
-                <span class="suffix-box-title">文章出处</span>：<a href="/2022/03/25/Vue3%E4%B8%AD%E5%AE%9E%E7%8E%B0echarts%E5%9B%BE%E8%A1%A8%E6%94%BE%E5%A4%A7%E9%A2%84%E8%A7%88/" target="_blank">Vue3中实现echarts图表放大预览</a>
+                <span class="suffix-box-title">文章出处</span>：<a href="/2022/04/01/%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%B8%B2%E6%9F%93/" target="_blank">服务端渲染</a>
                 <br>
                 <span class="suffix-box-title">作者签名</span>：简单地活着, 肆意又精彩.
                 <br>
@@ -93,22 +278,13 @@
     <div class="article-footer">
         
         
-            <div class="tag">
-                标签：
-                
-                    <a href="/tags/Vue3/">Vue3</a>
-                
-                    <a href="/tags/Echarts/">Echarts</a>
-                
-            </div>
-        
         <div class="article-prev-next">
             
-                <a href="/2022/04/01/%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%B8%B2%E6%9F%93/" class="prev-prefix">« </a> 上一篇：    <a href="/2022/04/01/%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%B8%B2%E6%9F%93/" title="发布于 2022-04-01 10:21">服务端渲染</a>
+                <a href="/2022/04/02/Node/" class="prev-prefix">« </a> 上一篇：    <a href="/2022/04/02/Node/" title="发布于 2022-04-02 09:40">Node</a>
                 <br>
             
             
-                <a href="/2022/03/24/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/" class="next-prefix">» </a> 下一篇：    <a href="/2022/03/24/%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96/" title="发布于 2022-03-24 03:30">前端工程化</a>
+                <a href="/2022/03/25/Vue3%E4%B8%AD%E5%AE%9E%E7%8E%B0echarts%E5%9B%BE%E8%A1%A8%E6%94%BE%E5%A4%A7%E9%A2%84%E8%A7%88/" class="next-prefix">» </a> 下一篇：    <a href="/2022/03/25/Vue3%E4%B8%AD%E5%AE%9E%E7%8E%B0echarts%E5%9B%BE%E8%A1%A8%E6%94%BE%E5%A4%A7%E9%A2%84%E8%A7%88/" title="发布于 2022-03-25 05:12">Vue3中实现echarts图表放大预览</a>
             
         </div>
     </div>

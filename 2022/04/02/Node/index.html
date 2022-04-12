@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, shrink-to-fit=no">
+    <meta name="referrer" content="origin">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <title>Node</title>
+    <link rel="shortcut icon" href="#"/>
+
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/LongCang.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Monda.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/NotoSansSC.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Playball.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/PTMono.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/RobotoSlab.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Rosario.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/UbuntuMono.css">
+
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/post.css">
+    
+        <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/normal.css">
+    
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/jquery-3.4.1.min.js"></script>
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    <a id="cover"></a>
+    <div id="header">
+    <div class="header">
+        <div class="vertical">
+            <div class="inner">
+                <h1 class="header-subtitle">Node</h1>
+                <div class="header-subinfo">
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2022-04-02
+                        </span>
+                        
+                            <span id="/2022/04/02/Node/" class="leancloud_visitors" data-flag-title="Node">
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
+                        
+                        <span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2022/04/02/Node/"></span>
+                        </span>  
+                    </p>                 
+                </div>
+            </div>
+        </div>
+        <canvas id="articleHeaderCanvas"></canvas>
+    </div>
+</div>
+    <div id="container">
+    <div id="content">
+        <div id="article">
+    <div class="toc"></div>
+    <div class="article-body">
+        <h1 id="Nodejs可以做什么？"><a href="#Nodejs可以做什么？" class="headerlink" title="Nodejs可以做什么？"></a>Nodejs可以做什么？</h1><ul>
+<li>轻量级、高性能的Web服务</li>
+<li>前端端JavaScript同构开发</li>
+<li>便捷高效的前端工程化</li>
+</ul>
+<h1 id="Node架构"><a href="#Node架构" class="headerlink" title="Node架构"></a>Node架构</h1><h2 id="Natives-modoles"><a href="#Natives-modoles" class="headerlink" title="Natives modoles"></a>Natives modoles</h2><ul>
+<li>当前层内容由JS实现</li>
+<li>提供应用程序可直接调用库，例如fs、path、http等</li>
+<li>JS语言无法直接操作底层硬件设备</li>
+</ul>
+<p>Builtin modules ”胶水层“</p>
+<h2 id="底层"><a href="#底层" class="headerlink" title="底层"></a>底层</h2><ul>
+<li>V8：执行JS代码，提供桥梁接口</li>
+<li>Libuv：事件循环、事件队列、异步IO</li>
+<li>第三方模块：zlib、http、c-ares等</li>
+</ul>
+<h2 id="Nodejs异步IO"><a href="#Nodejs异步IO" class="headerlink" title="Nodejs异步IO"></a>Nodejs异步IO</h2><ul>
+<li>IO是应用程序的瓶颈所在</li>
+<li>异步IO提高性能无采原地等待结果返回</li>
+<li>IO操作属于操作系统级别，平台都有对应实现</li>
+<li>Nodejs单线程配合事件驱动架构及libuv实现了异步IO</li>
+</ul>
+<h2 id="Nodejs事件驱动架构"><a href="#Nodejs事件驱动架构" class="headerlink" title="Nodejs事件驱动架构"></a>Nodejs事件驱动架构</h2><p>事件驱动架构是软件开发中的通用模式</p>
+<p>事件驱动、发布订阅、观察者</p>
+<p>主体发布消息，其他实例接收消息</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> EventEmitter = <span class="built_in">require</span>(<span class="string">&#x27;events&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> my Event = <span class="keyword">new</span> EventEmitter()</span><br><span class="line">myEvent.on(<span class="string">&#x27;事件1&#x27;</span>,<span class="function">()=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;事件1执行了&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">myEvent.emit(<span class="string">&#x27;事件1&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h1 id="Nodejs单线程"><a href="#Nodejs单线程" class="headerlink" title="Nodejs单线程"></a>Nodejs单线程</h1><p>异步IO、事件驱动、事件循环</p>
+<h2 id="单线程如何实现高并发？"><a href="#单线程如何实现高并发？" class="headerlink" title="单线程如何实现高并发？"></a>单线程如何实现高并发？</h2><p>异步非堵塞IO配合事件回调通知</p>
+<p>Nodejs主线程是单线程</p>
+<h1 id="Nodejs应用场景"><a href="#Nodejs应用场景" class="headerlink" title="Nodejs应用场景"></a>Nodejs应用场景</h1><ul>
+<li><p>IO密集型高并发请求</p>
+</li>
+<li><p>Node.js作为中间层</p>
+</li>
+<li><p>操作数据库提供API服务</p>
+</li>
+<li><p>实时聊天应用程序</p>
+</li>
+<li><p>Nodejs更加适合IO密集型任务</p>
+</li>
+</ul>
+<h1 id="Nodejs实现API服务"><a href="#Nodejs实现API服务" class="headerlink" title="Nodejs实现API服务"></a>Nodejs实现API服务</h1><p>npm i @types/express -D</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> express <span class="keyword">from</span> <span class="string">&#x27;express&#x27;</span>;</span><br><span class="line"><span class="keyword">const</span> app = express()</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">8080</span>,<span class="function">()=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;serve start  &#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h1 id="Nodejs全局对象"><a href="#Nodejs全局对象" class="headerlink" title="Nodejs全局对象"></a>Nodejs全局对象</h1><ul>
+<li>与浏览器平台的window不完全相同</li>
+<li>Nodejs全局对象上挂在许多属性</li>
+</ul>
+<p>全局对象是JavaScript中的特殊对象</p>
+<p>Nodejs中全局对象是globle</p>
+<p>global的根本作用就是作为宿主</p>
+<h2 id="Nodejs常见的全局变量"><a href="#Nodejs常见的全局变量" class="headerlink" title="Nodejs常见的全局变量"></a>Nodejs常见的全局变量</h2><ul>
+<li>__filename:返回正在执行脚本文件的绝对路径</li>
+<li>__dirname：返回正在执行脚本所在目录</li>
+<li>timer类函数：执行顺序与事件循环间的关系</li>
+<li>process：提供与当前进程互动的接口</li>
+<li>require：实现模块的加载</li>
+<li>module、exports：处理模块的导出</li>
+</ul>
+<h3 id="全局变量之process"><a href="#全局变量之process" class="headerlink" title="全局变量之process"></a>全局变量之process</h3><ul>
+<li>无须require可直接使用</li>
+<li>获取进程信息</li>
+<li>执行进程操作</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>)</span><br><span class="line"><span class="built_in">console</span>.log(process.memoryUsage()) <span class="comment">//  </span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(process.cpuUsage())<span class="comment">//cpu</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 运行环境：运行目录   node环境  cpu架构  用户环境  系统平台  </span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(process.cwd()) <span class="comment">//目录</span></span><br><span class="line"><span class="built_in">console</span>.log(process.version)<span class="comment">// 版本</span></span><br><span class="line"><span class="built_in">console</span>.log(process.versions) <span class="comment">// 详细版本</span></span><br><span class="line"><span class="built_in">console</span>.log(process.arch) <span class="comment">// 位数</span></span><br><span class="line"><span class="built_in">console</span>.log(process.env.NODE_ENV) <span class="comment">//区分环境console.log(process.env.PATH) // 环境变量</span></span><br><span class="line"><span class="built_in">console</span>.log(process.env.USERPROFILE) <span class="comment">// HOME</span></span><br><span class="line"><span class="built_in">console</span>.log(process.platfrom) <span class="comment">//平台 </span></span><br><span class="line"><span class="comment">// 运行状态  启动参数  PID 运行时间</span></span><br><span class="line"><span class="built_in">console</span>.log(process.argv) <span class="comment">// 返回一个数组  node.exe 当前目录地址</span></span><br><span class="line"><span class="built_in">console</span>.log(process.arg0) <span class="comment">// node.exe   execArgv</span></span><br><span class="line"><span class="built_in">console</span>.log(process.pid) <span class="comment">// PID</span></span><br><span class="line"><span class="built_in">console</span>.log(process.uptime()) <span class="comment">// 运行时间</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 事件监听</span></span><br><span class="line"> process.on(<span class="string">&#x27;exit&#x27;</span>,(code&gt;&#123; <span class="comment">//只能写同步代码</span></span><br><span class="line">     <span class="built_in">console</span>.log(<span class="string">&#x27;exit&#x27;</span> + code)</span><br><span class="line"> &#125;)</span><br><span class="line">process.on(<span class="string">&#x27;beforeExit&#x27;</span>,<span class="function">()=&gt;</span>&#123;  <span class="comment">// 能写异步代码</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;beforeExit&#x27;</span> + code)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;代码执行完&#x27;</span>) </span><br><span class="line"><span class="comment">// 标准输入 输出  错误</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log = <span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">    process.stdout.wtrite(<span class="string">&#x27;--&#x27;</span>+data)</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="number">11</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>)</span><br><span class="line"></span><br><span class="line">fs.createReadStream(<span class="string">&#x27;test.txt&#x27;</span>)</span><br><span class="line">	.pipe(process.stdout)</span><br><span class="line"></span><br><span class="line">process.stdin.pipe(process.stdout)</span><br><span class="line"></span><br><span class="line">process.stdin.setEncoding(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">process.stdin.on(<span class="string">&#x27;readable&#x27;</span>,<span class="function">()=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> chunk = process.stdin,read()</span><br><span class="line">    <span class="keyword">if</span>(chunk !== <span class="literal">null</span>)&#123;</span><br><span class="line">        process.stdout.write(<span class="string">&#x27;data&#x27;</span> + chunk)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h1 id="核心模块"><a href="#核心模块" class="headerlink" title="核心模块"></a>核心模块</h1><h2 id="内置模块之path"><a href="#内置模块之path" class="headerlink" title="内置模块之path"></a>内置模块之path</h2><p>内置模块，require之后直接使用</p>
+<p>用于处理文件/目录的路径</p>
+<p>掌握path模块中常见的API</p>
+<h3 id="path模块常用API"><a href="#path模块常用API" class="headerlink" title="path模块常用API"></a>path模块常用API</h3><ul>
+<li>basename() 获取路径中基础名称</li>
+<li>dirname()获取路径中目录名称</li>
+<li>extname()获取路径中扩展名称</li>
+<li>isAbsolute()获取路径是否为绝对路径</li>
+<li>join() 拼接多个路径片段</li>
+<li>resolve()返回绝对路径</li>
+<li>pasre()解析路径</li>
+<li>format()序列化路径</li>
+<li>normalize()规范化路径</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取路径中基础名称</span></span><br><span class="line"><span class="comment">// 返回的就是接受路径单中的最后一部分</span></span><br><span class="line"><span class="comment">// 第二个参数表示扩展名，如果说没有设置则返回完整的文件名称带后缀</span></span><br><span class="line"><span class="comment">// 第二个参数为后缀时，如果没有在当前路径中被匹配到，那么就会忽略</span></span><br><span class="line"><span class="comment">// 处理目录路径的时候如果说，结尾处有路径分隔符，则也会被忽略掉</span></span><br><span class="line"><span class="built_in">console</span>.log(path.basename(__filename))</span><br><span class="line"><span class="built_in">console</span>.log(path.basename(__filename),<span class="string">&#x27;js&#x27;</span>)</span><br><span class="line"><span class="built_in">console</span>.log(path.basename(__filename),<span class="string">&#x27;css&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取路径目录名</span></span><br><span class="line"><span class="built_in">console</span>.log(path.dirname(__filename))</span><br><span class="line"><span class="comment">// 获取路径中扩展名称</span></span><br><span class="line"><span class="comment">// 返回path路径中响应文件的后缀名</span></span><br><span class="line"><span class="comment">// 如果path路径当中存在多个点，它匹配的是最后一个点，到结尾的内容 </span></span><br><span class="line"><span class="built_in">console</span>.log(path.extname(__filename))</span><br><span class="line"><span class="built_in">console</span>.log(path.extname(<span class="string">&#x27;/a/b&#x27;</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">// 解析路径</span></span><br><span class="line"><span class="comment">// 接受一个路径，返回一个对象，包含不同的信息</span></span><br><span class="line"><span class="comment">// root dir base ext name</span></span><br><span class="line"> <span class="keyword">const</span> obj = path.parse(<span class="string">&#x27;/a/b/c/index.html&#x27;</span>)</span><br><span class="line"> <span class="built_in">console</span>.log(obj)</span><br><span class="line"><span class="comment">// 序列化路径</span></span><br><span class="line"><span class="keyword">const</span> obj = path.parse(<span class="string">&#x27;./a/b/c/&#x27;</span>)</span><br><span class="line"><span class="built_in">console</span>.log(path.format(obj))</span><br><span class="line"></span><br><span class="line"><span class="comment">// 判断当前路径是否为绝对</span></span><br><span class="line"><span class="built_in">console</span>.log(path.isAbsolute(<span class="string">&#x27;foo&#x27;</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">// 拼接路径</span></span><br><span class="line"><span class="built_in">console</span>.log(path.join(<span class="string">&#x27;a/b&#x27;</span>,<span class="string">&#x27;c&#x27;</span>,<span class="string">&#x27;index.html&#x27;</span>))</span><br><span class="line"><span class="comment">// 规范化路径</span></span><br><span class="line"><span class="built_in">console</span>.log(path.normalize(<span class="string">&#x27;a/b/c/d&#x27;</span>))</span><br><span class="line"><span class="built_in">console</span>.log(path.normalize(<span class="string">&#x27;a///b/c../d&#x27;</span>))</span><br><span class="line"><span class="comment">// 绝对路径</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* resolve([form],to)</span></span><br><span class="line"><span class="comment">* </span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="built_in">console</span>.log(path.resolve(<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;b&#x27;</span>))</span><br><span class="line"><span class="built_in">console</span>.log(path.resolve(<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;/b&#x27;</span>))</span><br><span class="line"><span class="built_in">console</span>.log(path.resolve(<span class="string">&#x27;/a&#x27;</span>,<span class="string">&#x27;b&#x27;</span>))  </span><br><span class="line"><span class="built_in">console</span>.log(path.resolve(<span class="string">&#x27;/a&#x27;</span>,<span class="string">&#x27;/b&#x27;</span>))  </span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(path.resolve(<span class="string">&#x27;index.html&#x27;</span>)) <span class="comment">//常用的方法</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="全局变量之Buffer"><a href="#全局变量之Buffer" class="headerlink" title="全局变量之Buffer"></a>全局变量之Buffer</h2><ul>
+<li><p>Buffer缓存区</p>
+</li>
+<li><p>Buffer让JavaScript可以操作二进制</p>
+</li>
+<li><p>Buffer是什么？在哪？做什么？</p>
+</li>
+<li><p>二进制数据、流操作、buffer</p>
+</li>
+<li><p>JavaScript语言起初服务于浏览器平台</p>
+</li>
+<li><p>Nodejs平台下JavaScript可实现IO</p>
+</li>
+<li><p>Sream流操作并非Nodejs独创</p>
+</li>
+<li><p>流操作配合管道实现数据分段传输</p>
+</li>
+<li><p>数据的端到端传输会有产生这和消费者 </p>
+</li>
+<li><p>生产和消费的过程往往存在等待</p>
+</li>
+<li><p>产生等待时数据存放在那？</p>
+</li>
+<li><p>Nodejs中Buffer是一片内存空间</p>
+</li>
+</ul>
+<h3 id="Buffer总结"><a href="#Buffer总结" class="headerlink" title="Buffer总结"></a>Buffer总结</h3><ul>
+<li>无需require的一个全局变量</li>
+<li>实现Nodejs平台下的二进制数据操作</li>
+<li>不占据V8堆内存大小的内存空间</li>
+<li>内存的使用由Node来操作，由V8的GC回收</li>
+<li>一般配合Stream流使用，充当数据缓存区</li>
+</ul>
+<h3 id="创建Buffer"><a href="#创建Buffer" class="headerlink" title="创建Buffer"></a>创建Buffer</h3><p>Buffer是Nodejs的内置类</p>
+<h4 id="创建Buffer实例"><a href="#创建Buffer实例" class="headerlink" title="创建Buffer实例"></a>创建Buffer实例</h4><ul>
+<li>alloc：创建指定字节大小的buffer</li>
+<li>allocUnsafe：创建指定大小的buffer（不安全）</li>
+<li>from：接受数据，创建buffer</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> b1 = Buffer.alloc(<span class="number">10</span>)</span><br><span class="line"><span class="keyword">const</span> b2 = Buffer.allocUnsafe(<span class="number">10</span>)</span><br><span class="line"><span class="built_in">console</span>.log(b1)</span><br><span class="line"><span class="built_in">console</span>.log(b2)</span><br><span class="line"><span class="comment">// from </span></span><br><span class="line"><span class="comment">// const  b1 = Buffer.from(&#x27;1&#x27;)</span></span><br><span class="line"><span class="comment">// console.log(b1)  // &lt;Buffer 31&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// const b1 = Buffe.from([1,2,&#x27;中&#x27;],&#x27;utf8&#x27;)</span></span><br><span class="line"><span class="comment">// console.log(b1) // &lt;Buffer 01 02 03&gt;</span></span><br><span class="line"><span class="comment">// const b1 = Buffe.from([1,2,3])</span></span><br><span class="line"><span class="comment">// console.log(b1)// &lt;Buffer 01 02 00&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// const b1 = Buffer.form(&#x27;中&#x27;)</span></span><br><span class="line"><span class="comment">// console.log(b1)</span></span><br><span class="line"><span class="comment">// console.log(b1.toString()) // 中</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// const b1 = Buffer.from([0xe4,0xb8,0xad])</span></span><br><span class="line"><span class="comment">// console.log(b1)</span></span><br><span class="line"><span class="comment">// console.log(b1.toString()) &#x27;中&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> b1 = Buffer.alloc(<span class="number">3</span>)</span><br><span class="line"><span class="keyword">const</span> b2 = Buffer.form(b1)  <span class="comment">// 并不是共享空间</span></span><br><span class="line"><span class="built_in">console</span>.log(b1)</span><br><span class="line"><span class="built_in">console</span>.log(b2)</span><br><span class="line">b1[<span class="number">0</span>] = <span class="number">1</span></span><br><span class="line"><span class="built_in">console</span>.log(b1)</span><br><span class="line"><span class="built_in">console</span>.log(b2)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="Buffer实例方法"><a href="#Buffer实例方法" class="headerlink" title="Buffer实例方法"></a>Buffer实例方法</h4><ul>
+<li>fill：使用数据填充buffer</li>
+<li>write：向buffer中写入数据</li>
+<li>toString：从buffer中提取数据</li>
+<li>slice：截取buffer</li>
+<li>indexOf：在buffer中查找数据</li>
+<li>copy：拷贝buffer中的数据</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> buf = Buffer.alloc(<span class="number">6</span>)</span><br><span class="line"><span class="comment">// fill</span></span><br><span class="line">buf.fill(<span class="string">&#x27;123&#x27;</span>)</span><br><span class="line"><span class="built_in">console</span>.log(buf)</span><br><span class="line"><span class="built_in">console</span>.log(buf.toString())</span><br><span class="line"></span><br><span class="line"><span class="comment">// write</span></span><br><span class="line">buf.write(<span class="string">&#x27;123&#x27;</span>, <span class="number">1</span>, <span class="number">4</span>)</span><br><span class="line"><span class="built_in">console</span>.log(buf)</span><br><span class="line"></span><br><span class="line"><span class="comment">// toString</span></span><br><span class="line">buf = Buffer.from(<span class="string">&#x27;测试代码&#x27;</span>)</span><br><span class="line"><span class="built_in">console</span>.log(buf)</span><br><span class="line"><span class="built_in">console</span>.log(buf.toString(<span class="string">&#x27;utf-8&#x27;</span>,<span class="number">3</span>,<span class="number">9</span>)) </span><br><span class="line"></span><br><span class="line"><span class="comment">// slice</span></span><br><span class="line">buf = Buffer.from(<span class="string">&#x27;测试代码&#x27;</span>)</span><br><span class="line"><span class="keyword">let</span> b1 = buf.slice(-<span class="number">3</span>)</span><br><span class="line"><span class="built_in">console</span>.log(b1)</span><br><span class="line"><span class="built_in">console</span>.log(b1.toString())</span><br><span class="line"></span><br><span class="line"><span class="comment">// indexOf</span></span><br><span class="line"></span><br><span class="line">buf = Buffer.from(<span class="string">&#x27;zce爱前端，爱大家，我爱所有&#x27;</span>)</span><br><span class="line"><span class="built_in">console</span>.log(buf)</span><br><span class="line"><span class="built_in">console</span>.log(buf.indexOf(<span class="string">&#x27;爱&#x27;</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">// copy</span></span><br><span class="line"><span class="keyword">let</span> b1 = Buffer.alloc(<span class="number">6</span>)</span><br><span class="line"><span class="keyword">let</span> b2 = Buffer.from(<span class="string">&#x27;拉勾&#x27;</span>)</span><br><span class="line"></span><br><span class="line">b2.copy(b1)</span><br><span class="line">b2.copy(b1,<span class="number">3</span>,<span class="number">3</span>,<span class="number">6</span>) <span class="comment">// b1.3位置写入，3读取位置，读取结束位置6</span></span><br><span class="line"><span class="built_in">console</span>.log(b1.toString())</span><br><span class="line"><span class="built_in">console</span>.log(b2.toString())</span><br></pre></td></tr></table></figure>
+
+<h4 id="Buffer静态方法"><a href="#Buffer静态方法" class="headerlink" title="Buffer静态方法"></a>Buffer静态方法</h4><ul>
+<li>concat：将多个buffer拼接成一个新的buffer</li>
+<li>isBuffer：判断当前数据是否为buffer</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> b1 = Buffer.from(<span class="string">&#x27;测试&#x27;</span>)</span><br><span class="line"><span class="keyword">let</span> b2 = Buffer.from(<span class="string">&#x27;代码&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> b = Buffer.concat([b1,b2],<span class="number">9</span>)</span><br><span class="line"><span class="built_in">console</span>.log(b)</span><br><span class="line"><span class="built_in">console</span>.log(b.toString())</span><br><span class="line"></span><br><span class="line"><span class="comment">// isBuffer</span></span><br><span class="line"><span class="keyword">let</span> b1 = <span class="string">&#x27;123&#x27;</span></span><br><span class="line"><span class="built_in">console</span>.log(Buffer.isBuffer(b1))</span><br></pre></td></tr></table></figure>
+
+<h4 id="Buffer-split实现"><a href="#Buffer-split实现" class="headerlink" title="Buffer-split实现"></a>Buffer-split实现</h4><p>自定义Buffer之split实现</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ArrayBuffer</span>.prototype.split = <span class="function"><span class="keyword">function</span>(<span class="params">sep</span>)</span>&#123;</span><br><span class="line">	 <span class="keyword">let</span> len = Buffer.form(sep).length</span><br><span class="line">     <span class="keyword">let</span> ret = []</span><br><span class="line">     <span class="keyword">let</span> start = <span class="number">0</span></span><br><span class="line">     <span class="keyword">let</span> offset = <span class="number">0</span></span><br><span class="line">     <span class="keyword">while</span>(<span class="built_in">this</span>.indexOf(sep,start)!== -<span class="number">1</span>)&#123;</span><br><span class="line">         ret.push(<span class="built_in">this</span>.slice(start,offset))</span><br><span class="line">         start = offset + len </span><br><span class="line">     &#125;</span><br><span class="line">    ret.push(<span class="built_in">this</span>.slice(start))</span><br><span class="line">    <span class="keyword">return</span> ret</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> buf = <span class="string">&#x27;zce 吃馒头 吃面条 我吃所有&#x27;</span></span><br><span class="line"><span class="keyword">let</span> bufArr = buf.split(<span class="string">&#x27;吃&#x27;</span>)</span><br><span class="line"><span class="built_in">console</span>.log(bufArr)</span><br></pre></td></tr></table></figure>
+
+<h2 id="核心模块之FS"><a href="#核心模块之FS" class="headerlink" title="核心模块之FS"></a>核心模块之FS</h2><p>一个是缓存区，一个是数据流</p>
+<p>Buffer、Stream、与FS有什么关系？</p>
+<p><strong>FS是什么</strong></p>
+<p>FS是内置核心模块，提供文件系统操作的API</p>
+<h3 id="FS模块结构"><a href="#FS模块结构" class="headerlink" title="FS模块结构"></a>FS模块结构</h3><ul>
+<li>FS基本操作类</li>
+<li>FS常用API</li>
+</ul>
+<p>权限位、标识符、文件描述符</p>
+<p>用户对于文件所具备的操作权限</p>
+<table style="text-align:center;">
+      <tr>
+        <th>权限位</th>
+        <th colspan="3">文件所有者</th>
+        <th colspan="3">文件所属组</th>
+        <th colspan="3">其他用户</th>
+    <tr>
+    <tr>
+        <td>权限项</td>
+        <td>读</td>
+        <td>写</td>
+        <td>执行</td>
+        <td>读</td>
+        <td>写</td>
+        <td>执行</td>
+        <td>读</td>
+        <td>写</td>
+        <td>执行</td>
+    <tr>
+    <tr>
+        <td>字符表示</td>
+        <td>r</td>
+        <td>w</td>
+        <td>x</td>
+        <td>r</td>
+        <td>w</td>
+        <td>x</td>
+        <td>r</td>
+        <td>w</td>
+        <td>x</td>
+    <tr>
+    <tr>
+        <td>数字表示</td>
+        <td>4</td>
+        <td>2</td>
+        <td>1</td>
+        <td>4</td>
+        <td>2</td>
+        <td>1</td>
+        <td>4</td>
+        <td>2</td>
+        <td>1</td>
+    <tr>
+</table>
+
+<p>Nodejs中flag表示对文件操作方式</p>
+<p>常见的flag操作符</p>
+<ul>
+<li>r：表示可读</li>
+<li>w：表示可写</li>
+<li>s：表示同步</li>
+<li>+：表示执行相反操作</li>
+<li>x：表示排它操作</li>
+<li>a：表示追加操作</li>
+</ul>
+<p><strong>fd就是操作系统分配给被打开文件的标识</strong></p>
+<p>fs介绍总结</p>
+<ul>
+<li>fs是nodejs中的内置核心模块</li>
+<li>代码层面上fs分为基本操作类和常用api</li>
+<li>权限位、标识符、操作符</li>
+</ul>
+<h3 id="文件操作API"><a href="#文件操作API" class="headerlink" title="文件操作API"></a>文件操作API</h3><ul>
+<li>readFile：从指定文件中读取数据</li>
+<li>writeFile：向指定文件中写入数据</li>
+<li>appendFile：追加的方式向指定文件中写入数据</li>
+<li>copyFile：将某个文件中的数据拷贝至另一个文件</li>
+<li>watchFile：对指定文件进行监控</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// readFile</span></span><br><span class="line">fs.readFile(path.resolve(<span class="string">&#x27;data.txt&#x27;</span>),<span class="string">&#x27;utf-8&#x27;</span>,<span class="function">(<span class="params">err,data</span>)=&gt;</span>&#123; <span class="comment">// 错误优先</span></span><br><span class="line">    <span class="built_in">console</span>.log(err)</span><br><span class="line">    cnosole.log(data)  <span class="comment">// 文件内容 </span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// writeFile</span></span><br><span class="line">fs.writeFile(<span class="string">&#x27;data.txt&#x27;</span>,<span class="string">&#x27;123&#x27;</span>,&#123;</span><br><span class="line">    <span class="attr">mode</span>: <span class="number">438</span>,</span><br><span class="line">    <span class="attr">flag</span>: <span class="string">&#x27;r+&#x27;</span>,<span class="comment">// r+不会清空目标文件   w+清空以后再写入   </span></span><br><span class="line">    <span class="attr">encoding</span>:<span class="string">&#x27;utf-8&#x27;</span></span><br><span class="line">&#125;,<span class="function">(<span class="params">err</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!err)&#123;</span><br><span class="line">        fs.readFile(<span class="string">&#x27;data.text&#x27;</span>,<span class="string">&#x27;utf-8&#x27;</span>,<span class="function">(<span class="params">err,data</span>)=&gt;</span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(data)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// appendFile</span></span><br><span class="line">fs.appendFile(<span class="string">&#x27;data.txt&#x27;</span>,<span class="string">&#x27;test&#x27;</span>,<span class="function">(<span class="params">err,data</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(err,<span class="string">&#x27;写入成功&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// copyFile</span></span><br><span class="line">fs.copyFile(<span class="string">&#x27;data.txt&#x27;</span>,<span class="string">&#x27;text.txt&#x27;</span>,<span class="function">()=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;拷贝成功&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// watchFile</span></span><br><span class="line">fs.watchFile(<span class="string">&#x27;data.txt&#x27;</span>,&#123;<span class="attr">interval</span>:<span class="number">20</span>&#125;, <span class="function">(<span class="params">curr,prev</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(curr.mtime != prev.mtime)&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(curr,prev,<span class="string">&#x27;文件被修改了&#x27;</span>)</span><br><span class="line">        fs.unwatchFile(<span class="string">&#x27;data.txt&#x27;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="文件操作实现md转html"><a href="#文件操作实现md转html" class="headerlink" title="文件操作实现md转html"></a>文件操作实现md转html</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> marked = <span class="built_in">require</span>(<span class="string">&#x27;marked&#x27;</span>)</span><br><span class="line">consst browserSync = requuire(<span class="string">&#x27;browser-sync&#x27;</span>)</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 01 读取md和css内容</span></span><br><span class="line"><span class="comment">* 02 将上述读取出来的内容替换占位符，生成一个最终需要展示的html字符串</span></span><br><span class="line"><span class="comment">* 03 将上述的Html字符写入到指定的html文件中</span></span><br><span class="line"><span class="comment">* 04 监听md文档内容的变化，然后更新html内容</span></span><br><span class="line"><span class="comment">*  05 使用borwser-sync来实时显示html内容</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> mdPath = path.join(_dirname,process.argv[<span class="number">2</span>])</span><br><span class="line"><span class="keyword">let</span> cssPath = path.resolve(<span class="string">&#x27;github.css&#x27;</span>)</span><br><span class="line"><span class="keyword">let</span> htmlPath = mdPath.replace(path.extname(mdPath),<span class="string">&#x27;.html&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">fs.watchFile(<span class="string">&#x27;data.txt&#x27;</span>,&#123;<span class="attr">interval</span>:<span class="number">20</span>&#125;, <span class="function">(<span class="params">curr,prev</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(curr.mtime != prev.mtime)&#123;</span><br><span class="line">       fs.readFile(mdPath,<span class="string">&#x27;utf-8&#x27;</span>,<span class="function">(<span class="params">err,data</span>)=&gt;</span>&#123;</span><br><span class="line">            <span class="comment">// 将md -&gt; html</span></span><br><span class="line">            <span class="keyword">let</span> htmlStr = marked(data)</span><br><span class="line">            fs.readFile(cssPath,<span class="string">&#x27;utf-8&#x27;</span>,<span class="function">(<span class="params">err,data</span>)=&gt;</span>&#123;</span><br><span class="line">                <span class="keyword">let</span> retHtml = temp.replace(<span class="string">&#x27;&#123;&#123;content&#125;&#125;&#x27;</span>,htmlStr).replace(<span class="string">&#x27;&#123;&#123;style&#125;&#125;&#x27;</span>,data)</span><br><span class="line">                fs.writeFile(htmlPath.retHtml,<span class="function">(<span class="params">err</span>)=&gt;</span>&#123;</span><br><span class="line">                    <span class="built_in">console</span>.log(<span class="string">&#x27;生成成功&#x27;</span>)</span><br><span class="line">                &#125;)</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line">browserSync.init(&#123;</span><br><span class="line">    <span class="attr">vrowser</span>:<span class="string">&#x27;&#x27;</span>,</span><br><span class="line">    <span class="attr">server</span>:_dirname,</span><br><span class="line">    <span class="attr">watch</span>:<span class="literal">true</span>,</span><br><span class="line">    <span class="attr">index</span>:path.basename(htmlPath)</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">const</span> temp = <span class="string">``</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="文件打开与关闭"><a href="#文件打开与关闭" class="headerlink" title="文件打开与关闭"></a>文件打开与关闭</h3>
+        <p class="suffix-end">__END__</p>
+        <div class="suffix-box">
+            <div class="suffix-box-left">
+                <img src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/sidebar/avatar.jpg" alt="Live For Code">
+            </div>
+            <div class="suffix-box-right">
+                <span class="suffix-box-title">文章作者</span>：Live For Code
+                <br>
+                <span class="suffix-box-title">文章出处</span>：<a href="/2022/04/02/Node/" target="_blank">Node</a>
+                <br>
+                <span class="suffix-box-title">作者签名</span>：简单地活着, 肆意又精彩.
+                <br>
+                <span class="suffix-box-title">关于主题</span>：<a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+                <br>
+                <span class="suffix-box-title">版权声明</span>：文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+                <br>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+    </div>
+    <div class="article-footer">
+        
+        
+        <div class="article-prev-next">
+            
+                <a href="/2022/04/06/%E5%89%8D%E7%AB%AF%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/" class="prev-prefix">« </a> 上一篇：    <a href="/2022/04/06/%E5%89%8D%E7%AB%AF%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/" title="发布于 2022-04-06 05:11">前端数据可视化</a>
+                <br>
+            
+            
+                <a href="/2022/04/01/%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%B8%B2%E6%9F%93/" class="next-prefix">» </a> 下一篇：    <a href="/2022/04/01/%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%B8%B2%E6%9F%93/" title="发布于 2022-04-01 10:21">服务端渲染</a>
+            
+        </div>
+    </div>
+    
+    <div class="article-comments">
+        <div class="comments-title">
+            评论列表
+        </div>
+        <div class="comments-content">
+        </div>
+    </div>
+
+</div>
+
+    </div>
+</div>
+    <div id="footer"></div>
+    <div id="sidebar">
+    <div class="menu-wrap" style="display:none;">
+        <nav class="menu">
+            <div class="menu-introduce"> 
+                <div class="introduce-avatar"></div> 
+                <div class="introduce-info"> 
+                    <div class="introduce-user"><span></span></div>        
+                </div> 
+            </div> 
+            <div class="menu-list">
+                <ul></ul> 
+            </div> 
+            <div class="menu-link"></div> 
+        </nav>
+        <button class="menu-button-close"></button>
+        <div class="morph-shape" id="morph-shape" data-morph-open="M-7.312,0H15c0,0,66,113.339,66,399.5C81,664.006,15,800,15,800H-7.312V0z;M-7.312,0H100c0,0,0,113.839,0,400c0,264.506,0,400,0,400H-7.312V0z">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 100 800" preserveAspectRatio="none">
+                <path d="M-7.312,0H0c0,0,0,113.839,0,400c0,264.506,0,400,0,400h-7.312V0z"/>
+            </svg>
+        </div>
+    </div>
+    <button class="menu-button-open">MENU</button>
+    <div class="menu-cover"></div>
+</div>
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/search.css">
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/iscroll.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/instantsearch.min.js"></script>
+<div class="search-window">
+    <div class="search-content">
+        <div class="search-content-icon">
+            <i class="iconfont icon-search"></i>
+        </div>
+        <div id="search-input" class="search-input"></div>
+    </div>
+
+    <div class="search-scroll">
+        <div class="search-result">
+            <div id="search-stats" class="search-stats"></div>
+            <div id="search-hits"></div>
+            <div id="search-pagination" class="search-pagination"></div>
+        </div>
+    </div>
+
+    <span class="search-close-icon">
+        <i class="iconfont icon-close"></i>
+    </span>
+</div>
+    <div id="tools">
+    <div class="progressbar-top"></div>
+
+    
+        <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/APlayer.css">
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/APlayer.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/Meting.min.js"></script>
+        <meting-js id="3778678" lrcshow="false" server="netease" type="playlist" fixed="true" autoplay="false" loop="all" order="random" preload="auto" volume="0.67" mutex="true"></meting-js>
+    
+    
+    <div class="wrap-right"></div>
+    <div class="loading"></div>
+</div>
+    <script>
+    window.config = {
+        GitHubUserName     : 'first19326',
+        GitHubRepositories : 'Hexo-LiveForCode',
+
+        BlogUser      : 'Live For Code',
+        BlogAvatar    : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/sidebar/avatar.jpg',
+        BlogStartDate : '2020-01-01',
+
+        WebsiteTitleBlur         : '(◍´꒳`◍) Hi, Live For Code',
+        WebsiteTitleBlurTimeOut  : 500,
+        WebsiteTitleFocus        : '(*´∇｀*) 欢迎回来!',
+        WebsiteTitleFocusTimeOut : 1000,
+        WebsiteFavicon           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/website/logo.png',
+
+        ProgressBar: {
+            id       : 'topProgressBar',
+            color    : '#77B6FF',
+            height   : '2px',
+            duration : 0.2
+        },
+
+        Loading: {
+            rebound: {
+                tension  : 16,
+                friction : 5
+            },
+            spinner: {
+                id     : 'spinner',
+                radius : 90,
+                sides  : 3,
+                depth  : 4,
+                colors : {
+                    background : '#F0F0F0',
+                    stroke     : '#272633',
+                    base       : '',
+                    child      : '#272633'
+                },
+                alwaysForward : true,
+                restAt        : 0.5,
+                renderBase    : false
+            }
+        },
+
+        HomeHeaderAnimationRendered : true,
+        HomeHeaderAnimation         : {
+            radius      : 15,
+            density     : 0.2,
+            color       : 'rgba(255, 255, 255, .2)',
+            clearOffset : 0.3
+        },
+
+        ArticleHeaderAnimationRendered : false,
+        ArticleHeaderAnimation         : {
+            triW                  : 14,
+            triH                  : 20,
+            neighbours            : [
+                
+                    'side',
+                
+                    'top',
+                
+                    'bottom',
+                
+            ],
+            speedTrailAppear      : 0.1,
+            speedTrailDisappear   : 0.1,
+            speedTriOpen          : 1,
+            trailMaxLength        : 30,
+            trailIntervalCreation : 100,
+            delayBeforeDisappear  : 2,
+            colors                : [
+                
+                    '#96EDA6',
+                
+                    '#5BC6A9',
+                
+                    '#38668C',
+                
+                    '#374D84',
+                
+                    '#BED5CB',
+                
+                    '#62ADC6',
+                
+                    '#8EE5DE',
+                
+                    '#304E7B',
+                
+            ]
+        },
+
+        BackAnimationRendered          : true,
+        IEBrowserBackAnimationRendered : false,
+        BackAnimation                  : {
+            colorSaturation  : '60%',
+            colorBrightness  : '50%',
+            colorAlpha       : 0.5,
+            colorCycleSpeed  : 5,
+            verticalPosition : 'random',
+            horizontalSpeed  : 200,
+            ribbonCount      : 3,
+            strokeSize       : 0,
+            parallaxAmount   : -0.2,
+            animateSections  : true
+        },
+
+        HomeHeaderImage : [
+            
+                'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/header/home.jpg',
+            
+                'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/header/home.jpeg',
+            
+        ],
+        HomeBannerText  : '',
+
+        ArticleHeaderImage : [
+            
+                'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/header/article.jpg',
+            
+        ],
+
+        OtherBannerText : '',
+
+        MenuList : [
+            
+                {
+                    name   : '首页',
+                    href   : '/',    
+                    target : '',
+                    class  : ''
+                },
+            
+                {
+                    name   : '标签',
+                    href   : '/tag',    
+                    target : '',
+                    class  : ''
+                },
+            
+                {
+                    name   : '分类',
+                    href   : '/category',    
+                    target : '',
+                    class  : ''
+                },
+            
+                {
+                    name   : '归档',
+                    href   : '/archive',    
+                    target : '',
+                    class  : ''
+                },
+            
+                {
+                    name   : '赞赏',
+                    href   : '/donate',    
+                    target : '',
+                    class  : ''
+                },
+            
+                {
+                    name   : '关于',
+                    href   : '/about',    
+                    target : '',
+                    class  : ''
+                },
+            
+                {
+                    name   : '订阅',
+                    href   : '/atom.xml',    
+                    target : '_blank',
+                    class  : ''
+                },
+            
+                {
+                    name   : '搜索',
+                    href   : '',    
+                    target : '',
+                    class  : 'search'
+                },
+            
+                {
+                    name   : '留言板',
+                    href   : '/comment',    
+                    target : '',
+                    class  : ''
+                },
+            
+                {
+                    name   : '友情链接',
+                    href   : '/friend',    
+                    target : '',
+                    class  : ''
+                },
+            
+        ],
+        MenuLink : [
+            
+                
+                    {
+                        icon : 'icon-weibo', 
+                        url  : ''
+                    },
+                
+                    {
+                        icon : 'icon-wechat', 
+                        url  : ''
+                    },
+                
+                    {
+                        icon : 'icon-qq', 
+                        url  : ''
+                    },
+                
+                    {
+                        icon : 'icon-github', 
+                        url  : 'https://github.com/first19326'
+                    },
+                
+            
+        ],
+
+        FooterStyle : 2,
+        BottomText  : {
+            icon    : 'like-fill',
+            left    : '人生若只如初见',
+            right   : '何事秋风悲画扇'
+        },
+        ThemeInfo   : true,
+
+        ConsoleList : [
+            
+                
+                    [
+                        
+                            
+                                'Based on cnblogs theme SimpleMemory.',
+                            
+                                '',
+                            
+                        
+                    ],
+                
+                    [
+                        
+                            
+                                'SimpleMemory Author:',
+                            
+                                'BNDong',
+                            
+                        
+                    ],
+                
+                    [
+                        
+                            
+                                'Theme:',
+                            
+                                'LiveForCode',
+                            
+                        
+                    ],
+                
+            
+        ],
+
+        FontIconExtend : '',
+
+        Donate : {
+            paypal  : '',
+            bitcoin : '',
+            alipay  : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/donate/alipay.png',
+            wechat  : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/donate/wechat.png'
+        },
+
+        Code : {
+            style : 'normal'
+        },  
+
+        Search : {
+            applicationID : '010C3EANT8',
+            apiKey        : 'c7abab9f11b79102b9aff7fe6d41447d',
+            indexName     : 'Notes',
+            hits          : {
+                page : 10
+            },
+            labels        : {
+                placeholder : '搜索',
+                empty       : '未发现与 「${query}」 相关的内容',
+                stats       : '${hits} 条相关条目，使用了 ${time} 毫秒',
+            }
+        }, 
+
+        Valine : {
+            switch         : true,
+            el             : '.comments-content',
+            appId          : 'srhKtvWPQTWYKh3qX8G8M7v0-gzGzoHsz',
+            appKey         : '8uVSP1q6UlALVC5igYfIfv2h',
+            placeholder    : '你是我一生只会遇见一次的惊喜...',
+            avatar         : 'mm',
+            meta           : 'nick,mail,link',
+            requiredFields : 'nick,mail',
+            pageSize       : 5,
+            lang           : 'zh-cn',
+            visitor        : true,
+            enableQQ       : true
+        },
+
+        Tocbot : {
+            switch                : true,
+            tocSelector           : '.toc',
+            contentSelector       : '.article-body',
+            headingSelector       : 'h1, h2, h3, h4, h5',
+            headingsOffset        : 0,
+            scrollSmooth          : true,
+            scrollSmoothOffset    : -5,
+            positionFixedSelector : '.toc',
+            positionFixedClass    : 'toc-fixed',
+            fixedSidebarOffset    : '',
+        },
+
+        Require : {
+            baseUrl     : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/',
+            waitSeconds : 100
+        },
+
+        Music : {
+            type : 'Meting'
+        },
+        APlayer : {
+            container : '.aplayer',
+            fixed     : true,
+            autoplay  : false,
+            loop      : 'all',
+            order     : 'random',
+            preload   : 'auto',
+            volume    : 0.67,
+            mutex     : true,
+            lrcType   : 3,
+            audio     : [
+                
+                    {
+                        name   : 'aLIEz',
+                        artist : 'mizuki（瑞葵）',
+                        cover  : '/music/cover/aLIEz.jpg',
+                        url    : '/music/song/aLIEz.mp3',
+                        lrc    : '/music/lrc/aLIEz.lrc'
+                    },
+                
+                    {
+                        name   : 'Endless Tears',
+                        artist : 'CLIFF EDGE',
+                        cover  : '/music/cover/Endless Tears.jpg',
+                        url    : '/music/song/Endless Tears.mp3',
+                        lrc    : '/music/lrc/Endless Tears.lrc'
+                    },
+                
+                    {
+                        name   : 'Miracle',
+                        artist : 'Cascada',
+                        cover  : '/music/cover/Miracle.jpg',
+                        url    : '/music/song/Miracle.mp3',
+                        lrc    : '/music/lrc/Miracle.lrc'
+                    },
+                
+                    {
+                        name   : 'Roll The Dice',
+                        artist : '高珊',
+                        cover  : '/music/cover/Roll The Dice.jpg',
+                        url    : '/music/song/Roll The Dice.mp3',
+                        lrc    : '/music/lrc/Roll The Dice.lrc'
+                    },
+                
+                    {
+                        name   : 'See You Again',
+                        artist : 'Charlie Puth, Wiz Khalifa',
+                        cover  : '/music/cover/See You Again.jpg',
+                        url    : '/music/song/See You Again.mp3',
+                        lrc    : '/music/lrc/See You Again.lrc'
+                    },
+                
+                    {
+                        name   : 'Traveling Light',
+                        artist : 'Joel Hanson, Sara Groves',
+                        cover  : '/music/cover/Traveling Light.jpg',
+                        url    : '/music/song/Traveling Light.mp3',
+                        lrc    : '/music/lrc/Traveling Light.lrc'
+                    },
+                
+                    {
+                        name   : '痴心绝对',
+                        artist : '李圣杰',
+                        cover  : '/music/cover/痴心绝对.jpg',
+                        url    : '/music/song/痴心绝对.mp3',
+                        lrc    : '/music/lrc/痴心绝对.lrc'
+                    },
+                
+                    {
+                        name   : '好想大声说爱你',
+                        artist : 'BAAD（バード）',
+                        cover  : '/music/cover/好想大声说爱你.jpg',
+                        url    : '/music/song/好想大声说爱你.mp3',
+                        lrc    : '/music/lrc/好想大声说爱你.lrc'
+                    },
+                
+            ]
+        },
+        Meting : {
+            id       : '3778678', 
+            lrcshow  : false, 
+            server   : 'netease', 
+            type     : 'playlist', 
+            fixed    : true, 
+            autoplay : false, 
+            loop     : 'all', 
+            order    : 'random', 
+            preload  : 'auto', 
+            volume   : 0.67, 
+            mutex    : true
+        },
+
+        Mouse : {
+            enable  : true,
+            options : {
+                size  : 6,
+                sizeF : 24
+            }
+        },
+
+        LazyLoad : {
+            default : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/website/lazyload.svg'
+        },
+  
+        Style : {
+            aplayer          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/APlayer.css',
+            archive          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/archive.css',
+            donate           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/donate.css',
+            fancybox         : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/jquery.fancybox.css',
+            footer           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/footer.css',
+            iconfont         : 'https://at.alicdn.com/t/font_1546312_l3yohatebw.css',
+            index            : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/index.css',
+            menuBubble       : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/menu-bubble.css',
+            page             : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/page.css',
+            post             : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/post.css',
+            search           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/search.css',
+            tocbot           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/tocbot.css',
+            normal           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/normal.css',
+            night            : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/night.css',
+            clipboard        : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/clipboard.css'
+        },
+
+        Script: {
+            aplayer          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/APlayer.min.js',
+            config           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/require.config.js',
+            index            : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/index.js',
+            instantSearch    : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/instantsearch.min.js',
+            jQuery           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/jquery-3.4.1.min.js',
+            loading          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/loading.js',
+            meting           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/Meting.min.js',
+            iscroll          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/iscroll.js',
+            require          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/require.min.js'
+        },
+
+        Font: {
+            LongCang   : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/LongCang.css',
+            Monda      : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Monda.css',
+            NotoSansSC : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/NotoSansSC.css',
+            Playball   : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Playball.css',
+            PTMono     : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/PTMono.css',
+            RobotoSlab : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/RobotoSlab.css',
+            Rosario    : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Rosario.css',
+            UbuntuMono : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/UbuntuMono.css'
+        },
+
+        Suffix : {
+            about : '简单地活着, 肆意又精彩.'
+        },
+            
+        Theme : {
+            url  : 'https://github.com/first19326/Hexo-LiveForCode',
+            name : 'Hexo - Live For Code'
+        }  
+    };
+</script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/index.js"></script>
+</body>
+</html>

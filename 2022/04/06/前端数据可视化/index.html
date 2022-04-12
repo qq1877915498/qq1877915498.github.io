@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, shrink-to-fit=no">
+    <meta name="referrer" content="origin">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <title>前端数据可视化</title>
+    <link rel="shortcut icon" href="#"/>
+
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/LongCang.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Monda.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/NotoSansSC.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Playball.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/PTMono.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/RobotoSlab.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Rosario.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/UbuntuMono.css">
+
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/post.css">
+    
+        <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/normal.css">
+    
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/jquery-3.4.1.min.js"></script>
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    <a id="cover"></a>
+    <div id="header">
+    <div class="header">
+        <div class="vertical">
+            <div class="inner">
+                <h1 class="header-subtitle">前端数据可视化</h1>
+                <div class="header-subinfo">
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2022-04-06
+                        </span>
+                        
+                            <span id="/2022/04/06/前端数据可视化/" class="leancloud_visitors" data-flag-title="前端数据可视化">
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
+                        
+                        <span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2022/04/06/前端数据可视化/"></span>
+                        </span>  
+                    </p>                 
+                </div>
+            </div>
+        </div>
+        <canvas id="articleHeaderCanvas"></canvas>
+    </div>
+</div>
+    <div id="container">
+    <div id="content">
+        <div id="article">
+    <div class="toc"></div>
+    <div class="article-body">
+        <p>[TOC]</p>
+<h1 id="前端数据可视化"><a href="#前端数据可视化" class="headerlink" title="前端数据可视化"></a>前端数据可视化</h1><h2 id="什么是数据可视化？"><a href="#什么是数据可视化？" class="headerlink" title="什么是数据可视化？"></a>什么是数据可视化？</h2><p>把数据经过一定转换之后变成图形显示的操作</p>
+<h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><ul>
+<li>定量数据<ul>
+<li>连续性变量</li>
+<li>离散变量</li>
+</ul>
+</li>
+<li>定性数据<ul>
+<li>文本描述</li>
+<li>有序变量和无序变量</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">数据</th>
+<th align="center">数据类型</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">11010、10086、10000</td>
+<td align="center">定量数据/离散数据</td>
+<td align="center">取值来自于有限或可数的集合</td>
+</tr>
+<tr>
+<td align="center">篮球、足球、排球</td>
+<td align="center">定性数据/无序分类</td>
+<td align="center">数据没无序且不同数据无关联</td>
+</tr>
+<tr>
+<td align="center">及格、不及格、良好、优秀</td>
+<td align="center">定性数据/有序分类</td>
+<td align="center">数据有序且不同数据有比较关系</td>
+</tr>
+<tr>
+<td align="center">100m、200m、300m</td>
+<td align="center">定量数据/连续性数据</td>
+<td align="center">数据可以是实数域的任意值</td>
+</tr>
+<tr>
+<td align="center">数据可视化</td>
+<td align="center">文本数据</td>
+<td align="center">任意格式文本、视情况分类</td>
+</tr>
+<tr>
+<td align="center">Jan.1 1970，00：00：00 am</td>
+<td align="center">日期/时间</td>
+<td align="center">特定的日期或时间</td>
+</tr>
+</tbody></table>
+<h2 id="数据转换图形步骤"><a href="#数据转换图形步骤" class="headerlink" title="数据转换图形步骤"></a>数据转换图形步骤</h2><ul>
+<li>执行映射将数据与不同标度对应</li>
+<li>选择合适的图形形状将映射体现出来</li>
+</ul>
+<h2 id="数据可视化"><a href="#数据可视化" class="headerlink" title="数据可视化"></a>数据可视化</h2><ul>
+<li>数据可视化就是将数据转换为图形展示 </li>
+<li>被展示的数据是分类型的</li>
+<li>转换图形一般有两个步骤<ul>
+<li>将数据与不同的标度对应，做好映射</li>
+<li>选择合适的图形来体现我们涉及的映射</li>
+</ul>
+</li>
+</ul>
+<h2 id="坐标轴"><a href="#坐标轴" class="headerlink" title="坐标轴"></a>坐标轴</h2><ul>
+<li>坐标轴是可视化主句的第一步，不同轴向展示数据标度</li>
+<li>常见坐标轴是直角坐标轴<ul>
+<li>线性直角坐标轴</li>
+<li>非线性直角坐标轴</li>
+</ul>
+</li>
+<li>极坐标轴</li>
+</ul>
+<h2 id="颜色标度"><a href="#颜色标度" class="headerlink" title="颜色标度"></a>颜色标度</h2><h3 id="颜色标度作用"><a href="#颜色标度作用" class="headerlink" title="颜色标度作用"></a>颜色标度作用</h3><ul>
+<li>数据分组</li>
+<li>不同颜色对应数据</li>
+<li>指定数据突出显示</li>
+</ul>
+<h2 id="数据可视化解决方案"><a href="#数据可视化解决方案" class="headerlink" title="数据可视化解决方案"></a>数据可视化解决方案</h2><p>Highcharts、Echarts、Antv、D3、zrender、three.js等</p>
+<h2 id="canvas绘制直线"><a href="#canvas绘制直线" class="headerlink" title="canvas绘制直线"></a>canvas绘制直线</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;X-UA-Compatible&quot;</span> <span class="attr">content</span>=<span class="string">&quot;IE=edge&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="css"></span></span><br><span class="line"><span class="css">        <span class="selector-id">#canvas</span>&#123;</span></span><br><span class="line"><span class="css">            <span class="attribute">display</span>: block;</span></span><br><span class="line"><span class="css">            <span class="attribute">margin</span>: <span class="number">10px</span> auto <span class="number">0</span>;</span></span><br><span class="line"><span class="css">            <span class="attribute">border</span>: <span class="number">1px</span> solid orange;</span></span><br><span class="line"><span class="css">        &#125;</span></span><br><span class="line"><span class="css">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">canvas</span> <span class="attr">id</span>=<span class="string">&quot;canvas&quot;</span> <span class="attr">width</span>=<span class="string">&quot;600&quot;</span> <span class="attr">height</span>=<span class="string">&quot;500&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">        <span class="keyword">const</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;canvas&#x27;</span>)</span></span><br><span class="line"><span class="javascript">        <span class="keyword">const</span> ctx = canvas.getContext(<span class="string">&#x27;2d&#x27;</span>)</span></span><br><span class="line"><span class="javascript">        </span></span><br><span class="line"><span class="javascript">        ctx.lineWidth = <span class="number">4</span></span></span><br><span class="line"><span class="javascript">        ctx.strokeStyle = <span class="string">&#x27;orange&#x27;</span></span></span><br><span class="line"><span class="javascript">        ctx.beginPath()</span></span><br><span class="line"><span class="javascript">        ctx.moveTo(<span class="number">100</span>,<span class="number">100</span>)</span></span><br><span class="line"><span class="javascript">        ctx.lineTo(<span class="number">300</span>,<span class="number">300</span>)</span></span><br><span class="line"><span class="javascript">        ctx.stroke()</span></span><br><span class="line"><span class="javascript">        ctx.closePath()</span></span><br><span class="line"><span class="javascript">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="canvas高清绘制"><a href="#canvas高清绘制" class="headerlink" title="canvas高清绘制"></a>canvas高清绘制</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;</span><br><span class="line">    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;</span><br><span class="line">    &lt;title&gt;Document&lt;/title&gt;</span><br><span class="line">    &lt;style&gt;</span><br><span class="line">        #canvas&#123;</span><br><span class="line">            display: block;</span><br><span class="line">            margin: 10px auto 0;</span><br><span class="line">            border: 1px solid orange;</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;canvas id=&quot;canvas&quot; width=&quot;600&quot; height=&quot;500&quot;&gt;&lt;/canvas&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        const canvas = document.getElementById(&#x27;canvas&#x27;)</span><br><span class="line">        const ctx = canvas.getContext(&#x27;2d&#x27;)</span><br><span class="line">        </span><br><span class="line">        const getPixelRatio = (context)=&gt;&#123;</span><br><span class="line">            return window.devicePixelRatio || 1</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        /*</span><br><span class="line">         01 放在canvas</span><br><span class="line">         02 再在css里将宽高设置为原来的大小</span><br><span class="line">         03 考虑到内容的缩放，因此也需将ctx缩放</span><br><span class="line">        */</span><br><span class="line">        const ratio = getPixelRatio()</span><br><span class="line">        const oldWidth = canvas.width</span><br><span class="line">        const oldHeight = canvas.height</span><br><span class="line">        canvas.width = canvas.width  * ratio</span><br><span class="line">        canvas.height = canvas.height * ratio</span><br><span class="line">		canvas.style.width = oldWidth + &#x27;px&#x27;</span><br><span class="line">		canvas.style.height = oldHeight + &#x27;px&#x27;</span><br><span class="line">		ctx.scale(ratio,ratio)</span><br><span class="line">		</span><br><span class="line">        ctx.lineWidth = 4</span><br><span class="line">        ctx.strokeStyle = &#x27;orange&#x27;</span><br><span class="line">        ctx.beginPath()</span><br><span class="line">        ctx.moveTo(100,100)</span><br><span class="line">        ctx.lineTo(300,300)</span><br><span class="line">        ctx.stroke()</span><br><span class="line">        ctx.closePath()</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="canvas绘制直角坐标系"><a href="#canvas绘制直角坐标系" class="headerlink" title="canvas绘制直角坐标系"></a>canvas绘制直角坐标系</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;X-UA-Compatible&quot;</span> <span class="attr">content</span>=<span class="string">&quot;IE=edge&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="css"></span></span><br><span class="line"><span class="css">        <span class="selector-id">#canvas</span> &#123;</span></span><br><span class="line"><span class="css">            <span class="attribute">display</span>: block;</span></span><br><span class="line"><span class="css">            <span class="attribute">margin</span>: <span class="number">10px</span> auto <span class="number">0</span>;</span></span><br><span class="line"><span class="css">            <span class="attribute">border</span>: <span class="number">1px</span> solid orange;</span></span><br><span class="line"><span class="css">        &#125;</span></span><br><span class="line"><span class="css">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">canvas</span> <span class="attr">id</span>=<span class="string">&quot;canvas&quot;</span> <span class="attr">width</span>=<span class="string">&quot;600&quot;</span> <span class="attr">height</span>=<span class="string">&quot;400&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;canvas&#x27;</span>)</span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> ctx = canvas.getContext(<span class="string">&#x27;2d&#x27;</span>)</span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> getPixelRatio = <span class="function">(<span class="params">context</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">return</span> <span class="built_in">window</span>.devicePixelRatio || <span class="number">1</span></span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> ratio = getPixelRatio()</span></span><br><span class="line"><span class="javascript">    canvas.style.width = canvas.width + <span class="string">&#x27;px&#x27;</span></span></span><br><span class="line"><span class="javascript">    canvas.style.height = canvas.height + <span class="string">&#x27;px&#x27;</span></span></span><br><span class="line"><span class="javascript">    canvas.width = canvas.width * ratio</span></span><br><span class="line"><span class="javascript">    canvas.height = canvas.height * ratio</span></span><br><span class="line"><span class="javascript">    <span class="comment">// 提前设置相关属性</span></span></span><br><span class="line"><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> ht = canvas.clientHeight</span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> wd = canvas.clientWidth</span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> pad = <span class="number">20</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> bottomPad = <span class="number">20</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> step = <span class="number">100</span></span></span><br><span class="line"><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="comment">// 绘制坐标系</span></span></span><br><span class="line"><span class="javascript">    ctx.beginPath()</span></span><br><span class="line"><span class="javascript">    ctx.lineWidth = <span class="number">2</span></span></span><br><span class="line"><span class="javascript">    ctx.strokeStyle = <span class="string">&#x27;lightblue&#x27;</span></span></span><br><span class="line"><span class="javascript">    ctx.moveTo(pad, pad)</span></span><br><span class="line"><span class="javascript">    ctx.lineTo(pad, ht * ratio - bottomPad)</span></span><br><span class="line"><span class="javascript">    ctx.lineTo(wd * ratio - pad, ht * ratio - bottomPad)</span></span><br><span class="line"><span class="javascript">    ctx.stroke()</span></span><br><span class="line"><span class="javascript">    ctx.closePath()</span></span><br><span class="line"><span class="javascript"></span></span><br><span class="line"><span class="javascript">    </span></span><br><span class="line"><span class="javascript">    <span class="comment">// 绘制x轴方向刻度</span></span></span><br><span class="line"><span class="javascript">    ctx.beginPath()</span></span><br><span class="line"><span class="javascript">    ctx.lineWidth = <span class="number">1</span></span></span><br><span class="line"><span class="javascript">    ctx.strokeStyle = <span class="string">&#x27;#333&#x27;</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">1</span>; i &lt; <span class="built_in">Math</span>.floor(wd * ratio / step); i++ ) &#123;</span></span><br><span class="line"><span class="javascript">        ctx.moveTo(pad + i * step, ht * ratio - bottomPad )</span></span><br><span class="line"><span class="javascript">        ctx.lineTo(pad + i * step, ht * ratio - bottomPad - <span class="number">10</span>)</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript">    ctx.stroke()</span></span><br><span class="line"><span class="javascript">    ctx.closePath()</span></span><br><span class="line"><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="comment">// 绘制y轴方向刻度</span></span></span><br><span class="line"><span class="javascript">    ctx.beginPath()</span></span><br><span class="line"><span class="javascript">    ctx.lineWidth = <span class="number">1</span></span></span><br><span class="line"><span class="javascript">    ctx.strokeStyle = <span class="string">&#x27;#333&#x27;</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">1</span>; i &lt; <span class="built_in">Math</span>.floor(ht * ratio / step); i ++ ) &#123;</span></span><br><span class="line"><span class="javascript">        ctx.moveTo(pad, (ht * ratio - bottomPad) - (i * step))</span></span><br><span class="line"><span class="javascript">        ctx.lineTo(pad + <span class="number">10</span>, (ht * ratio - bottomPad) - (i * step))</span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript">    ctx.stroke()</span></span><br><span class="line"><span class="javascript">    ctx.closePath()</span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span>     const canvas = document.getElementById(&#x27;canvas&#x27;)</span><br><span class="line">        const ctx = canvas.getContext(&#x27;2d&#x27;)</span><br><span class="line">        const getPixelRatio = (context)=&gt;&#123;</span><br><span class="line">            return window.devicePixelRatio || 1</span><br><span class="line">        &#125;</span><br><span class="line">        const ratio = getPixelRatio()</span><br><span class="line">		canvas.style.width = canvas.width + &#x27;px&#x27;</span><br><span class="line">		canvas.style.height = canvas.height + &#x27;px&#x27;</span><br><span class="line">        canvas.width = canvas.width  * ratio</span><br><span class="line">        canvas.height = canvas.height * ratio</span><br><span class="line">		// 提前设置相关属性</span><br><span class="line">        </span><br><span class="line">        const ht = canvas.clientHeight</span><br><span class="line">        const wd = canvas.clientWidth</span><br><span class="line">        const pad = 20</span><br><span class="line">        const bottomPad = 20</span><br><span class="line">        const step = 100</span><br><span class="line">        </span><br><span class="line">        function drawAxis(options)&#123;</span><br><span class="line">        let &#123;ht, wd, pad, bottomPad, step, ctx, ratio&#125; = options</span><br><span class="line">        // 绘制坐标系</span><br><span class="line">        ctx.beginPath()</span><br><span class="line">        ctx.lineWidth = 2</span><br><span class="line">        ctx.strokeStyle = &#x27;lightblue&#x27;</span><br><span class="line">        ctx.moveTo(pad, pad)</span><br><span class="line">        ctx.lineTo(pad, ht * ratio - bottomPad)</span><br><span class="line">        ctx.lineTo(wd * ratio - pad, ht * ratio - bottomPad)</span><br><span class="line">        ctx.stroke()</span><br><span class="line">        ctx.closePath()</span><br><span class="line"></span><br><span class="line">        </span><br><span class="line">        // 绘制x轴方向刻度</span><br><span class="line">        ctx.beginPath()</span><br><span class="line">        ctx.lineWidth = 1</span><br><span class="line">        ctx.strokeStyle = &#x27;#333&#x27;</span><br><span class="line">        for (let i = 1; i &lt; Math.floor(wd * ratio / step); i++ ) &#123;</span><br><span class="line">            ctx.moveTo(pad + i * step, ht * ratio - bottomPad )</span><br><span class="line">            ctx.lineTo(pad + i * step, ht * ratio - bottomPad - 10)</span><br><span class="line">        &#125;</span><br><span class="line">        ctx.stroke()</span><br><span class="line">        ctx.closePath()</span><br><span class="line">        // 绘制y轴方向刻度</span><br><span class="line">        ctx.beginPath()</span><br><span class="line">        ctx.lineWidth = 1</span><br><span class="line">        ctx.strokeStyle = &#x27;#333&#x27;</span><br><span class="line">        for (let i = 1; i &lt; Math.floor(ht * ratio / step); i ++ ) &#123;</span><br><span class="line">            ctx.moveTo(pad, (ht * ratio - bottomPad) - (i * step))</span><br><span class="line">            ctx.lineTo(pad + 10, (ht * ratio - bottomPad) - (i * step))</span><br><span class="line">        &#125;</span><br><span class="line">        ctx.stroke()</span><br><span class="line">        ctx.closePath()</span><br><span class="line">    &#125;</span><br><span class="line">    drawAxis(&#123;ht, wd, pad, bottomPad, step, ctx, ratio&#125;)</span><br><span class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="canvas绘制直方图"><a href="#canvas绘制直方图" class="headerlink" title="canvas绘制直方图"></a>canvas绘制直方图</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 绘制长方体  描边填充</span></span><br><span class="line">   ctx.beginPath()</span><br><span class="line">ctx.lineWidth = <span class="number">5</span></span><br><span class="line">ctx.strokeStyle = <span class="string">&#x27;orange&#x27;</span></span><br><span class="line">ctx.fillStyle = <span class="string">&#x27;hotpink&#x27;</span></span><br><span class="line">ctx.rect(<span class="number">100</span>,<span class="number">100</span>,<span class="number">300</span>,<span class="number">200</span>)</span><br><span class="line">ctx.fill()</span><br><span class="line">ctx.stroke()</span><br><span class="line">ctx.closePath()</span><br><span class="line"></span><br><span class="line">ctx.beginPath()</span><br><span class="line">ctx.lineWidth = <span class="number">5</span></span><br><span class="line">ctx.strokeStyle = <span class="string">&#x27;orange&#x27;</span></span><br><span class="line">ctx.strokeRect(<span class="number">100</span>,<span class="number">310</span>,<span class="number">300</span>,<span class="number">200</span>)</span><br><span class="line">ctx.closePath()</span><br><span class="line"></span><br><span class="line">ctx.beginPath()</span><br><span class="line">ctx.lineWidth = <span class="number">5</span></span><br><span class="line">ctx.strokeStyle = <span class="string">&#x27;orange&#x27;</span></span><br><span class="line">ctx.fillRect(<span class="number">410</span>,<span class="number">310</span>,<span class="number">300</span>,<span class="number">200</span>)</span><br><span class="line">ctx.closePath()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line"></span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;</span><br><span class="line">    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;</span><br><span class="line">    &lt;title&gt;Document&lt;/title&gt;</span><br><span class="line">    &lt;style&gt;</span><br><span class="line">        #canvas &#123;</span><br><span class="line">            display: block;</span><br><span class="line">            margin: 10px auto 0;</span><br><span class="line">            border: 1px solid orange;</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line"></span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;canvas id=&quot;canvas&quot; width=&quot;600&quot; height=&quot;400&quot;&gt;&lt;/canvas&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    const canvas = document.getElementById(&#x27;canvas&#x27;)</span><br><span class="line">    const ctx = canvas.getContext(&#x27;2d&#x27;)</span><br><span class="line">    const getPixelRatio = (context) =&gt; &#123;</span><br><span class="line">        return window.devicePixelRatio || 1</span><br><span class="line">    &#125;</span><br><span class="line">    const ratio = getPixelRatio()</span><br><span class="line">    canvas.style.width = canvas.width + &#x27;px&#x27;</span><br><span class="line">    canvas.style.height = canvas.height + &#x27;px&#x27;</span><br><span class="line">    canvas.width = canvas.width * ratio</span><br><span class="line">    canvas.height = canvas.height * ratio</span><br><span class="line">    // 提前设置相关属性</span><br><span class="line"></span><br><span class="line">    const ht = canvas.clientHeight</span><br><span class="line">    const wd = canvas.clientWidth</span><br><span class="line">    const pad = 20</span><br><span class="line">    const bottomPad = 20</span><br><span class="line">    const step = 100</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    function drawAxis(options)&#123;</span><br><span class="line">        let &#123;ht, wd, pad, bottomPad, step, ctx&#125; = options</span><br><span class="line">        // 绘制坐标系</span><br><span class="line">        ctx.beginPath()</span><br><span class="line">        ctx.lineWidth = 2</span><br><span class="line">        ctx.strokeStyle = &#x27;lightblue&#x27;</span><br><span class="line">        ctx.moveTo(pad, pad)</span><br><span class="line">        ctx.lineTo(pad, ht * ratio - bottomPad)</span><br><span class="line">        ctx.lineTo(wd * ratio - pad, ht * ratio - bottomPad)</span><br><span class="line">        ctx.stroke()</span><br><span class="line">        ctx.closePath()</span><br><span class="line"></span><br><span class="line">        </span><br><span class="line">        // 绘制x轴方向刻度</span><br><span class="line">        ctx.beginPath()</span><br><span class="line">        ctx.lineWidth = 1</span><br><span class="line">        ctx.strokeStyle = &#x27;#333&#x27;</span><br><span class="line">        for (let i = 1; i &lt; Math.floor(wd * ratio / step); i++ ) &#123;</span><br><span class="line">            ctx.moveTo(pad + i * step, ht * ratio - bottomPad )</span><br><span class="line">            ctx.lineTo(pad + i * step, ht * ratio - bottomPad - 10)</span><br><span class="line">        &#125;</span><br><span class="line">        ctx.stroke()</span><br><span class="line">        ctx.closePath()</span><br><span class="line"></span><br><span class="line">        // 绘制y轴方向刻度</span><br><span class="line">        ctx.beginPath()</span><br><span class="line">        ctx.lineWidth = 1</span><br><span class="line">        ctx.strokeStyle = &#x27;#333&#x27;</span><br><span class="line">        for (let i = 1; i &lt; Math.floor(ht * ratio / step); i ++ ) &#123;</span><br><span class="line">            ctx.moveTo(pad, (ht * ratio - bottomPad) - (i * step))</span><br><span class="line">            ctx.lineTo(pad + 10, (ht * ratio - bottomPad) - (i * step))</span><br><span class="line">        &#125;</span><br><span class="line">        ctx.stroke()</span><br><span class="line">        ctx.closePath()</span><br><span class="line"></span><br><span class="line">         // 绘制直方图</span><br><span class="line">         ctx.beginPath()</span><br><span class="line">        for(let i = 1; i&lt; Math.floor(wd*ratio / step); i++)&#123;</span><br><span class="line">        	const height = Math.random()*300 + 50</span><br><span class="line">        	ctx.fillStyle = &#x27;#&#x27; + parseInt(Math.random() * 0xFFFFFF).toString(16)</span><br><span class="line">        	ctx.fillRect((i*step),ht * ratio - bottomPad - height,40,height)</span><br><span class="line">        &#125;</span><br><span class="line">		ctx.closePath()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    drawAxis(&#123;ht, wd, pad, bottomPad, step, ctx&#125;)</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="canvas绘制圆形"><a href="#canvas绘制圆形" class="headerlink" title="canvas绘制圆形"></a>canvas绘制圆形</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// 绘制圆环</span><br><span class="line">ctx.beginPath()</span><br><span class="line">ctx.lineWidth = 2</span><br><span class="line">ctx.strokeStyle = &#x27;orange&#x27;</span><br><span class="line">ctx.arc(400,300,200,0,Math.PI*2,false) // x轴 y轴，半径，圆心，长度，方向</span><br><span class="line">ctx.stroke()</span><br><span class="line">ctx.closePath()</span><br><span class="line">//绘制圆形</span><br><span class="line">ctx.beginPath()</span><br><span class="line">ctx.fillStyle = &#x27;skyblue&#x27;</span><br><span class="line">ctx.act(400,300,100,0,Math.PI*2)</span><br><span class="line">ctx.fill()</span><br><span class="line">ctx.closePath()</span><br></pre></td></tr></table></figure>
+
+<h2 id="canvas绘制饼状图"><a href="#canvas绘制饼状图" class="headerlink" title="canvas绘制饼状图"></a>canvas绘制饼状图</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;X-UA-Compatible&quot;</span> <span class="attr">content</span>=<span class="string">&quot;IE=edge&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="css"></span></span><br><span class="line"><span class="css">        <span class="selector-id">#canvas</span> &#123;</span></span><br><span class="line"><span class="css">            <span class="attribute">display</span>: block;</span></span><br><span class="line"><span class="css">            <span class="attribute">margin</span>: <span class="number">10px</span> auto <span class="number">0</span>;</span></span><br><span class="line"><span class="css">            <span class="attribute">border</span>: <span class="number">1px</span> solid orange;</span></span><br><span class="line"><span class="css">        &#125;</span></span><br><span class="line"><span class="css">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">canvas</span> <span class="attr">id</span>=<span class="string">&quot;canvas&quot;</span> <span class="attr">width</span>=<span class="string">&quot;600&quot;</span> <span class="attr">height</span>=<span class="string">&quot;400&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;canvas&#x27;</span>)</span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> ctx = canvas.getContext(<span class="string">&#x27;2d&#x27;</span>)</span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> getPixelRatio = <span class="function">(<span class="params">context</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">return</span> <span class="built_in">window</span>.devicePixelRatio || <span class="number">1</span></span></span><br><span class="line"><span class="javascript">    &#125;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> ratio = getPixelRatio()</span></span><br><span class="line"><span class="javascript">    canvas.style.width = canvas.width + <span class="string">&#x27;px&#x27;</span></span></span><br><span class="line"><span class="javascript">    canvas.style.height = canvas.height + <span class="string">&#x27;px&#x27;</span></span></span><br><span class="line"><span class="javascript">    canvas.width = canvas.width * ratio</span></span><br><span class="line"><span class="javascript">    canvas.height = canvas.height * ratio</span></span><br><span class="line"><span class="javascript">    <span class="comment">// 提前设置相关属性</span></span></span><br><span class="line"><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> ht = canvas.clientHeight</span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> wd = canvas.clientWidth</span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> pad = <span class="number">20</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> bottomPad = <span class="number">20</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> step = <span class="number">100</span></span></span><br><span class="line"><span class="javascript">	<span class="comment">// 绘制饼状图</span></span></span><br><span class="line"><span class="javascript">    ctx.beginPath()</span></span><br><span class="line"><span class="javascript">    ctx.shadowOffsetX = <span class="number">0</span></span></span><br><span class="line"><span class="javascript">    ctx.shadowOffsetY = <span class="number">0</span></span></span><br><span class="line"><span class="javascript">    ctx.shadowBlur = <span class="number">4</span></span></span><br><span class="line"><span class="javascript">    ctx.shadowColor = <span class="string">&#x27;#333&#x27;</span></span></span><br><span class="line"><span class="javascript">    ctx.fillStyle = <span class="string">&#x27;red&#x27;</span></span></span><br><span class="line"><span class="javascript">    ctx.moveTo(<span class="number">400</span>,<span class="number">300</span>)</span></span><br><span class="line"><span class="javascript">    ctx.arc(<span class="number">400</span>,<span class="number">300</span>,<span class="number">100</span>,-<span class="built_in">Math</span>.PI/<span class="number">2</span>,-<span class="built_in">Math</span>.PI/<span class="number">4</span>)</span></span><br><span class="line"><span class="javascript">    ctx.fill()</span></span><br><span class="line"><span class="javascript">    ctx.closePath()</span></span><br><span class="line"><span class="javascript"></span></span><br><span class="line"><span class="javascript">    ctx.beginPath()</span></span><br><span class="line"><span class="javascript">    ctx.shadowOffsetX = <span class="number">0</span></span></span><br><span class="line"><span class="javascript">    ctx.shadowOffsetY = <span class="number">0</span></span></span><br><span class="line"><span class="javascript">    ctx.shadowBlur = <span class="number">4</span></span></span><br><span class="line"><span class="javascript">    ctx.shadowColor = <span class="string">&#x27;#333&#x27;</span></span></span><br><span class="line"><span class="javascript">    ctx.fillStyle = <span class="string">&#x27;yellow&#x27;</span></span></span><br><span class="line"><span class="javascript">    ctx.moveTo(<span class="number">400</span>,<span class="number">300</span>)</span></span><br><span class="line"><span class="javascript">    ctx.arc(<span class="number">400</span>,<span class="number">300</span>,<span class="number">120</span>,-<span class="built_in">Math</span>.PI/<span class="number">4</span>,<span class="built_in">Math</span>.PI/<span class="number">4</span>)</span></span><br><span class="line"><span class="javascript">    ctx.fill()</span></span><br><span class="line"><span class="javascript">    ctx.closePath()</span></span><br><span class="line"><span class="javascript"></span></span><br><span class="line"><span class="javascript">    ctx.beginPath()</span></span><br><span class="line"><span class="javascript">    ctx.shadowOffsetX = <span class="number">0</span></span></span><br><span class="line"><span class="javascript">    ctx.shadowOffsetY = <span class="number">0</span></span></span><br><span class="line"><span class="javascript">    ctx.shadowBlur = <span class="number">4</span></span></span><br><span class="line"><span class="javascript">    ctx.shadowColor = <span class="string">&#x27;#333&#x27;</span></span></span><br><span class="line"><span class="javascript">    ctx.fillStyle = <span class="string">&#x27;green&#x27;</span></span></span><br><span class="line"><span class="javascript">    ctx.moveTo(<span class="number">400</span>,<span class="number">300</span>)</span></span><br><span class="line"><span class="javascript">    ctx.arc(<span class="number">400</span>,<span class="number">300</span>,<span class="number">130</span>,<span class="built_in">Math</span>.PI/<span class="number">4</span>,<span class="built_in">Math</span>.PI*<span class="number">5</span>/<span class="number">8</span>)</span></span><br><span class="line"><span class="javascript">    ctx.fill()</span></span><br><span class="line"><span class="javascript">    ctx.closePath()</span></span><br><span class="line"><span class="javascript"></span></span><br><span class="line"><span class="javascript">    ctx.beginPath()</span></span><br><span class="line"><span class="javascript">    ctx.shadowOffsetX = <span class="number">0</span></span></span><br><span class="line"><span class="javascript">    ctx.shadowOffsetY = <span class="number">0</span></span></span><br><span class="line"><span class="javascript">    ctx.shadowBlur = <span class="number">4</span></span></span><br><span class="line"><span class="javascript">    ctx.shadowColor = <span class="string">&#x27;#333&#x27;</span></span></span><br><span class="line"><span class="javascript">    ctx.fillStyle = <span class="string">&#x27;pink&#x27;</span></span></span><br><span class="line"><span class="javascript">    ctx.moveTo(<span class="number">400</span>,<span class="number">300</span>)</span></span><br><span class="line"><span class="javascript">    ctx.arc(<span class="number">400</span>,<span class="number">300</span>,<span class="number">140</span>,<span class="built_in">Math</span>.PI*<span class="number">5</span>/<span class="number">8</span>,<span class="built_in">Math</span>.PI)</span></span><br><span class="line"><span class="javascript">    ctx.fill()</span></span><br><span class="line"><span class="javascript">    ctx.closePath()</span></span><br><span class="line"><span class="javascript"></span></span><br><span class="line"><span class="javascript">    ctx.beginPath()</span></span><br><span class="line"><span class="javascript">    ctx.shadowOffsetX = <span class="number">0</span></span></span><br><span class="line"><span class="javascript">    ctx.shadowOffsetY = <span class="number">0</span></span></span><br><span class="line"><span class="javascript">    ctx.shadowBlur = <span class="number">4</span></span></span><br><span class="line"><span class="javascript">    ctx.shadowColor = <span class="string">&#x27;#333&#x27;</span></span></span><br><span class="line"><span class="javascript">    ctx.fillStyle = <span class="string">&#x27;blue&#x27;</span></span></span><br><span class="line"><span class="javascript">    ctx.moveTo(<span class="number">400</span>,<span class="number">300</span>)</span></span><br><span class="line"><span class="javascript">    ctx.arc(<span class="number">400</span>,<span class="number">300</span>,<span class="number">150</span>,<span class="built_in">Math</span>.PI,<span class="built_in">Math</span>.PI*<span class="number">3</span>/<span class="number">2</span>)</span></span><br><span class="line"><span class="javascript">    ctx.fill()</span></span><br><span class="line"><span class="javascript">    ctx.closePath()</span></span><br><span class="line"><span class="javascript">    <span class="comment">// drawAxis(&#123;ht, wd, pad, bottomPad, step, ctx&#125;)</span></span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="canvas绘制文字"><a href="#canvas绘制文字" class="headerlink" title="canvas绘制文字"></a>canvas绘制文字</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ctx.fillStyle = &#x27;orange&#x27;</span><br><span class="line">ctx.font = &#x27;bold 60px 微软雅黑&#x27;</span><br><span class="line">ctx.fillText(&#x27;测试&#x27;,100,100)</span><br><span class="line">ctx.strokeText(&#x27;测试&#x27;,100,240)</span><br><span class="line">ctx.textAlign = &#x27;center&#x27; // left right start end center</span><br><span class="line">ctx.textBaseline = &#x27;top&#x27; // top bottom middle </span><br></pre></td></tr></table></figure>
+
+<h2 id="碰撞检测"><a href="#碰撞检测" class="headerlink" title="碰撞检测"></a>碰撞检测</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;</span><br><span class="line">    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;</span><br><span class="line">    &lt;title&gt;Document&lt;/title&gt;</span><br><span class="line">    &lt;style&gt;</span><br><span class="line">        #canvas&#123;</span><br><span class="line">            display: block;</span><br><span class="line">            margin: 10px auto 0;</span><br><span class="line">            border: 1px solid orange;</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;canvas id=&quot;canvas&quot; width=&quot;600&quot; height=&quot;400&quot;&gt;&lt;/canvas&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        const canvas = document.getElementById(&#x27;canvas&#x27;)</span><br><span class="line">        const ctx = canvas.getContext(&#x27;2d&#x27;)</span><br><span class="line">        </span><br><span class="line">        const getPixelRatio = (context) =&gt; &#123;</span><br><span class="line">            return window.devicePixelRatio || 1</span><br><span class="line">        &#125;</span><br><span class="line">        const ratio = getPixelRatio()</span><br><span class="line">        canvas.style.width = canvas.width + &#x27;px&#x27;</span><br><span class="line">        canvas.style.height = canvas.height + &#x27;px&#x27;</span><br><span class="line">        canvas.width = canvas.width * ratio</span><br><span class="line">        canvas.height = canvas.height * ratio</span><br><span class="line"></span><br><span class="line">        const drawCircle = (x, y, r) =&gt;&#123;</span><br><span class="line">            ctx.beginPath()</span><br><span class="line">            ctx.fillStyle = &#x27;orange&#x27;</span><br><span class="line">            ctx.arc(x,y,r,0,Math.PI*2)</span><br><span class="line">            ctx.fill()</span><br><span class="line">            ctx.closePath()</span><br><span class="line">        &#125;</span><br><span class="line">        // 配置属性</span><br><span class="line">        const wd = canvas.clientWidth * ratio</span><br><span class="line">        const ht = canvas.clientHeight * ratio</span><br><span class="line">        let x = y = 100 </span><br><span class="line">        const r = 20</span><br><span class="line">        let xSpeed = 4</span><br><span class="line">        let ySpeed = 3</span><br><span class="line">        drawCircle(x, y, r)</span><br><span class="line">        setInterval(()=&gt;&#123;</span><br><span class="line">            ctx.clearRect(0,0,wd,ht)</span><br><span class="line">            if(x-r &lt;= 0 || x + r &gt;= wd)&#123;</span><br><span class="line">                xSpeed = -xSpeed</span><br><span class="line">            &#125;</span><br><span class="line">            if(y-r &lt;= 0 || y + r &gt;= ht)&#123;</span><br><span class="line">                ySpeed = -ySpeed</span><br><span class="line">            &#125;</span><br><span class="line">            x += xSpeed</span><br><span class="line">            y += ySpeed</span><br><span class="line">            drawCircle(x,y,r)</span><br><span class="line">        &#125;,20)    </span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="canvas动画"><a href="#canvas动画" class="headerlink" title="canvas动画"></a>canvas动画</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;X-UA-Compatible&quot;</span> <span class="attr">content</span>=<span class="string">&quot;IE=edge&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="css"></span></span><br><span class="line"><span class="css">        <span class="selector-id">#canvas</span>&#123;</span></span><br><span class="line"><span class="css">            <span class="attribute">display</span>: block;</span></span><br><span class="line"><span class="css">            <span class="attribute">margin</span>: <span class="number">10px</span> auto <span class="number">0</span>;</span></span><br><span class="line"><span class="css">            <span class="attribute">border</span>: <span class="number">1px</span> solid orange;</span></span><br><span class="line"><span class="css">        &#125;</span></span><br><span class="line"><span class="css">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">canvas</span> <span class="attr">id</span>=<span class="string">&quot;canvas&quot;</span> <span class="attr">width</span>=<span class="string">&quot;600&quot;</span> <span class="attr">height</span>=<span class="string">&quot;400&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">        <span class="keyword">const</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;canvas&#x27;</span>)</span></span><br><span class="line"><span class="javascript">        <span class="keyword">const</span> ctx = canvas.getContext(<span class="string">&#x27;2d&#x27;</span>)</span></span><br><span class="line"><span class="javascript">        </span></span><br><span class="line"><span class="javascript">        <span class="keyword">const</span> getPixelRatio = <span class="function">(<span class="params">context</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">return</span> <span class="built_in">window</span>.devicePixelRatio || <span class="number">1</span></span></span><br><span class="line"><span class="javascript">        &#125;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">const</span> ratio = getPixelRatio()</span></span><br><span class="line"><span class="javascript">        canvas.style.width = canvas.width + <span class="string">&#x27;px&#x27;</span></span></span><br><span class="line"><span class="javascript">        canvas.style.height = canvas.height + <span class="string">&#x27;px&#x27;</span></span></span><br><span class="line"><span class="javascript">        canvas.width = canvas.width * ratio</span></span><br><span class="line"><span class="javascript">        canvas.height = canvas.height * ratio</span></span><br><span class="line"><span class="javascript"></span></span><br><span class="line"><span class="javascript">        <span class="class"><span class="keyword">class</span> <span class="title">Ball</span></span>&#123;</span></span><br><span class="line"><span class="javascript">            <span class="function"><span class="title">constructor</span>(<span class="params">canvas</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.canvas = canvas</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.ctx = <span class="built_in">this</span>.canvas.getContext(<span class="string">&#x27;2d&#x27;</span>)</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.wd = <span class="built_in">this</span>.canvas.clientWidth * ratio</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.ht = <span class="built_in">this</span>.canvas.clientHeight * ratio</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.r = <span class="built_in">Math</span>.random() * <span class="number">40</span> + <span class="number">10</span></span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.x = <span class="built_in">Math</span>.random() * (<span class="built_in">this</span>.wd - (<span class="built_in">this</span>.r*<span class="number">2</span>)) + <span class="built_in">this</span>.r</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.y = <span class="built_in">Math</span>.random() * (<span class="built_in">this</span>.ht - (<span class="built_in">this</span>.r*<span class="number">2</span>)) + <span class="built_in">this</span>.r</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.color = <span class="string">&#x27;#&#x27;</span> + <span class="built_in">parseInt</span>(<span class="built_in">Math</span>.random() * <span class="number">0xffffff</span>).toString(<span class="number">16</span>)</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.xSpeed = <span class="built_in">Math</span>.random() * <span class="number">4</span> +<span class="number">6</span></span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.ySpeed = <span class="built_in">Math</span>.random() * <span class="number">6</span> +<span class="number">4</span></span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.init()</span></span><br><span class="line"><span class="javascript">            &#125;</span></span><br><span class="line"><span class="javascript">            <span class="function"><span class="title">init</span>(<span class="params"></span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.run()</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.draw()</span></span><br><span class="line"><span class="javascript">            &#125;</span></span><br><span class="line"><span class="javascript">            <span class="function"><span class="title">draw</span>(<span class="params"></span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.ctx.beginPath()</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.ctx.fillStyle = <span class="built_in">this</span>.color</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.ctx.arc(<span class="built_in">this</span>.x,<span class="built_in">this</span>.y,<span class="built_in">this</span>.r,<span class="number">0</span>,<span class="number">2</span>*<span class="built_in">Math</span>.PI)</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.ctx.fill()</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.ctx.closePath()</span></span><br><span class="line"><span class="javascript">            &#125;</span></span><br><span class="line"><span class="javascript">            <span class="function"><span class="title">run</span>(<span class="params"></span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">                <span class="keyword">if</span>(<span class="built_in">this</span>.x - <span class="built_in">this</span>.r&lt;<span class="number">0</span> || <span class="built_in">this</span>.x + <span class="built_in">this</span>.r &gt; <span class="built_in">this</span>.wd)&#123;</span></span><br><span class="line"><span class="javascript">                    <span class="built_in">this</span>.xSpeed = -<span class="built_in">this</span>.xSpeed</span></span><br><span class="line"><span class="javascript">                &#125;</span></span><br><span class="line"><span class="javascript">                <span class="keyword">if</span>(<span class="built_in">this</span>.y - <span class="built_in">this</span>.r&lt;<span class="number">0</span> || <span class="built_in">this</span>.y + <span class="built_in">this</span>.r &gt; <span class="built_in">this</span>.ht)&#123;</span></span><br><span class="line"><span class="javascript">                    <span class="built_in">this</span>.ySpeed = -<span class="built_in">this</span>.ySpeed</span></span><br><span class="line"><span class="javascript">                &#125;</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.x += <span class="built_in">this</span>.xSpeed</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.y += <span class="built_in">this</span>.ySpeed</span></span><br><span class="line"><span class="javascript">            &#125;</span></span><br><span class="line"><span class="javascript">        &#125;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> ballArr = []</span></span><br><span class="line"><span class="javascript">        <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">20</span>; i++)&#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">const</span> ball = <span class="keyword">new</span> Ball(canvas)</span></span><br><span class="line"><span class="javascript">            ballArr.push(ball)</span></span><br><span class="line"><span class="javascript">        &#125;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">setInterval</span>(<span class="function">()=&gt;</span>&#123;</span></span><br><span class="line"><span class="javascript">            ctx.clearRect(<span class="number">0</span>,<span class="number">0</span>,canvas.clientWidth * ratio,canvas.clientHeight * ratio)</span></span><br><span class="line"><span class="javascript">            <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; ballArr.length; i++)&#123;</span></span><br><span class="line"><span class="javascript">                <span class="keyword">let</span> ball = ballArr[i]</span></span><br><span class="line"><span class="javascript">                ball.init()</span></span><br><span class="line"><span class="javascript">            &#125;</span></span><br><span class="line"><span class="javascript">        &#125;,<span class="number">20</span>)</span></span><br><span class="line"><span class="javascript">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="canvas绘制关系图"><a href="#canvas绘制关系图" class="headerlink" title="canvas绘制关系图"></a>canvas绘制关系图</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;X-UA-Compatible&quot;</span> <span class="attr">content</span>=<span class="string">&quot;IE=edge&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="css"></span></span><br><span class="line"><span class="css">        <span class="selector-id">#canvas</span>&#123;</span></span><br><span class="line"><span class="css">            <span class="attribute">display</span>: block;</span></span><br><span class="line"><span class="css">            <span class="attribute">margin</span>: <span class="number">10px</span> auto <span class="number">0</span>;</span></span><br><span class="line"><span class="css">            <span class="attribute">border</span>: <span class="number">1px</span> solid orange;</span></span><br><span class="line"><span class="css">        &#125;</span></span><br><span class="line"><span class="css">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">canvas</span> <span class="attr">id</span>=<span class="string">&quot;canvas&quot;</span> <span class="attr">width</span>=<span class="string">&quot;600&quot;</span> <span class="attr">height</span>=<span class="string">&quot;400&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">        <span class="keyword">const</span> canvas = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;canvas&#x27;</span>)</span></span><br><span class="line"><span class="javascript">        <span class="keyword">const</span> ctx = canvas.getContext(<span class="string">&#x27;2d&#x27;</span>)</span></span><br><span class="line"><span class="javascript">        </span></span><br><span class="line"><span class="javascript">        <span class="keyword">const</span> getPixelRatio = <span class="function">(<span class="params">context</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">return</span> <span class="built_in">window</span>.devicePixelRatio || <span class="number">1</span></span></span><br><span class="line"><span class="javascript">        &#125;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">const</span> ratio = getPixelRatio()</span></span><br><span class="line"><span class="javascript">        canvas.style.width = canvas.width + <span class="string">&#x27;px&#x27;</span></span></span><br><span class="line"><span class="javascript">        canvas.style.height = canvas.height + <span class="string">&#x27;px&#x27;</span></span></span><br><span class="line"><span class="javascript">        canvas.width = canvas.width * ratio</span></span><br><span class="line"><span class="javascript">        canvas.height = canvas.height * ratio</span></span><br><span class="line"><span class="javascript"></span></span><br><span class="line"><span class="javascript">        <span class="class"><span class="keyword">class</span> <span class="title">Ball</span></span>&#123;</span></span><br><span class="line"><span class="javascript">            <span class="function"><span class="title">constructor</span>(<span class="params">options</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.canvas = options.canvas</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.text = options.tittle</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.ctx = <span class="built_in">this</span>.canvas.getContext(<span class="string">&#x27;2d&#x27;</span>)</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.wd = <span class="built_in">this</span>.canvas.clientWidth * ratio</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.ht = <span class="built_in">this</span>.canvas.clientHeight * ratio</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.r = <span class="built_in">Math</span>.random() * <span class="number">40</span> + <span class="number">10</span></span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.x = <span class="built_in">Math</span>.random() * (<span class="built_in">this</span>.wd - (<span class="built_in">this</span>.r*<span class="number">2</span>)) + <span class="built_in">this</span>.r</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.y = <span class="built_in">Math</span>.random() * (<span class="built_in">this</span>.ht - (<span class="built_in">this</span>.r*<span class="number">2</span>)) + <span class="built_in">this</span>.r</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.color = <span class="string">&#x27;#&#x27;</span> + <span class="built_in">parseInt</span>(<span class="built_in">Math</span>.random() * <span class="number">0xffffff</span>).toString(<span class="number">16</span>)</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.xSpeed = <span class="built_in">Math</span>.random() * <span class="number">4</span> +<span class="number">6</span></span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.ySpeed = <span class="built_in">Math</span>.random() * <span class="number">6</span> +<span class="number">4</span></span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.init()</span></span><br><span class="line"><span class="javascript">            &#125;</span></span><br><span class="line"><span class="javascript">            <span class="function"><span class="title">init</span>(<span class="params"></span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.run()</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.draw()</span></span><br><span class="line"><span class="javascript">            &#125;</span></span><br><span class="line"><span class="javascript">            <span class="function"><span class="title">draw</span>(<span class="params"></span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.drawCircle()</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.drawText(<span class="built_in">this</span>.text,<span class="built_in">this</span>.x,<span class="built_in">this</span>.y + <span class="built_in">this</span>.r*<span class="number">1.25</span>)</span></span><br><span class="line"><span class="javascript">            &#125;</span></span><br><span class="line"><span class="javascript">            <span class="function"><span class="title">drawCircle</span>(<span class="params"></span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.ctx.beginPath()</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.ctx.fillStyle = <span class="built_in">this</span>.color</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.ctx.arc(<span class="built_in">this</span>.x,<span class="built_in">this</span>.y,<span class="built_in">this</span>.r,<span class="number">0</span>,<span class="number">2</span>*<span class="built_in">Math</span>.PI)</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.ctx.fill()</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.ctx.closePath()</span></span><br><span class="line"><span class="javascript">            &#125;</span></span><br><span class="line"><span class="javascript">            <span class="function"><span class="title">drawText</span>(<span class="params">text,x,y</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.ctx.font = <span class="string">&#x27;normal 20px 微软雅黑&#x27;</span></span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.ctx.textAlign = <span class="string">&#x27;center&#x27;</span></span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.ctx.textBaseline = <span class="string">&#x27;middle&#x27;</span></span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.ctx.fillText(text,x,y)</span></span><br><span class="line"><span class="javascript">            &#125;</span></span><br><span class="line"><span class="javascript">            <span class="function"><span class="title">drawLine</span>(<span class="params">x1,y1,x2,y2,color</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.ctx.beginPath()</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.ctx.lineWidth = <span class="number">1</span></span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.ctx.strokeStyle = color || <span class="string">&#x27;#666&#x27;</span></span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.ctx.moveTo(x1,y1)</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.ctx.lineTo(x2,y2)</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.ctx.stroke()</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.ctx.closePath()</span></span><br><span class="line"><span class="javascript">            &#125;</span></span><br><span class="line"><span class="javascript">            <span class="function"><span class="title">run</span>(<span class="params"></span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">                <span class="keyword">if</span>(<span class="built_in">this</span>.x - <span class="built_in">this</span>.r&lt;<span class="number">0</span> || <span class="built_in">this</span>.x + <span class="built_in">this</span>.r &gt; <span class="built_in">this</span>.wd)&#123;</span></span><br><span class="line"><span class="javascript">                    <span class="built_in">this</span>.xSpeed = -<span class="built_in">this</span>.xSpeed</span></span><br><span class="line"><span class="javascript">                &#125;</span></span><br><span class="line"><span class="javascript">                <span class="keyword">if</span>(<span class="built_in">this</span>.y - <span class="built_in">this</span>.r&lt;<span class="number">0</span> || <span class="built_in">this</span>.y + <span class="built_in">this</span>.r &gt; <span class="built_in">this</span>.ht)&#123;</span></span><br><span class="line"><span class="javascript">                    <span class="built_in">this</span>.ySpeed = -<span class="built_in">this</span>.ySpeed</span></span><br><span class="line"><span class="javascript">                &#125;</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.x += <span class="built_in">this</span>.xSpeed</span></span><br><span class="line"><span class="javascript">                <span class="built_in">this</span>.y += <span class="built_in">this</span>.ySpeed</span></span><br><span class="line"><span class="javascript">            &#125;</span></span><br><span class="line"><span class="javascript">        &#125;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> tittleArr = [<span class="string">&#x27;React&#x27;</span>,<span class="string">&#x27;Vue&#x27;</span>,<span class="string">&#x27;Webpack&#x27;</span>,<span class="string">&#x27;Angular&#x27;</span>,<span class="string">&#x27;Python&#x27;</span>]</span></span><br><span class="line"><span class="javascript">        <span class="keyword">let</span> ballArr = []</span></span><br><span class="line"><span class="javascript">        <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++)&#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">const</span> ball = <span class="keyword">new</span> Ball(&#123;<span class="attr">canvas</span>:canvas,<span class="attr">tittle</span>:tittleArr[i]&#125;)</span></span><br><span class="line"><span class="javascript">            ballArr.push(ball)</span></span><br><span class="line"><span class="javascript">            <span class="comment">// 连线</span></span></span><br><span class="line"><span class="javascript">            <span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; i; j++) &#123;</span></span><br><span class="line"><span class="javascript">                <span class="keyword">let</span> preBall = ballArr[j]</span></span><br><span class="line"><span class="javascript">                ball.drawLine(ball.x, ball.y, preBall.x, preBall.y)</span></span><br><span class="line"><span class="javascript">            &#125;</span></span><br><span class="line"><span class="javascript">        &#125;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">setInterval</span>(<span class="function">()=&gt;</span>&#123;</span></span><br><span class="line"><span class="javascript">            ctx.clearRect(<span class="number">0</span>,<span class="number">0</span>,canvas.clientWidth * ratio,canvas.clientHeight * ratio)</span></span><br><span class="line"><span class="javascript">            <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; ballArr.length; i++)&#123;</span></span><br><span class="line"><span class="javascript">                <span class="keyword">const</span> ball = ballArr[i]</span></span><br><span class="line"><span class="javascript">                <span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; i; j++) &#123;</span></span><br><span class="line"><span class="javascript">                    <span class="keyword">let</span> preBall = ballArr[j]</span></span><br><span class="line"><span class="javascript">                    ball.drawLine(ball.x, ball.y, preBall.x, preBall.y)</span></span><br><span class="line"><span class="javascript">                &#125;</span></span><br><span class="line"><span class="javascript">            &#125;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; ballArr.length; i++)&#123;</span></span><br><span class="line"><span class="javascript">                <span class="keyword">let</span> ball = ballArr[i]</span></span><br><span class="line"><span class="javascript">                ball.init()</span></span><br><span class="line"><span class="javascript">            &#125;</span></span><br><span class="line"><span class="javascript">        &#125;,<span class="number">20</span>)</span></span><br><span class="line"><span class="javascript">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+        <p class="suffix-end">__END__</p>
+        <div class="suffix-box">
+            <div class="suffix-box-left">
+                <img src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/sidebar/avatar.jpg" alt="Live For Code">
+            </div>
+            <div class="suffix-box-right">
+                <span class="suffix-box-title">文章作者</span>：Live For Code
+                <br>
+                <span class="suffix-box-title">文章出处</span>：<a href="/2022/04/06/%E5%89%8D%E7%AB%AF%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/" target="_blank">前端数据可视化</a>
+                <br>
+                <span class="suffix-box-title">作者签名</span>：简单地活着, 肆意又精彩.
+                <br>
+                <span class="suffix-box-title">关于主题</span>：<a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+                <br>
+                <span class="suffix-box-title">版权声明</span>：文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+                <br>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+    </div>
+    <div class="article-footer">
+        
+        
+        <div class="article-prev-next">
+            
+            
+                <a href="/2022/04/02/Node/" class="next-prefix">» </a> 下一篇：    <a href="/2022/04/02/Node/" title="发布于 2022-04-02 09:40">Node</a>
+            
+        </div>
+    </div>
+    
+    <div class="article-comments">
+        <div class="comments-title">
+            评论列表
+        </div>
+        <div class="comments-content">
+        </div>
+    </div>
+
+</div>
+
+    </div>
+</div>
+    <div id="footer"></div>
+    <div id="sidebar">
+    <div class="menu-wrap" style="display:none;">
+        <nav class="menu">
+            <div class="menu-introduce"> 
+                <div class="introduce-avatar"></div> 
+                <div class="introduce-info"> 
+                    <div class="introduce-user"><span></span></div>        
+                </div> 
+            </div> 
+            <div class="menu-list">
+                <ul></ul> 
+            </div> 
+            <div class="menu-link"></div> 
+        </nav>
+        <button class="menu-button-close"></button>
+        <div class="morph-shape" id="morph-shape" data-morph-open="M-7.312,0H15c0,0,66,113.339,66,399.5C81,664.006,15,800,15,800H-7.312V0z;M-7.312,0H100c0,0,0,113.839,0,400c0,264.506,0,400,0,400H-7.312V0z">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 100 800" preserveAspectRatio="none">
+                <path d="M-7.312,0H0c0,0,0,113.839,0,400c0,264.506,0,400,0,400h-7.312V0z"/>
+            </svg>
+        </div>
+    </div>
+    <button class="menu-button-open">MENU</button>
+    <div class="menu-cover"></div>
+</div>
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/search.css">
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/iscroll.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/instantsearch.min.js"></script>
+<div class="search-window">
+    <div class="search-content">
+        <div class="search-content-icon">
+            <i class="iconfont icon-search"></i>
+        </div>
+        <div id="search-input" class="search-input"></div>
+    </div>
+
+    <div class="search-scroll">
+        <div class="search-result">
+            <div id="search-stats" class="search-stats"></div>
+            <div id="search-hits"></div>
+            <div id="search-pagination" class="search-pagination"></div>
+        </div>
+    </div>
+
+    <span class="search-close-icon">
+        <i class="iconfont icon-close"></i>
+    </span>
+</div>
+    <div id="tools">
+    <div class="progressbar-top"></div>
+
+    
+        <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/APlayer.css">
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/APlayer.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/Meting.min.js"></script>
+        <meting-js id="3778678" lrcshow="false" server="netease" type="playlist" fixed="true" autoplay="false" loop="all" order="random" preload="auto" volume="0.67" mutex="true"></meting-js>
+    
+    
+    <div class="wrap-right"></div>
+    <div class="loading"></div>
+</div>
+    <script>
+    window.config = {
+        GitHubUserName     : 'first19326',
+        GitHubRepositories : 'Hexo-LiveForCode',
+
+        BlogUser      : 'Live For Code',
+        BlogAvatar    : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/sidebar/avatar.jpg',
+        BlogStartDate : '2020-01-01',
+
+        WebsiteTitleBlur         : '(◍´꒳`◍) Hi, Live For Code',
+        WebsiteTitleBlurTimeOut  : 500,
+        WebsiteTitleFocus        : '(*´∇｀*) 欢迎回来!',
+        WebsiteTitleFocusTimeOut : 1000,
+        WebsiteFavicon           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/website/logo.png',
+
+        ProgressBar: {
+            id       : 'topProgressBar',
+            color    : '#77B6FF',
+            height   : '2px',
+            duration : 0.2
+        },
+
+        Loading: {
+            rebound: {
+                tension  : 16,
+                friction : 5
+            },
+            spinner: {
+                id     : 'spinner',
+                radius : 90,
+                sides  : 3,
+                depth  : 4,
+                colors : {
+                    background : '#F0F0F0',
+                    stroke     : '#272633',
+                    base       : '',
+                    child      : '#272633'
+                },
+                alwaysForward : true,
+                restAt        : 0.5,
+                renderBase    : false
+            }
+        },
+
+        HomeHeaderAnimationRendered : true,
+        HomeHeaderAnimation         : {
+            radius      : 15,
+            density     : 0.2,
+            color       : 'rgba(255, 255, 255, .2)',
+            clearOffset : 0.3
+        },
+
+        ArticleHeaderAnimationRendered : false,
+        ArticleHeaderAnimation         : {
+            triW                  : 14,
+            triH                  : 20,
+            neighbours            : [
+                
+                    'side',
+                
+                    'top',
+                
+                    'bottom',
+                
+            ],
+            speedTrailAppear      : 0.1,
+            speedTrailDisappear   : 0.1,
+            speedTriOpen          : 1,
+            trailMaxLength        : 30,
+            trailIntervalCreation : 100,
+            delayBeforeDisappear  : 2,
+            colors                : [
+                
+                    '#96EDA6',
+                
+                    '#5BC6A9',
+                
+                    '#38668C',
+                
+                    '#374D84',
+                
+                    '#BED5CB',
+                
+                    '#62ADC6',
+                
+                    '#8EE5DE',
+                
+                    '#304E7B',
+                
+            ]
+        },
+
+        BackAnimationRendered          : true,
+        IEBrowserBackAnimationRendered : false,
+        BackAnimation                  : {
+            colorSaturation  : '60%',
+            colorBrightness  : '50%',
+            colorAlpha       : 0.5,
+            colorCycleSpeed  : 5,
+            verticalPosition : 'random',
+            horizontalSpeed  : 200,
+            ribbonCount      : 3,
+            strokeSize       : 0,
+            parallaxAmount   : -0.2,
+            animateSections  : true
+        },
+
+        HomeHeaderImage : [
+            
+                'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/header/home.jpg',
+            
+                'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/header/home.jpeg',
+            
+        ],
+        HomeBannerText  : '',
+
+        ArticleHeaderImage : [
+            
+                'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/header/article.jpg',
+            
+        ],
+
+        OtherBannerText : '',
+
+        MenuList : [
+            
+                {
+                    name   : '首页',
+                    href   : '/',    
+                    target : '',
+                    class  : ''
+                },
+            
+                {
+                    name   : '标签',
+                    href   : '/tag',    
+                    target : '',
+                    class  : ''
+                },
+            
+                {
+                    name   : '分类',
+                    href   : '/category',    
+                    target : '',
+                    class  : ''
+                },
+            
+                {
+                    name   : '归档',
+                    href   : '/archive',    
+                    target : '',
+                    class  : ''
+                },
+            
+                {
+                    name   : '赞赏',
+                    href   : '/donate',    
+                    target : '',
+                    class  : ''
+                },
+            
+                {
+                    name   : '关于',
+                    href   : '/about',    
+                    target : '',
+                    class  : ''
+                },
+            
+                {
+                    name   : '订阅',
+                    href   : '/atom.xml',    
+                    target : '_blank',
+                    class  : ''
+                },
+            
+                {
+                    name   : '搜索',
+                    href   : '',    
+                    target : '',
+                    class  : 'search'
+                },
+            
+                {
+                    name   : '留言板',
+                    href   : '/comment',    
+                    target : '',
+                    class  : ''
+                },
+            
+                {
+                    name   : '友情链接',
+                    href   : '/friend',    
+                    target : '',
+                    class  : ''
+                },
+            
+        ],
+        MenuLink : [
+            
+                
+                    {
+                        icon : 'icon-weibo', 
+                        url  : ''
+                    },
+                
+                    {
+                        icon : 'icon-wechat', 
+                        url  : ''
+                    },
+                
+                    {
+                        icon : 'icon-qq', 
+                        url  : ''
+                    },
+                
+                    {
+                        icon : 'icon-github', 
+                        url  : 'https://github.com/first19326'
+                    },
+                
+            
+        ],
+
+        FooterStyle : 2,
+        BottomText  : {
+            icon    : 'like-fill',
+            left    : '人生若只如初见',
+            right   : '何事秋风悲画扇'
+        },
+        ThemeInfo   : true,
+
+        ConsoleList : [
+            
+                
+                    [
+                        
+                            
+                                'Based on cnblogs theme SimpleMemory.',
+                            
+                                '',
+                            
+                        
+                    ],
+                
+                    [
+                        
+                            
+                                'SimpleMemory Author:',
+                            
+                                'BNDong',
+                            
+                        
+                    ],
+                
+                    [
+                        
+                            
+                                'Theme:',
+                            
+                                'LiveForCode',
+                            
+                        
+                    ],
+                
+            
+        ],
+
+        FontIconExtend : '',
+
+        Donate : {
+            paypal  : '',
+            bitcoin : '',
+            alipay  : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/donate/alipay.png',
+            wechat  : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/donate/wechat.png'
+        },
+
+        Code : {
+            style : 'normal'
+        },  
+
+        Search : {
+            applicationID : '010C3EANT8',
+            apiKey        : 'c7abab9f11b79102b9aff7fe6d41447d',
+            indexName     : 'Notes',
+            hits          : {
+                page : 10
+            },
+            labels        : {
+                placeholder : '搜索',
+                empty       : '未发现与 「${query}」 相关的内容',
+                stats       : '${hits} 条相关条目，使用了 ${time} 毫秒',
+            }
+        }, 
+
+        Valine : {
+            switch         : true,
+            el             : '.comments-content',
+            appId          : 'srhKtvWPQTWYKh3qX8G8M7v0-gzGzoHsz',
+            appKey         : '8uVSP1q6UlALVC5igYfIfv2h',
+            placeholder    : '你是我一生只会遇见一次的惊喜...',
+            avatar         : 'mm',
+            meta           : 'nick,mail,link',
+            requiredFields : 'nick,mail',
+            pageSize       : 5,
+            lang           : 'zh-cn',
+            visitor        : true,
+            enableQQ       : true
+        },
+
+        Tocbot : {
+            switch                : true,
+            tocSelector           : '.toc',
+            contentSelector       : '.article-body',
+            headingSelector       : 'h1, h2, h3, h4, h5',
+            headingsOffset        : 0,
+            scrollSmooth          : true,
+            scrollSmoothOffset    : -5,
+            positionFixedSelector : '.toc',
+            positionFixedClass    : 'toc-fixed',
+            fixedSidebarOffset    : '',
+        },
+
+        Require : {
+            baseUrl     : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/',
+            waitSeconds : 100
+        },
+
+        Music : {
+            type : 'Meting'
+        },
+        APlayer : {
+            container : '.aplayer',
+            fixed     : true,
+            autoplay  : false,
+            loop      : 'all',
+            order     : 'random',
+            preload   : 'auto',
+            volume    : 0.67,
+            mutex     : true,
+            lrcType   : 3,
+            audio     : [
+                
+                    {
+                        name   : 'aLIEz',
+                        artist : 'mizuki（瑞葵）',
+                        cover  : '/music/cover/aLIEz.jpg',
+                        url    : '/music/song/aLIEz.mp3',
+                        lrc    : '/music/lrc/aLIEz.lrc'
+                    },
+                
+                    {
+                        name   : 'Endless Tears',
+                        artist : 'CLIFF EDGE',
+                        cover  : '/music/cover/Endless Tears.jpg',
+                        url    : '/music/song/Endless Tears.mp3',
+                        lrc    : '/music/lrc/Endless Tears.lrc'
+                    },
+                
+                    {
+                        name   : 'Miracle',
+                        artist : 'Cascada',
+                        cover  : '/music/cover/Miracle.jpg',
+                        url    : '/music/song/Miracle.mp3',
+                        lrc    : '/music/lrc/Miracle.lrc'
+                    },
+                
+                    {
+                        name   : 'Roll The Dice',
+                        artist : '高珊',
+                        cover  : '/music/cover/Roll The Dice.jpg',
+                        url    : '/music/song/Roll The Dice.mp3',
+                        lrc    : '/music/lrc/Roll The Dice.lrc'
+                    },
+                
+                    {
+                        name   : 'See You Again',
+                        artist : 'Charlie Puth, Wiz Khalifa',
+                        cover  : '/music/cover/See You Again.jpg',
+                        url    : '/music/song/See You Again.mp3',
+                        lrc    : '/music/lrc/See You Again.lrc'
+                    },
+                
+                    {
+                        name   : 'Traveling Light',
+                        artist : 'Joel Hanson, Sara Groves',
+                        cover  : '/music/cover/Traveling Light.jpg',
+                        url    : '/music/song/Traveling Light.mp3',
+                        lrc    : '/music/lrc/Traveling Light.lrc'
+                    },
+                
+                    {
+                        name   : '痴心绝对',
+                        artist : '李圣杰',
+                        cover  : '/music/cover/痴心绝对.jpg',
+                        url    : '/music/song/痴心绝对.mp3',
+                        lrc    : '/music/lrc/痴心绝对.lrc'
+                    },
+                
+                    {
+                        name   : '好想大声说爱你',
+                        artist : 'BAAD（バード）',
+                        cover  : '/music/cover/好想大声说爱你.jpg',
+                        url    : '/music/song/好想大声说爱你.mp3',
+                        lrc    : '/music/lrc/好想大声说爱你.lrc'
+                    },
+                
+            ]
+        },
+        Meting : {
+            id       : '3778678', 
+            lrcshow  : false, 
+            server   : 'netease', 
+            type     : 'playlist', 
+            fixed    : true, 
+            autoplay : false, 
+            loop     : 'all', 
+            order    : 'random', 
+            preload  : 'auto', 
+            volume   : 0.67, 
+            mutex    : true
+        },
+
+        Mouse : {
+            enable  : true,
+            options : {
+                size  : 6,
+                sizeF : 24
+            }
+        },
+
+        LazyLoad : {
+            default : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/website/lazyload.svg'
+        },
+  
+        Style : {
+            aplayer          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/APlayer.css',
+            archive          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/archive.css',
+            donate           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/donate.css',
+            fancybox         : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/jquery.fancybox.css',
+            footer           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/footer.css',
+            iconfont         : 'https://at.alicdn.com/t/font_1546312_l3yohatebw.css',
+            index            : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/index.css',
+            menuBubble       : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/menu-bubble.css',
+            page             : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/page.css',
+            post             : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/post.css',
+            search           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/search.css',
+            tocbot           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/tocbot.css',
+            normal           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/normal.css',
+            night            : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/night.css',
+            clipboard        : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/clipboard.css'
+        },
+
+        Script: {
+            aplayer          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/APlayer.min.js',
+            config           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/require.config.js',
+            index            : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/index.js',
+            instantSearch    : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/instantsearch.min.js',
+            jQuery           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/jquery-3.4.1.min.js',
+            loading          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/loading.js',
+            meting           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/Meting.min.js',
+            iscroll          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/iscroll.js',
+            require          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/require.min.js'
+        },
+
+        Font: {
+            LongCang   : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/LongCang.css',
+            Monda      : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Monda.css',
+            NotoSansSC : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/NotoSansSC.css',
+            Playball   : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Playball.css',
+            PTMono     : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/PTMono.css',
+            RobotoSlab : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/RobotoSlab.css',
+            Rosario    : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Rosario.css',
+            UbuntuMono : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/UbuntuMono.css'
+        },
+
+        Suffix : {
+            about : '简单地活着, 肆意又精彩.'
+        },
+            
+        Theme : {
+            url  : 'https://github.com/first19326/Hexo-LiveForCode',
+            name : 'Hexo - Live For Code'
+        }  
+    };
+</script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/index.js"></script>
+</body>
+</html>
