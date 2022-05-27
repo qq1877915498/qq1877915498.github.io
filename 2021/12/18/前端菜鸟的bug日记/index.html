@@ -9,21 +9,21 @@
     <title>前端菜鸟的bug日记</title>
     <link rel="shortcut icon" href="#"/>
 
-    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/LongCang.css">
-    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Monda.css">
-    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/NotoSansSC.css">
-    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Playball.css">
-    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/PTMono.css">
-    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/RobotoSlab.css">
-    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Rosario.css">
-    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/UbuntuMono.css">
+    <link type="text/css" rel="stylesheet" href="https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/font/LongCang.css">
+    <link type="text/css" rel="stylesheet" href="https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/font/Monda.css">
+    <link type="text/css" rel="stylesheet" href="https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/font/NotoSansSC.css">
+    <link type="text/css" rel="stylesheet" href="https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/font/Playball.css">
+    <link type="text/css" rel="stylesheet" href="https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/font/PTMono.css">
+    <link type="text/css" rel="stylesheet" href="https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/font/RobotoSlab.css">
+    <link type="text/css" rel="stylesheet" href="https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/font/Rosario.css">
+    <link type="text/css" rel="stylesheet" href="https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/font/UbuntuMono.css">
 
-    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/post.css">
+    <link type="text/css" rel="stylesheet" href="https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/css/post.css">
     
-        <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/normal.css">
+        <link type="text/css" rel="stylesheet" href="https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/css/normal.css">
     
 
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/js/jquery-3.4.1.min.js"></script>
 
 <meta name="generator" content="Hexo 5.4.0"></head>
 <body>
@@ -89,11 +89,15 @@
 
 <h2 id="问题10：table文字溢出显示省略号"><a href="#问题10：table文字溢出显示省略号" class="headerlink" title="问题10：table文字溢出显示省略号"></a>问题10：table文字溢出显示省略号</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">table</span> &#123;  <span class="attribute">width</span>: <span class="number">100%</span>;  <span class="attribute">table-layout</span>:fixed;&#125;</span><br><span class="line"><span class="selector-tag">td</span> &#123;  <span class="attribute">width</span>: <span class="number">20%</span>;  <span class="attribute">overflow</span>: hidden;  <span class="attribute">white-space</span>: nowrap;  <span class="attribute">text-overflow</span>: ellipsis;&#125;</span><br></pre></td></tr></table></figure>
 
+<h2 id="问题11：border在部分机型使用不生效"><a href="#问题11：border在部分机型使用不生效" class="headerlink" title="问题11：border在部分机型使用不生效"></a>问题11：border在部分机型使用不生效</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// 在<span class="attribute">border</span>小于<span class="number">1px</span>时 直接写<span class="number">1px</span>转成rem会出错，在某些机型下，当rem转换成px小于<span class="number">1</span>时就会出现失效的问题。<span class="attribute">border</span>太小时不能用转成rem用</span><br><span class="line">解决方案:</span><br><span class="line">直接设置为<span class="number">1px</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="问题12：postcss-px2rem中设置单独的px不转换成rem"><a href="#问题12：postcss-px2rem中设置单独的px不转换成rem" class="headerlink" title="问题12：postcss-px2rem中设置单独的px不转换成rem"></a>问题12：postcss-px2rem中设置单独的px不转换成rem</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.van-switch</span>&#123;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">1px</span> solid <span class="built_in">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,.<span class="number">1</span>);<span class="comment">/*no*/</span> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 
         <p class="suffix-end">__END__</p>
         <div class="suffix-box">
             <div class="suffix-box-left">
-                <img src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/sidebar/avatar.jpg" alt="Live For Code">
+                <img src="https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/image/sidebar/avatar.jpg" alt="Live For Code">
             </div>
             <div class="suffix-box-right">
                 <span class="suffix-box-title">文章作者</span>：Live For Code
@@ -161,9 +165,9 @@
     <button class="menu-button-open">MENU</button>
     <div class="menu-cover"></div>
 </div>
-    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/search.css">
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/iscroll.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/instantsearch.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/css/search.css">
+<script type="text/javascript" src="https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/js/iscroll.js"></script>
+<script type="text/javascript" src="https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/js/instantsearch.min.js"></script>
 <div class="search-window">
     <div class="search-content">
         <div class="search-content-icon">
@@ -188,9 +192,9 @@
     <div class="progressbar-top"></div>
 
     
-        <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/APlayer.css">
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/APlayer.min.js"></script>
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/Meting.min.js"></script>
+        <link type="text/css" rel="stylesheet" href="https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/css/APlayer.css">
+        <script type="text/javascript" src="https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/js/APlayer.min.js"></script>
+        <script type="text/javascript" src="https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/js/Meting.min.js"></script>
         <meting-js id="3778678" lrcshow="false" server="netease" type="playlist" fixed="true" autoplay="false" loop="all" order="random" preload="auto" volume="0.67" mutex="true"></meting-js>
     
     
@@ -203,14 +207,14 @@
         GitHubRepositories : 'Hexo-LiveForCode',
 
         BlogUser      : 'Live For Code',
-        BlogAvatar    : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/sidebar/avatar.jpg',
+        BlogAvatar    : 'https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/image/sidebar/avatar.jpg',
         BlogStartDate : '2020-01-01',
 
         WebsiteTitleBlur         : '(◍´꒳`◍) Hi, Live For Code',
         WebsiteTitleBlurTimeOut  : 500,
         WebsiteTitleFocus        : '(*´∇｀*) 欢迎回来!',
         WebsiteTitleFocusTimeOut : 1000,
-        WebsiteFavicon           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/website/logo.png',
+        WebsiteFavicon           : 'https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/image/website/logo.png',
 
         ProgressBar: {
             id       : 'topProgressBar',
@@ -306,16 +310,16 @@
 
         HomeHeaderImage : [
             
-                'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/header/home.jpg',
+                'https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/image/header/home.jpg',
             
-                'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/header/home.jpeg',
+                'https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/image/header/home.jpeg',
             
         ],
         HomeBannerText  : '',
 
         ArticleHeaderImage : [
             
-                'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/header/article.jpg',
+                'https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/image/header/article.jpg',
             
         ],
 
@@ -469,8 +473,8 @@
         Donate : {
             paypal  : '',
             bitcoin : '',
-            alipay  : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/donate/alipay.png',
-            wechat  : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/donate/wechat.png'
+            alipay  : 'https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/image/donate/alipay.png',
+            wechat  : 'https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/image/donate/wechat.png'
         },
 
         Code : {
@@ -520,7 +524,7 @@
         },
 
         Require : {
-            baseUrl     : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/',
+            baseUrl     : 'https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/js/',
             waitSeconds : 100
         },
 
@@ -628,48 +632,48 @@
         },
 
         LazyLoad : {
-            default : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/image/website/lazyload.svg'
+            default : 'https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/image/website/lazyload.svg'
         },
   
         Style : {
-            aplayer          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/APlayer.css',
-            archive          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/archive.css',
-            donate           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/donate.css',
-            fancybox         : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/jquery.fancybox.css',
-            footer           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/footer.css',
+            aplayer          : 'https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/css/APlayer.css',
+            archive          : 'https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/css/archive.css',
+            donate           : 'https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/css/donate.css',
+            fancybox         : 'https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/css/jquery.fancybox.css',
+            footer           : 'https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/css/footer.css',
             iconfont         : 'https://at.alicdn.com/t/font_1546312_l3yohatebw.css',
-            index            : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/index.css',
-            menuBubble       : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/menu-bubble.css',
-            page             : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/page.css',
-            post             : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/post.css',
-            search           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/search.css',
-            tocbot           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/tocbot.css',
-            normal           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/normal.css',
-            night            : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/night.css',
-            clipboard        : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/css/clipboard.css'
+            index            : 'https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/css/index.css',
+            menuBubble       : 'https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/css/menu-bubble.css',
+            page             : 'https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/css/page.css',
+            post             : 'https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/css/post.css',
+            search           : 'https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/css/search.css',
+            tocbot           : 'https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/css/tocbot.css',
+            normal           : 'https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/css/normal.css',
+            night            : 'https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/css/night.css',
+            clipboard        : 'https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/css/clipboard.css'
         },
 
         Script: {
-            aplayer          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/APlayer.min.js',
-            config           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/require.config.js',
-            index            : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/index.js',
-            instantSearch    : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/instantsearch.min.js',
-            jQuery           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/jquery-3.4.1.min.js',
-            loading          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/loading.js',
-            meting           : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/Meting.min.js',
-            iscroll          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/iscroll.js',
-            require          : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/require.min.js'
+            aplayer          : 'https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/js/APlayer.min.js',
+            config           : 'https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/js/require.config.js',
+            index            : 'https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/js/index.js',
+            instantSearch    : 'https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/js/instantsearch.min.js',
+            jQuery           : 'https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/js/jquery-3.4.1.min.js',
+            loading          : 'https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/js/loading.js',
+            meting           : 'https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/js/Meting.min.js',
+            iscroll          : 'https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/js/iscroll.js',
+            require          : 'https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/js/require.min.js'
         },
 
         Font: {
-            LongCang   : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/LongCang.css',
-            Monda      : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Monda.css',
-            NotoSansSC : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/NotoSansSC.css',
-            Playball   : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Playball.css',
-            PTMono     : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/PTMono.css',
-            RobotoSlab : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/RobotoSlab.css',
-            Rosario    : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/Rosario.css',
-            UbuntuMono : 'https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/font/UbuntuMono.css'
+            LongCang   : 'https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/font/LongCang.css',
+            Monda      : 'https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/font/Monda.css',
+            NotoSansSC : 'https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/font/NotoSansSC.css',
+            Playball   : 'https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/font/Playball.css',
+            PTMono     : 'https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/font/PTMono.css',
+            RobotoSlab : 'https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/font/RobotoSlab.css',
+            Rosario    : 'https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/font/Rosario.css',
+            UbuntuMono : 'https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/font/UbuntuMono.css'
         },
 
         Suffix : {
@@ -682,6 +686,6 @@
         }  
     };
 </script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/cdn@master/static/js/index.js"></script>
+    <script type="text/javascript" src="https://fastly.jsdelivr.net/gh/first19326/cdn@master/static/js/index.js"></script>
 </body>
 </html>
