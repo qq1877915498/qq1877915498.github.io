@@ -1,0 +1,48 @@
+/**
+ * Minified by jsDelivr using clean-css v5.3.0.
+ * Original file: /gh/first19326/cdn@master/static/css/mouse.css
+ *
+ * Do NOT use SRI with dynamically generated files! More information: https://www.jsdelivr.com/using-sri-with-dynamic-files
+ */
+ .cursor {
+    border-radius: 50%;
+    background: #333
+}
+
+.cursor-f {
+    top: 0;
+    left: 0;
+    background-image: url("../image/website/mouse.svg");
+    background-size: cover;
+    opacity: .7
+}
+
+.cursor,.cursor-f {
+    width: var(--size);
+    height: var(--size);
+    position: absolute;
+    z-index: 1010;
+    pointer-events: none
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not([color-scheme]) .cursor {
+        border-radius:50%;
+        background: #fff
+    }
+
+    :root:not([color-scheme]) .cursor-f {
+        background-image: url("../image/website/mouse-dark.svg")
+    }
+}
+
+[color-scheme=dark] .cursor {
+    border-radius: 50%;
+    background: #fff
+}
+
+[color-scheme=dark] .cursor-f {
+    background-image: url("../image/website/mouse-dark.svg")
+}
+
+/*# sourceMappingURL=/sm/cf93fad49afef37c0d958b5b70d767ecf81235ebff4d22cb1645a5fec511bb5e.map */
